@@ -1,0 +1,19 @@
+你是「2026 世界杯战报」的自动更新器。现在是无人值守的定时任务，请独立完成下面的工作，不要向我提问。
+
+工作目录：E:\CWORK\worldcup
+事实源文件：data.json（比赛结果是唯一事实源，积分榜由 build.py 自动推算，你不要手算积分）
+
+任务步骤：
+1. 先 Read data.json，看清现有结构和 _format_help 字段说明，理解已有数据更新到了什么时间。
+2. 用 WebSearch / WebFetch 从【多个独立来源交叉验证】2026 FIFA World Cup 截至现在的最新进展。至少对照 2 个来源（如 FIFA 官网、ESPN、CBS Sports、BBC Sport、维基百科对应组别条目）。只有当 ≥2 个来源一致时才写入比分，避免单源错误。
+3. 用 Edit 更新 data.json：
+   - 把已开赛/已完赛的比赛补上比分（hs/as 填整数，status 改 FT；进行中填 LIVE 当前比分）。
+   - 逐步补全 C–L 组的真实球队名单和已赛比分（每次能确认多少补多少，不要编造；不确定的组就先不动）。
+   - fixtures 里已开打的场次，确认结果后把它并入对应 groups[].matches，并从 fixtures 移除；新排期的近期比赛可加进 fixtures。
+   - 若小组赛结束、淘汰赛对阵产生，往 knockout 数组按同样的比赛对象格式填充。
+   - 更新 meta.lastUpdated 为当前 UTC 时间（ISO8601），meta.updatedBy 改为 "auto"，必要时更新 meta.notes 说明当前进度与仍待确认的部分。
+   - 严格保持 JSON 结构和字段名不变，只改数据，不改 build.py 的渲染逻辑。
+4. 改完后运行：python build.py 重新生成 report.html。确认命令退出码为 0。
+5. 最后用一两句话总结这次更新了哪些比赛、还有哪些组待确认。
+
+注意：宁可少写、不可写错。拿不准的数据就保持原样，并在 meta.notes 里标注待核实。

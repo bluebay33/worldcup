@@ -1,0 +1,49 @@
+name: 更新世界杯战报
+
+on:
+  push:
+    branches: [main]          # 首次推送即部署
+  schedule:
+    - cron: '0 */6 * * *'     # 每 6 小时(UTC 0/6/12/18)自动跑
+  workflow_dispatch:           # 允许在网页上手动触发
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 拉取真实数据并生成网页
+        run: |
+          python fetch_espn.py
+          python build.py
+
+      - name: 整理发布目录
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          cp report.html _site/report.html
+          cp data.json _site/data.json
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
