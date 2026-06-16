@@ -1,0 +1,162 @@
+{
+  "groups_order": [
+    {
+      "name": "A",
+      "teams": [
+        "Mexico",
+        "Czechia",
+        "South Korea",
+        "South Africa"
+      ]
+    },
+    {
+      "name": "B",
+      "teams": [
+        "Canada",
+        "Bosnia-Herzegovina",
+        "Switzerland",
+        "Qatar"
+      ]
+    },
+    {
+      "name": "C",
+      "teams": [
+        "Brazil",
+        "Scotland",
+        "Haiti",
+        "Morocco"
+      ]
+    },
+    {
+      "name": "D",
+      "teams": [
+        "Paraguay",
+        "Türkiye",
+        "Australia",
+        "United States"
+      ]
+    },
+    {
+      "name": "E",
+      "teams": [
+        "Ecuador",
+        "Germany",
+        "Ivory Coast",
+        "Curaçao"
+      ]
+    },
+    {
+      "name": "F",
+      "teams": [
+        "Netherlands",
+        "Sweden",
+        "Japan",
+        "Tunisia"
+      ]
+    },
+    {
+      "name": "G",
+      "teams": [
+        "Belgium",
+        "Iran",
+        "Egypt",
+        "New Zealand"
+      ]
+    },
+    {
+      "name": "H",
+      "teams": [
+        "Spain",
+        "Uruguay",
+        "Saudi Arabia",
+        "Cape Verde"
+      ]
+    },
+    {
+      "name": "I",
+      "teams": [
+        "Norway",
+        "France",
+        "Senegal",
+        "Iraq"
+      ]
+    },
+    {
+      "name": "J",
+      "teams": [
+        "Argentina",
+        "Austria",
+        "Algeria",
+        "Jordan"
+      ]
+    },
+    {
+      "name": "K",
+      "teams": [
+        "Colombia",
+        "Portugal",
+        "Uzbekistan",
+        "Congo DR"
+      ]
+    },
+    {
+      "name": "L",
+      "teams": [
+        "England",
+        "Croatia",
+        "Panama",
+        "Ghana"
+      ]
+    }
+  ],
+  "team2group": {
+    "Mexico": "A",
+    "Czechia": "A",
+    "South Korea": "A",
+    "South Africa": "A",
+    "Canada": "B",
+    "Bosnia-Herzegovina": "B",
+    "Switzerland": "B",
+    "Qatar": "B",
+    "Brazil": "C",
+    "Scotland": "C",
+    "Haiti": "C",
+    "Morocco": "C",
+    "Paraguay": "D",
+    "Türkiye": "D",
+    "Australia": "D",
+    "United States": "D",
+    "Ecuador": "E",
+    "Germany": "E",
+    "Ivory Coast": "E",
+    "Curaçao": "E",
+    "Netherlands": "F",
+    "Sweden": "F",
+    "Japan": "F",
+    "Tunisia": "F",
+    "Belgium": "G",
+    "Iran": "G",
+    "Egypt": "G",
+    "New Zealand": "G",
+    "Spain": "H",
+    "Uruguay": "H",
+    "Saudi Arabia": "H",
+    "Cape Verde": "H",
+    "Norway": "I",
+    "France": "I",
+    "Senegal": "I",
+    "Iraq": "I",
+    "Argentina": "J",
+    "Austria": "J",
+    "Algeria": "J",
+    "Jordan": "J",
+    "Colombia": "K",
+    "Portugal": "K",
+    "Uzbekistan": "K",
+    "Congo DR": "K",
+    "England": "L",
+    "Croatia": "L",
+    "Panama": "L",
+    "Ghana": "L"
+  }
+}

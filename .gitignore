@@ -3,3 +3,11 @@ __pycache__/
 _site/
 _dbg.py
 *.pyc
+*.log
+
+# wrangler 本地缓存（含 Cloudflare 账户 ID/邮箱）—— 绝不入库
+.wrangler/
+
+# 临时探针/调试文件
+_probe.*
+_espn_probe.py

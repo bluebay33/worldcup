@@ -1,49 +1,43 @@
 name: 更新世界杯战报
 
+# 在 GitHub 云端每 6 小时跑一次：拉 ESPN 真实数据 -> 生成页面 -> 部署到 Cloudflare Pages。
+# 全程纯 Python + wrangler，不依赖你的电脑、不使用 Claude。
 on:
-  push:
-    branches: [main]          # 首次推送即部署
   schedule:
-    - cron: '0 */6 * * *'     # 每 6 小时(UTC 0/6/12/18)自动跑
-  workflow_dispatch:           # 允许在网页上手动触发
+    - cron: '0 */6 * * *'    # UTC 的 0/6/12/18 点，约合北京时间 08/14/20/02 点
+  workflow_dispatch: {}        # 允许在 Actions 页面手动点「Run workflow」
+  push:
+    branches: [ main ]         # 推代码到 main 时也跑一次（方便首次验证）
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
+  contents: read               # 只读仓库，最小权限
 
 jobs:
-  build-deploy:
+  update:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - name: 拉取仓库
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: 安装 Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
-      - name: 拉取真实数据并生成网页
-        run: |
-          python fetch_espn.py
-          python build.py
+      - name: 拉 ESPN 真实数据
+        run: python fetch_espn.py
 
-      - name: 整理发布目录
+      - name: 生成页面
+        run: python build.py
+
+      - name: 整理发布目录（只放静态文件）
         run: |
           mkdir -p _site
-          cp index.html _site/index.html
-          cp report.html _site/report.html
-          cp data.json _site/data.json
+          cp index.html report.html data.json _site/
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: 部署到 Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          path: _site
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=worldcup --branch=main

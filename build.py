@@ -12,8 +12,9 @@
 """
 import json
 import os
+import re
 import html
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "data.json")
@@ -22,6 +23,68 @@ OUT = os.path.join(HERE, "report.html")
 
 def esc(s):
     return html.escape(str(s))
+
+
+# ESPN 英文队名 -> 中文（含常见写法变体，缺失则回退英文）
+TEAM_CN = {
+    "South Africa": "南非", "Mexico": "墨西哥", "South Korea": "韩国", "Korea Republic": "韩国",
+    "Czechia": "捷克", "Czech Republic": "捷克",
+    "Switzerland": "瑞士", "Canada": "加拿大", "Qatar": "卡塔尔",
+    "Bosnia and Herzegovina": "波黑", "Bosnia & Herzegovina": "波黑", "Bosnia-Herzegovina": "波黑",
+    "Croatia": "克罗地亚", "Brazil": "巴西", "Morocco": "摩洛哥", "Scotland": "苏格兰", "Haiti": "海地",
+    "United States": "美国", "USA": "美国", "Australia": "澳大利亚",
+    "Türkiye": "土耳其", "Turkey": "土耳其", "Paraguay": "巴拉圭",
+    "Germany": "德国", "Ecuador": "厄瓜多尔", "Curaçao": "库拉索",
+    "Côte d'Ivoire": "科特迪瓦", "Ivory Coast": "科特迪瓦",
+    "Netherlands": "荷兰", "Japan": "日本", "Tunisia": "突尼斯", "Sweden": "瑞典",
+    "Belgium": "比利时", "New Zealand": "新西兰", "Egypt": "埃及", "Iran": "伊朗", "IR Iran": "伊朗",
+    "Spain": "西班牙", "Uruguay": "乌拉圭", "Saudi Arabia": "沙特阿拉伯", "Cape Verde": "佛得角",
+    "France": "法国", "Norway": "挪威", "Senegal": "塞内加尔", "Iraq": "伊拉克",
+    "Argentina": "阿根廷", "Austria": "奥地利", "Algeria": "阿尔及利亚", "Jordan": "约旦",
+    "Colombia": "哥伦比亚", "Uzbekistan": "乌兹别克斯坦", "DR Congo": "刚果(金)", "Congo DR": "刚果(金)", "Portugal": "葡萄牙",
+    "England": "英格兰", "Panama": "巴拿马", "Ghana": "加纳",
+}
+
+
+_ROUND_CN = {"Round of 32": "32强", "Round of 16": "16强",
+             "Quarterfinal": "1/4决赛", "Semifinal": "半决赛"}
+
+
+def cn(name):
+    """队名转中文；淘汰赛占位名(如 'Group A Winner')按模式翻译；都没命中则原样返回。"""
+    if name in TEAM_CN:
+        return TEAM_CN[name]
+    m = re.fullmatch(r"Group ([A-L]) Winner", name)
+    if m:
+        return f"{m.group(1)}组第1"
+    m = re.fullmatch(r"Group ([A-L]) 2nd Place", name)
+    if m:
+        return f"{m.group(1)}组第2"
+    m = re.fullmatch(r"Third Place Group ([A-L/]+)", name)
+    if m:
+        return f"小组第3({m.group(1)})"
+    m = re.fullmatch(r"(Round of 32|Round of 16|Quarterfinal|Semifinal) (\d+) (Winner|Loser)", name)
+    if m:
+        wl = "胜者" if m.group(3) == "Winner" else "负者"
+        return f"{_ROUND_CN[m.group(1)]}第{m.group(2)}场{wl}"
+    return name
+
+
+# ESPN 城市字符串 -> 中文主办城市（16 个主办城市；缺失则回退英文原文，不编造）
+CITY_CN = {
+    "Arlington, Texas": "达拉斯", "Atlanta, Georgia": "亚特兰大",
+    "East Rutherford, New Jersey": "纽约", "Foxborough, Massachusetts": "波士顿",
+    "Guadalajara": "瓜达拉哈拉", "Guadalupe": "蒙特雷",
+    "Houston, Texas": "休斯顿", "Inglewood, California": "洛杉矶",
+    "Kansas City, Missouri": "堪萨斯城", "Mexico City": "墨西哥城",
+    "Miami Gardens, Florida": "迈阿密", "Philadelphia, Pennsylvania": "费城",
+    "Santa Clara, California": "旧金山湾区", "Seattle, Washington": "西雅图",
+    "Toronto": "多伦多", "Vancouver": "温哥华",
+}
+
+
+def city_cn(city):
+    return CITY_CN.get(city, city)
 
 
 def compute_table(group):
@@ -70,12 +133,16 @@ def match_row(m, show_group=False):
         badge = '<span class="badge live">进行中</span>'
     elif status == "sched":
         badge = '<span class="badge sched">未开赛</span>'
-    venue = f'<span class="venue">{esc(m["venue"])}</span>' if m.get("venue") else ""
+    _city = city_cn(m.get("city", ""))
+    _vname = m.get("venue", "")
+    _loc = f"{_city} · {_vname}" if (_city and _vname) else (_city or _vname)
+    venue = f'<span class="venue">{esc(_loc)}</span>' if _loc else ""
+    dt = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
     return f"""<div class="match">
-      <div class="m-date">{grp}{esc(m.get("date",""))}</div>
-      <div class="m-home">{esc(m["home"])}</div>
+      <div class="m-date">{grp}{dt}</div>
+      <div class="m-home">{esc(cn(m["home"]))}</div>
       <div class="m-score">{score_cell(m)}</div>
-      <div class="m-away">{esc(m["away"])}</div>
+      <div class="m-away">{esc(cn(m["away"]))}</div>
       <div class="m-meta">{badge}{venue}</div>
     </div>"""
 
@@ -90,7 +157,7 @@ def group_block(group):
         gd_s = f"+{gd}" if gd > 0 else str(gd)
         trs.append(f"""<tr class="{cls}">
           <td class="rank">{i+1}</td>
-          <td class="tname">{esc(r['team'])}</td>
+          <td class="tname">{esc(cn(r['team']))}</td>
           <td>{r['p']}</td><td>{r['w']}</td><td>{r['d']}</td><td>{r['l']}</td>
           <td>{r['gf']}</td><td>{r['ga']}</td><td class="gd">{gd_s}</td>
           <td class="pts">{r['pts']}</td>
@@ -102,6 +169,12 @@ def group_block(group):
     matches_html = ""
     for m in played + sched:
         matches_html += match_row(m)
+    n = len(played) + len(sched)
+    if matches_html:
+        body = (f'<details class="g-details"><summary>比赛详情 · {n} 场</summary>'
+                f'<div class="g-matches">{matches_html}</div></details>')
+    else:
+        body = '<div class="empty">暂无比赛</div>'
     return f"""<section class="group">
       <h3>小组 {esc(name)}</h3>
       <table class="standings">
@@ -111,7 +184,7 @@ def group_block(group):
         </tr></thead>
         <tbody>{''.join(trs)}</tbody>
       </table>
-      <div class="g-matches">{matches_html or '<div class="empty">暂无比赛</div>'}</div>
+      {body}
     </section>"""
 
 
@@ -124,12 +197,73 @@ def build():
     if not groups_html:
         groups_html = '<div class="empty">小组数据待补全</div>'
 
-    fixtures = data.get("fixtures", [])
+    # 近期赛程：未来 48 小时内要踢的（北京时间）。候选含小组赛 sched + fixtures 数组 + 淘汰赛 sched。
+    BJT = timezone(timedelta(hours=8))
+
+    def _mdt(m):
+        try:
+            return datetime.strptime(m.get("date", "") + " " + (m.get("time") or "00:00"),
+                                     "%Y-%m-%d %H:%M").replace(tzinfo=BJT)
+        except ValueError:
+            return None
+
+    pool = []
+    for g in data.get("groups", []):
+        for m in g.get("matches", []):
+            if m.get("status") == "sched":
+                mm = dict(m); mm["group"] = g["name"]; pool.append(mm)
+    for m in data.get("fixtures", []):
+        if m.get("hs") is None:
+            pool.append(dict(m))
+    for m in data.get("knockout", []):
+        if m.get("status") == "sched" or m.get("hs") is None:
+            mm = dict(m); mm.setdefault("group", "淘汰赛"); pool.append(mm)
+
+    now = datetime.now(BJT)
+    end48 = now + timedelta(hours=48)
+    win = sorted((( _mdt(m), m) for m in pool), key=lambda x: (x[0] is None, x[0] or now))
+    in48 = [m for dt, m in win if dt is not None and now <= dt <= end48]
+    if in48:
+        upcoming = in48
+        fix_label = "未来 48 小时"
+    else:
+        # 当前时段没有 48h 内的比赛，退而显示最近即将开赛的 8 场
+        upcoming = [m for dt, m in win if dt is not None and dt >= now][:8]
+        fix_label = "即将开赛"
     fixtures_html = ""
-    if fixtures:
-        fixtures_html = '<section class="fixtures"><h2>近期赛程 / 进行中</h2><div class="fix-grid">'
-        fixtures_html += "".join(match_row(m, show_group=True) for m in fixtures)
+    if upcoming:
+        fixtures_html = ('<section class="fixtures hero">'
+                         f'<h2>🔥 近期赛程 · {fix_label} <span class="cnt">{len(upcoming)} 场</span>'
+                         '<span style="font-size:13px;color:var(--muted);font-weight:400;">（时间为北京时间）</span>'
+                         '</h2><div class="fix-grid">')
+        fixtures_html += "".join(match_row(m, show_group=True) for m in upcoming)
         fixtures_html += "</div></section>"
+
+    # 最近战果（已赛）：取「最近 6 场」与「最近 24 小时内」中数量更多的一组，时间倒序展示。
+    played_pool = []
+    for g in data.get("groups", []):
+        for m in g.get("matches", []):
+            if m.get("status") == "FT" and m.get("hs") is not None:
+                mm = dict(m); mm["group"] = g["name"]; played_pool.append(mm)
+    for m in data.get("knockout", []):
+        if m.get("status") == "FT" and m.get("hs") is not None:
+            mm = dict(m); mm.setdefault("group", "淘汰赛"); played_pool.append(mm)
+    _far = datetime.min.replace(tzinfo=BJT)
+    played_desc = sorted(played_pool, key=lambda m: (_mdt(m) or _far), reverse=True)
+    last6 = played_desc[:6]
+    last24 = [m for m in played_desc if _mdt(m) and (now - timedelta(hours=24)) <= _mdt(m) <= now]
+    if len(last24) > len(last6):
+        recent, recent_label = last24, "最近 24 小时"
+    else:
+        recent, recent_label = last6, "最近 6 场"
+    recent_html = ""
+    if recent:
+        recent_html = ('<section class="results hero">'
+                       f'<h2>🏁 最近战果 · {recent_label} <span class="cnt">{len(recent)} 场</span>'
+                       '<span style="font-size:13px;color:var(--muted);font-weight:400;">（时间为北京时间）</span>'
+                       '</h2><div class="fix-grid">')
+        recent_html += "".join(match_row(m, show_group=True) for m in recent)
+        recent_html += "</div></section>"
 
     knockout = data.get("knockout", [])
     knockout_html = ""
@@ -177,7 +311,16 @@ def build():
   td.gd {{ color:var(--muted); }}
   tr.qualify td {{ background:rgba(63,185,80,0.10); }}
   tr.qualify td.rank {{ color:var(--accent); font-weight:700; box-shadow:inset 2px 0 0 var(--accent); }}
-  .g-matches {{ margin-top:10px; display:flex; flex-direction:column; gap:4px; }}
+  .g-details {{ margin-top:10px; }}
+  .g-details > summary {{ cursor:pointer; list-style:none; user-select:none; font-size:12.5px;
+    color:var(--muted); padding:6px 10px; border-radius:6px; background:#161d27;
+    border:1px solid var(--line); }}
+  .g-details > summary::-webkit-details-marker {{ display:none; }}
+  .g-details > summary::after {{ content:"▸ 点击展开"; float:right; color:var(--gold); font-size:11px; }}
+  .g-details[open] > summary::after {{ content:"▾ 收起"; }}
+  .g-details > summary:hover {{ color:var(--txt); border-color:var(--accent); }}
+  .g-details[open] > summary {{ color:var(--txt); margin-bottom:6px; }}
+  .g-matches {{ display:flex; flex-direction:column; gap:4px; }}
   .match {{ display:grid; grid-template-columns:72px 1fr auto 1fr; align-items:center;
     gap:6px; font-size:12.5px; padding:5px 4px; border-radius:6px; }}
   .match:hover {{ background:#222c38; }}
@@ -196,6 +339,18 @@ def build():
   .tag {{ background:#21262d; color:var(--muted); padding:0 5px; border-radius:4px; font-size:10px; }}
   .fix-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:8px; }}
   .fix-grid .match {{ background:var(--card); border:1px solid var(--line); padding:10px 12px; }}
+  .fixtures.hero {{ background:linear-gradient(180deg,#1c2a22,#161d27); border:1px solid var(--accent);
+    border-radius:12px; padding:14px 18px 18px; margin-bottom:10px; box-shadow:0 0 0 3px rgba(63,185,80,0.08); }}
+  .fixtures.hero h2 {{ margin:4px 0 14px; border-left-color:var(--gold); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }}
+  .fixtures.hero .cnt {{ background:var(--accent); color:#06210f; font-size:13px; font-weight:700;
+    padding:1px 9px; border-radius:10px; }}
+  .fixtures.hero .fix-grid .match {{ background:#10171f; border-color:#2f4636; }}
+  .results.hero {{ background:linear-gradient(180deg,#2a2418,#161d27); border:1px solid var(--gold);
+    border-radius:12px; padding:14px 18px 18px; margin-bottom:10px; box-shadow:0 0 0 3px rgba(212,160,23,0.08); }}
+  .results.hero h2 {{ margin:4px 0 14px; border-left-color:var(--gold); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }}
+  .results.hero .cnt {{ background:var(--gold); color:#211900; font-size:13px; font-weight:700;
+    padding:1px 9px; border-radius:10px; }}
+  .results.hero .fix-grid .match {{ background:#10171f; border-color:#463a2f; }}
   .empty {{ color:var(--muted); font-size:13px; padding:16px; text-align:center;
     background:var(--card); border:1px dashed var(--line); border-radius:8px; }}
   footer {{ margin-top:40px; padding-top:16px; border-top:1px solid var(--line);
@@ -208,11 +363,11 @@ def build():
     <h1>⚽ {esc(meta.get('tournament','世界杯'))} 战报</h1>
     <div class="sub">
       <span>主办：<b>{esc(meta.get('host',''))}</b></span>
-      <span>数据更新：<b>{esc(meta.get('lastUpdated',''))}</b>（{esc(meta.get('updatedBy',''))}）</span>
-      <span>来源：{sources}</span>
+      <span>数据更新：<b>{esc(meta.get('lastUpdated',''))}</b></span>
     </div>
-    {'<div class="notes">' + esc(meta.get('notes','')) + '</div>' if meta.get('notes') else ''}
   </header>
+
+  {recent_html}
 
   {fixtures_html}
 
