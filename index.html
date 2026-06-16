@@ -58,6 +58,23 @@
   .badge.sched { background:rgba(212,160,23,0.15); color:var(--gold); }
   .venue { color:var(--muted); font-size:11px; }
   .tag { background:#21262d; color:var(--muted); padding:0 5px; border-radius:4px; font-size:10px; }
+  .m-goals { grid-column:1 / -1; font-size:12px; color:var(--txt); display:flex; flex-wrap:wrap;
+    gap:6px 12px; padding:4px 2px 0; }
+  .gitem { color:#cdd6e0; }
+  .gteam { color:var(--muted); font-size:10.5px; margin-left:3px; }
+  .m-videos { grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:6px 10px; padding:4px 2px 0; }
+  .vlink { color:var(--accent); font-size:11px; text-decoration:none; border:1px solid #2f4636;
+    padding:1px 7px; border-radius:10px; }
+  .vlink:hover { background:rgba(63,185,80,0.12); }
+  .scorers { margin-top:18px; }
+  table.scoretable { width:100%; max-width:560px; border-collapse:collapse; font-size:13px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  table.scoretable th { color:var(--muted); font-weight:500; text-align:center; padding:8px 6px; border-bottom:1px solid var(--line); }
+  table.scoretable td { text-align:center; padding:7px 6px; border-bottom:1px solid #222c38; }
+  table.scoretable td.tname { text-align:left; }
+  table.scoretable td.pts { font-weight:700; color:var(--accent); }
+  .pen { color:var(--muted); font-size:10.5px; margin-left:6px; }
+  .more { color:var(--muted); font-size:12px; margin-top:8px; }
   .fix-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:8px; }
   .fix-grid .match { background:var(--card); border:1px solid var(--line); padding:10px 12px; }
   .fixtures.hero { background:linear-gradient(180deg,#1c2a22,#161d27); border:1px solid var(--accent);
@@ -84,7 +101,7 @@
     <h1>⚽ 2026世界杯 战报</h1>
     <div class="sub">
       <span>主办：<b>美国 / 加拿大 / 墨西哥</b></span>
-      <span>数据更新：<b>2026-06-16 22:59 (北京时间)</b></span>
+      <span>数据更新：<b>2026-06-17 04:01 (北京时间)</b></span>
     </div>
   </header>
 
@@ -94,86 +111,107 @@
       <div class="m-score"><span class="score">2 : 2</span></div>
       <div class="m-away">新西兰</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">7&#x27; Elijah Just<span class="gteam">新西兰</span></span><span class="gitem">32&#x27; Ramin Rezaeian<span class="gteam">伊朗</span></span><span class="gitem">54&#x27; Elijah Just<span class="gteam">新西兰</span></span><span class="gitem">64&#x27; Mohammad Mohebbi(头球)<span class="gteam">伊朗</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_schaap_on_iran/dm_260616_schaap_on_iran_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Inside Iran&#x27;s tense World </a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Moreno: Iran, New Zealand </a></div>
     </div><div class="match">
       <div class="m-date"><span class="tag">H</span> 2026-06-16 06:00</div>
       <div class="m-home">沙特阿拉伯</div>
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">乌拉圭</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">41&#x27; Abdulelah Al-Amri<span class="gteam">沙特阿拉伯</span></span><span class="gitem">80&#x27; Maxi Araújo<span class="gteam">乌拉圭</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/ss_20260615_203722805_3565788/ss_20260615_203722805_3565788_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Ale Moreno: Uruguay missed</a></div>
     </div><div class="match">
       <div class="m-date"><span class="tag">G</span> 2026-06-16 03:00</div>
       <div class="m-home">比利时</div>
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">埃及</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">西雅图 · Lumen Field</span></div>
+      <div class="m-goals">⚽ <span class="gitem">20&#x27; Emam Ashour<span class="gteam">埃及</span></span><span class="gitem">66&#x27; Mohamed Hany(乌龙)<span class="gteam">比利时</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Are Belgium too reliant on</a></div>
     </div><div class="match">
       <div class="m-date"><span class="tag">H</span> 2026-06-16 00:00</div>
       <div class="m-home">西班牙</div>
       <div class="m-score"><span class="score">0 : 0</span></div>
       <div class="m-away">佛得角</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      <div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Burley slams &#x27;extremely pe</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Burley: Cape Verde couldn&#x27;</a></div>
     </div><div class="match">
       <div class="m-date"><span class="tag">F</span> 2026-06-15 10:00</div>
       <div class="m-home">瑞典</div>
       <div class="m-score"><span class="score">5 : 1</span></div>
       <div class="m-away">突尼斯</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">蒙特雷 · Estadio BBVA</span></div>
+      <div class="m-goals">⚽ <span class="gitem">7&#x27; Yasin Ayari<span class="gteam">瑞典</span></span><span class="gitem">30&#x27; Alexander Isak<span class="gteam">瑞典</span></span><span class="gitem">43&#x27; Omar Rekik(头球)<span class="gteam">突尼斯</span></span><span class="gitem">59&#x27; Viktor Gyökeres<span class="gteam">瑞典</span></span><span class="gitem">84&#x27; Mattias Svanberg<span class="gteam">瑞典</span></span><span class="gitem">90&#x27;+6&#x27; Yasin Ayari<span class="gteam">瑞典</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Potter: Isak-Gyokeres part</a></div>
     </div><div class="match">
       <div class="m-date"><span class="tag">E</span> 2026-06-15 07:00</div>
       <div class="m-home">科特迪瓦</div>
       <div class="m-score"><span class="score">1 : 0</span></div>
       <div class="m-away">厄瓜多尔</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      <div class="m-goals">⚽ <span class="gitem">90&#x27; Amad Diallo<span class="gteam">科特迪瓦</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Onuoha praises Diomande&#x27;s </a></div>
     </div></div></section>
 
-  <section class="fixtures hero"><h2>🔥 近期赛程 · 未来 48 小时 <span class="cnt">8 场</span><span style="font-size:13px;color:var(--muted);font-weight:400;">（时间为北京时间）</span></h2><div class="fix-grid"><div class="match">
-      <div class="m-date"><span class="tag">I</span> 2026-06-17 03:00</div>
-      <div class="m-home">法国</div>
-      <div class="m-score"><span class="vs">03:00 vs</span></div>
-      <div class="m-away">塞内加尔</div>
-      <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
-    </div><div class="match">
+  <section class="fixtures hero"><h2>🔥 近期赛程 · 未来 48 小时 <span class="cnt">9 场</span><span style="font-size:13px;color:var(--muted);font-weight:400;">（时间为北京时间）</span></h2><div class="fix-grid"><div class="match">
       <div class="m-date"><span class="tag">I</span> 2026-06-17 06:00</div>
       <div class="m-home">伊拉克</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">挪威</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date"><span class="tag">J</span> 2026-06-17 09:00</div>
       <div class="m-home">阿根廷</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">阿尔及利亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date"><span class="tag">J</span> 2026-06-17 12:00</div>
       <div class="m-home">奥地利</div>
       <div class="m-score"><span class="vs">12:00 vs</span></div>
       <div class="m-away">约旦</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date"><span class="tag">K</span> 2026-06-18 01:00</div>
       <div class="m-home">葡萄牙</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">刚果(金)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date"><span class="tag">L</span> 2026-06-18 04:00</div>
       <div class="m-home">英格兰</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">克罗地亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date"><span class="tag">L</span> 2026-06-18 07:00</div>
       <div class="m-home">加纳</div>
       <div class="m-score"><span class="vs">07:00 vs</span></div>
       <div class="m-away">巴拿马</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">多伦多 · BMO Field</span></div>
+      
     </div><div class="match">
       <div class="m-date"><span class="tag">K</span> 2026-06-18 10:00</div>
       <div class="m-home">乌兹别克斯坦</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">哥伦比亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
+      
+    </div><div class="match">
+      <div class="m-date"><span class="tag">A</span> 2026-06-19 00:00</div>
+      <div class="m-home">捷克</div>
+      <div class="m-score"><span class="vs">00:00 vs</span></div>
+      <div class="m-away">南非</div>
+      <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
+    </div><div class="match">
+      <div class="m-date"><span class="tag">B</span> 2026-06-19 03:00</div>
+      <div class="m-home">瑞士</div>
+      <div class="m-score"><span class="vs">03:00 vs</span></div>
+      <div class="m-away">波黑</div>
+      <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div></div></section>
 
   <h2>小组积分榜</h2>
@@ -216,36 +254,42 @@
       <div class="m-score"><span class="score">2 : 0</span></div>
       <div class="m-away">南非</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
+      <div class="m-goals">⚽ <span class="gitem">9&#x27; Julián Quiñones<span class="gteam">墨西哥</span></span><span class="gitem">67&#x27; Raúl Jiménez(头球)<span class="gteam">墨西哥</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Keller_Mexico_could_have_set_the_tone_for_the_group/dm_260611_Keller_Mexico_could_have_set_the_tone_for_the_group_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Keller: Mexico &#x27;could have</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Gomez_on_South_Africas_red_cards_I_have_no_idea_what_got_into_them/dm_260611_Gomez_on_South_Africas_red_cards_I_have_no_idea_what_got_into_them_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Gomez on South Africa&#x27;s re</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Laurens: South Africa &#x27;nee</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-12 10:00</div>
       <div class="m-home">韩国</div>
       <div class="m-score"><span class="score">2 : 1</span></div>
       <div class="m-away">捷克</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">瓜达拉哈拉 · Estadio Akron</span></div>
+      <div class="m-goals">⚽ <span class="gitem">59&#x27; Ladislav Krejcí(头球)<span class="gteam">捷克</span></span><span class="gitem">67&#x27; Hwang In-Beom<span class="gteam">韩国</span></span><span class="gitem">80&#x27; Oh Hyeon-Gyu<span class="gteam">韩国</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Are South Korea the best t</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-19 00:00</div>
       <div class="m-home">捷克</div>
       <div class="m-score"><span class="vs">00:00 vs</span></div>
       <div class="m-away">南非</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-19 09:00</div>
       <div class="m-home">墨西哥</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">韩国</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">瓜达拉哈拉 · Estadio Akron</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-25 09:00</div>
       <div class="m-home">捷克</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">墨西哥</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-25 09:00</div>
       <div class="m-home">南非</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">韩国</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">蒙特雷 · Estadio BBVA</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 B</h3>
@@ -286,36 +330,42 @@
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">波黑</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">多伦多 · BMO Field</span></div>
+      <div class="m-goals">⚽ <span class="gitem">21&#x27; Jovo Lukic(头球)<span class="gteam">波黑</span></span><span class="gitem">78&#x27; Cyle Larin<span class="gteam">加拿大</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_COM_SOC_ANALYSIS_Will_Canada_regret_a_missed_opportunity_vs_Bosnia-Herzegovina_2026_6_12/dm_260612_COM_SOC_ANALYSIS_Will_Canada_regret_a_missed_opportunity_vs_Bosnia-Herzegovina_2026_6_12_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Will Canada regret a misse</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Bosnia fan zone celebrates</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-14 03:00</div>
       <div class="m-home">卡塔尔</div>
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">瑞士</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">17&#x27; Breel Embolo(点球)<span class="gteam">瑞士</span></span><span class="gitem">90&#x27;+4&#x27; Miro Muheim(乌龙)<span class="gteam">卡塔尔</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C_360p30_1464k.mp4" target="_blank" rel="noopener">▶ How Qatar earned their fir</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-19 03:00</div>
       <div class="m-home">瑞士</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">波黑</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-19 06:00</div>
       <div class="m-home">加拿大</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">卡塔尔</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">温哥华 · BC Place</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-25 03:00</div>
       <div class="m-home">波黑</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">卡塔尔</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">西雅图 · Lumen Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-25 03:00</div>
       <div class="m-home">瑞士</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">加拿大</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">温哥华 · BC Place</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 C</h3>
@@ -356,36 +406,42 @@
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">摩洛哥</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">21&#x27; Ismael Saibari<span class="gteam">摩洛哥</span></span><span class="gitem">32&#x27; Vinícius Júnior<span class="gteam">巴西</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Presser_Burley_Brazil_arent_scary_anymore_20260613_GLOBAL_FIFA_WORLD_CUP/dm_260613_COM_SOC_Presser_Burley_Brazil_arent_scary_anymore_20260613_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Burley: Brazil aren&#x27;t scar</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Dove_on_Bouaddi_A_star_was_born_for_Morocco_in_Brazil_draw/dm_260614_Dove_on_Bouaddi_A_star_was_born_for_Morocco_in_Brazil_draw_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Dove on Bouaddi: &#x27;A star w</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Fans on Copacabana Beach c</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-14 09:00</div>
       <div class="m-home">海地</div>
       <div class="m-score"><span class="score">0 : 1</span></div>
       <div class="m-away">苏格兰</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">28&#x27; John McGinn<span class="gteam">苏格兰</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Burley: Scotland will be h</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-20 06:00</div>
       <div class="m-home">苏格兰</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">摩洛哥</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-20 08:30</div>
       <div class="m-home">巴西</div>
       <div class="m-score"><span class="vs">08:30 vs</span></div>
       <div class="m-away">海地</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-25 06:00</div>
       <div class="m-home">摩洛哥</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">海地</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-25 06:00</div>
       <div class="m-home">苏格兰</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">巴西</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 D</h3>
@@ -426,36 +482,42 @@
       <div class="m-score"><span class="score">4 : 1</span></div>
       <div class="m-away">巴拉圭</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">7&#x27; Damián Bobadilla(乌龙)<span class="gteam">美国</span></span><span class="gitem">31&#x27; Folarin Balogun<span class="gteam">美国</span></span><span class="gitem">45&#x27;+5&#x27; Folarin Balogun<span class="gteam">美国</span></span><span class="gitem">73&#x27; Maurício<span class="gteam">巴拉圭</span></span><span class="gitem">90&#x27;+8&#x27; Giovanni Reyna<span class="gteam">美国</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/wsc/2026/0613/57760942-70f4-400f-b483-6b7201facdac/57760942-70f4-400f-b483-6b7201facdac_360p30_1464k.mp4" target="_blank" rel="noopener">▶ USMNT fans celebrate team&#x27;</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/wsc/2026/0613/59f51625-cc47-4010-9fd4-ecee93b47324/59f51625-cc47-4010-9fd4-ecee93b47324_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Fans go wild at the LA Mem</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/wsc/2026/0613/6c4d8ac3-5330-4c68-827d-b992191ba7f0/6c4d8ac3-5330-4c68-827d-b992191ba7f0_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Bedlam at the Coliseum as </a></div>
     </div><div class="match">
       <div class="m-date">2026-06-14 12:00</div>
       <div class="m-home">澳大利亚</div>
       <div class="m-score"><span class="score">2 : 0</span></div>
       <div class="m-away">土耳其</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">温哥华 · BC Place</span></div>
+      <div class="m-goals">⚽ <span class="gitem">27&#x27; Nestory Irankunda<span class="gteam">澳大利亚</span></span><span class="gitem">75&#x27; Connor Metcalfe<span class="gteam">澳大利亚</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Soccer_Analysis_Patrick_Beach_stars_in_FIFA_World_Cup_debut__20260614/dm_260614_Soccer_Analysis_Patrick_Beach_stars_in_FIFA_World_Cup_debut__20260614_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Patrick Beach stars in FIF</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Popovic: Turkey win a &#x27;spe</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Montella says Australia lo</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-20 03:00</div>
       <div class="m-home">美国</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">澳大利亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">西雅图 · Lumen Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-20 11:00</div>
       <div class="m-home">土耳其</div>
       <div class="m-score"><span class="vs">11:00 vs</span></div>
       <div class="m-away">巴拉圭</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-26 10:00</div>
       <div class="m-home">巴拉圭</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">澳大利亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-26 10:00</div>
       <div class="m-home">土耳其</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">美国</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 E</h3>
@@ -496,36 +558,42 @@
       <div class="m-score"><span class="score">7 : 1</span></div>
       <div class="m-away">库拉索</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">6&#x27; Felix Nmecha<span class="gteam">德国</span></span><span class="gitem">21&#x27; Livano Comenencia<span class="gteam">库拉索</span></span><span class="gitem">38&#x27; Nico Schlotterbeck(头球)<span class="gteam">德国</span></span><span class="gitem">45&#x27;+5&#x27; Kai Havertz(点球)<span class="gteam">德国</span></span><span class="gitem">47&#x27; Jamal Musiala<span class="gteam">德国</span></span><span class="gitem">68&#x27; Nathaniel Brown<span class="gteam">德国</span></span><span class="gitem">78&#x27; Deniz Undav<span class="gteam">德国</span></span><span class="gitem">88&#x27; Kai Havertz<span class="gteam">德国</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Lone Curaçao supporter in </a></div>
     </div><div class="match">
       <div class="m-date">2026-06-15 07:00</div>
       <div class="m-home">科特迪瓦</div>
       <div class="m-score"><span class="score">1 : 0</span></div>
       <div class="m-away">厄瓜多尔</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      <div class="m-goals">⚽ <span class="gitem">90&#x27; Amad Diallo<span class="gteam">科特迪瓦</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Onuoha praises Diomande&#x27;s </a></div>
     </div><div class="match">
       <div class="m-date">2026-06-21 04:00</div>
       <div class="m-home">德国</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">科特迪瓦</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">多伦多 · BMO Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-21 08:00</div>
       <div class="m-home">厄瓜多尔</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">库拉索</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-26 04:00</div>
       <div class="m-home">库拉索</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">科特迪瓦</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-26 04:00</div>
       <div class="m-home">厄瓜多尔</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">德国</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 F</h3>
@@ -566,36 +634,42 @@
       <div class="m-score"><span class="score">2 : 2</span></div>
       <div class="m-away">日本</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">51&#x27; Virgil van Dijk(头球)<span class="gteam">荷兰</span></span><span class="gitem">57&#x27; Keito Nakamura<span class="gteam">日本</span></span><span class="gitem">64&#x27; Crysencio Summerville<span class="gteam">荷兰</span></span><span class="gitem">89&#x27; Daichi Kamada(头球)<span class="gteam">日本</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Will Japan go further than</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-15 10:00</div>
       <div class="m-home">瑞典</div>
       <div class="m-score"><span class="score">5 : 1</span></div>
       <div class="m-away">突尼斯</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">蒙特雷 · Estadio BBVA</span></div>
+      <div class="m-goals">⚽ <span class="gitem">7&#x27; Yasin Ayari<span class="gteam">瑞典</span></span><span class="gitem">30&#x27; Alexander Isak<span class="gteam">瑞典</span></span><span class="gitem">43&#x27; Omar Rekik(头球)<span class="gteam">突尼斯</span></span><span class="gitem">59&#x27; Viktor Gyökeres<span class="gteam">瑞典</span></span><span class="gitem">84&#x27; Mattias Svanberg<span class="gteam">瑞典</span></span><span class="gitem">90&#x27;+6&#x27; Yasin Ayari<span class="gteam">瑞典</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Potter: Isak-Gyokeres part</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-21 01:00</div>
       <div class="m-home">荷兰</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">瑞典</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-21 12:00</div>
       <div class="m-home">突尼斯</div>
       <div class="m-score"><span class="vs">12:00 vs</span></div>
       <div class="m-away">日本</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">蒙特雷 · Estadio BBVA</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-26 07:00</div>
       <div class="m-home">日本</div>
       <div class="m-score"><span class="vs">07:00 vs</span></div>
       <div class="m-away">瑞典</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-26 07:00</div>
       <div class="m-home">突尼斯</div>
       <div class="m-score"><span class="vs">07:00 vs</span></div>
       <div class="m-away">荷兰</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 G</h3>
@@ -636,36 +710,42 @@
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">埃及</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">西雅图 · Lumen Field</span></div>
+      <div class="m-goals">⚽ <span class="gitem">20&#x27; Emam Ashour<span class="gteam">埃及</span></span><span class="gitem">66&#x27; Mohamed Hany(乌龙)<span class="gteam">比利时</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Are Belgium too reliant on</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-16 09:00</div>
       <div class="m-home">伊朗</div>
       <div class="m-score"><span class="score">2 : 2</span></div>
       <div class="m-away">新西兰</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">7&#x27; Elijah Just<span class="gteam">新西兰</span></span><span class="gitem">32&#x27; Ramin Rezaeian<span class="gteam">伊朗</span></span><span class="gitem">54&#x27; Elijah Just<span class="gteam">新西兰</span></span><span class="gitem">64&#x27; Mohammad Mohebbi(头球)<span class="gteam">伊朗</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_schaap_on_iran/dm_260616_schaap_on_iran_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Inside Iran&#x27;s tense World </a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Moreno: Iran, New Zealand </a></div>
     </div><div class="match">
       <div class="m-date">2026-06-22 03:00</div>
       <div class="m-home">比利时</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">伊朗</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-22 09:00</div>
       <div class="m-home">新西兰</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">埃及</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">温哥华 · BC Place</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-27 11:00</div>
       <div class="m-home">埃及</div>
       <div class="m-score"><span class="vs">11:00 vs</span></div>
       <div class="m-away">伊朗</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">西雅图 · Lumen Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-27 11:00</div>
       <div class="m-home">新西兰</div>
       <div class="m-score"><span class="vs">11:00 vs</span></div>
       <div class="m-away">比利时</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">温哥华 · BC Place</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 H</h3>
@@ -706,36 +786,42 @@
       <div class="m-score"><span class="score">0 : 0</span></div>
       <div class="m-away">佛得角</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      <div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Burley slams &#x27;extremely pe</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Burley: Cape Verde couldn&#x27;</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-16 06:00</div>
       <div class="m-home">沙特阿拉伯</div>
       <div class="m-score"><span class="score">1 : 1</span></div>
       <div class="m-away">乌拉圭</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      <div class="m-goals">⚽ <span class="gitem">41&#x27; Abdulelah Al-Amri<span class="gteam">沙特阿拉伯</span></span><span class="gitem">80&#x27; Maxi Araújo<span class="gteam">乌拉圭</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0615/ss_20260615_203722805_3565788/ss_20260615_203722805_3565788_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Ale Moreno: Uruguay missed</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-22 00:00</div>
       <div class="m-home">西班牙</div>
       <div class="m-score"><span class="vs">00:00 vs</span></div>
       <div class="m-away">沙特阿拉伯</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-22 06:00</div>
       <div class="m-home">乌拉圭</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">佛得角</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-27 08:00</div>
       <div class="m-home">佛得角</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">沙特阿拉伯</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-27 08:00</div>
       <div class="m-home">乌拉圭</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">西班牙</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">瓜达拉哈拉 · Estadio Akron</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 I</h3>
@@ -747,24 +833,24 @@
         <tbody><tr class="qualify">
           <td class="rank">1</td>
           <td class="tname">法国</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td>
+          <td>1</td><td>0</td><td>1</td><td>0</td>
           <td>0</td><td>0</td><td class="gd">0</td>
-          <td class="pts">0</td>
+          <td class="pts">1</td>
         </tr><tr class="qualify">
           <td class="rank">2</td>
+          <td class="tname">塞内加尔</td>
+          <td>1</td><td>0</td><td>1</td><td>0</td>
+          <td>0</td><td>0</td><td class="gd">0</td>
+          <td class="pts">1</td>
+        </tr><tr class="">
+          <td class="rank">3</td>
           <td class="tname">伊拉克</td>
           <td>0</td><td>0</td><td>0</td><td>0</td>
           <td>0</td><td>0</td><td class="gd">0</td>
           <td class="pts">0</td>
         </tr><tr class="">
-          <td class="rank">3</td>
-          <td class="tname">挪威</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td class="gd">0</td>
-          <td class="pts">0</td>
-        </tr><tr class="">
           <td class="rank">4</td>
-          <td class="tname">塞内加尔</td>
+          <td class="tname">挪威</td>
           <td>0</td><td>0</td><td>0</td><td>0</td>
           <td>0</td><td>0</td><td class="gd">0</td>
           <td class="pts">0</td>
@@ -773,39 +859,45 @@
       <details class="g-details"><summary>比赛详情 · 6 场</summary><div class="g-matches"><div class="match">
       <div class="m-date">2026-06-17 03:00</div>
       <div class="m-home">法国</div>
-      <div class="m-score"><span class="vs">03:00 vs</span></div>
+      <div class="m-score"><span class="score">0 : 0</span></div>
       <div class="m-away">塞内加尔</div>
-      <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      <div class="m-meta"><span class="badge live">进行中</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-17 06:00</div>
       <div class="m-home">伊拉克</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">挪威</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-23 05:00</div>
       <div class="m-home">法国</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">伊拉克</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-23 08:00</div>
       <div class="m-home">挪威</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">塞内加尔</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-27 03:00</div>
       <div class="m-home">挪威</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">法国</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-27 03:00</div>
       <div class="m-home">塞内加尔</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">伊拉克</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">多伦多 · BMO Field</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 J</h3>
@@ -846,36 +938,42 @@
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">阿尔及利亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-17 12:00</div>
       <div class="m-home">奥地利</div>
       <div class="m-score"><span class="vs">12:00 vs</span></div>
       <div class="m-away">约旦</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-23 01:00</div>
       <div class="m-home">阿根廷</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">奥地利</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-23 11:00</div>
       <div class="m-home">约旦</div>
       <div class="m-score"><span class="vs">11:00 vs</span></div>
       <div class="m-away">阿尔及利亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-28 10:00</div>
       <div class="m-home">阿尔及利亚</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">奥地利</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-28 10:00</div>
       <div class="m-home">约旦</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">阿根廷</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 K</h3>
@@ -916,36 +1014,42 @@
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">刚果(金)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-18 10:00</div>
       <div class="m-home">乌兹别克斯坦</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">哥伦比亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-24 01:00</div>
       <div class="m-home">葡萄牙</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">乌兹别克斯坦</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-24 10:00</div>
       <div class="m-home">哥伦比亚</div>
       <div class="m-score"><span class="vs">10:00 vs</span></div>
       <div class="m-away">刚果(金)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">瓜达拉哈拉 · Estadio Akron</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-28 07:30</div>
       <div class="m-home">哥伦比亚</div>
       <div class="m-score"><span class="vs">07:30 vs</span></div>
       <div class="m-away">葡萄牙</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-28 07:30</div>
       <div class="m-home">刚果(金)</div>
       <div class="m-score"><span class="vs">07:30 vs</span></div>
       <div class="m-away">乌兹别克斯坦</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div></div></details>
     </section><section class="group">
       <h3>小组 L</h3>
@@ -986,38 +1090,46 @@
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">克罗地亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-18 07:00</div>
       <div class="m-home">加纳</div>
       <div class="m-score"><span class="vs">07:00 vs</span></div>
       <div class="m-away">巴拿马</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">多伦多 · BMO Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-24 04:00</div>
       <div class="m-home">英格兰</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">加纳</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-24 07:00</div>
       <div class="m-home">巴拿马</div>
       <div class="m-score"><span class="vs">07:00 vs</span></div>
       <div class="m-away">克罗地亚</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">多伦多 · BMO Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-28 05:00</div>
       <div class="m-home">克罗地亚</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">加纳</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-28 05:00</div>
       <div class="m-home">巴拿马</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">英格兰</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div></div></details>
     </section></div>
+
+  <section class="scorers"><h2>⚽ 球员进球榜</h2><table class="scoretable"><thead><tr><th>#</th><th class="tname">球员</th><th>球队</th><th>进球</th></tr></thead><tbody><tr><td class="rank">1</td><td class="tname">Elijah Just</td><td>新西兰</td><td class="pts">2</td></tr><tr><td class="rank">2</td><td class="tname">Folarin Balogun</td><td>美国</td><td class="pts">2</td></tr><tr><td class="rank">3</td><td class="tname">Kai Havertz<span class="pen">含1点</span></td><td>德国</td><td class="pts">2</td></tr><tr><td class="rank">4</td><td class="tname">Yasin Ayari</td><td>瑞典</td><td class="pts">2</td></tr><tr><td class="rank">5</td><td class="tname">Abdulelah Al-Amri</td><td>沙特阿拉伯</td><td class="pts">1</td></tr><tr><td class="rank">6</td><td class="tname">Alexander Isak</td><td>瑞典</td><td class="pts">1</td></tr><tr><td class="rank">7</td><td class="tname">Amad Diallo</td><td>科特迪瓦</td><td class="pts">1</td></tr><tr><td class="rank">8</td><td class="tname">Breel Embolo<span class="pen">含1点</span></td><td>瑞士</td><td class="pts">1</td></tr><tr><td class="rank">9</td><td class="tname">Connor Metcalfe</td><td>澳大利亚</td><td class="pts">1</td></tr><tr><td class="rank">10</td><td class="tname">Crysencio Summerville</td><td>荷兰</td><td class="pts">1</td></tr><tr><td class="rank">11</td><td class="tname">Cyle Larin</td><td>加拿大</td><td class="pts">1</td></tr><tr><td class="rank">12</td><td class="tname">Daichi Kamada</td><td>日本</td><td class="pts">1</td></tr><tr><td class="rank">13</td><td class="tname">Deniz Undav</td><td>德国</td><td class="pts">1</td></tr><tr><td class="rank">14</td><td class="tname">Emam Ashour</td><td>埃及</td><td class="pts">1</td></tr><tr><td class="rank">15</td><td class="tname">Felix Nmecha</td><td>德国</td><td class="pts">1</td></tr><tr><td class="rank">16</td><td class="tname">Giovanni Reyna</td><td>美国</td><td class="pts">1</td></tr><tr><td class="rank">17</td><td class="tname">Hwang In-Beom</td><td>韩国</td><td class="pts">1</td></tr><tr><td class="rank">18</td><td class="tname">Ismael Saibari</td><td>摩洛哥</td><td class="pts">1</td></tr><tr><td class="rank">19</td><td class="tname">Jamal Musiala</td><td>德国</td><td class="pts">1</td></tr><tr><td class="rank">20</td><td class="tname">John McGinn</td><td>苏格兰</td><td class="pts">1</td></tr></tbody></table><div class="more">仅显示前 20 名，共 39 名球员有进球</div></section>
 
   <section class="knockout"><h2>淘汰赛</h2><div class="fix-grid"><div class="match">
       <div class="m-date">2026-06-29 03:00</div>
@@ -1025,195 +1137,227 @@
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">B组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-30 01:00</div>
       <div class="m-home">C组第1</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">F组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-30 04:30</div>
       <div class="m-home">E组第1</div>
       <div class="m-score"><span class="vs">04:30 vs</span></div>
       <div class="m-away">小组第3(A/B/C/D/F)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-06-30 09:00</div>
       <div class="m-home">F组第1</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">C组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">蒙特雷 · Estadio BBVA</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-01 01:00</div>
       <div class="m-home">E组第2</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">I组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-01 05:00</div>
       <div class="m-home">I组第1</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">小组第3(C/D/F/G/H)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-01 09:00</div>
       <div class="m-home">A组第1</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">小组第3(C/E/F/H/I)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-02 00:00</div>
       <div class="m-home">L组第1</div>
       <div class="m-score"><span class="vs">00:00 vs</span></div>
       <div class="m-away">小组第3(E/H/I/J/K)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-02 04:00</div>
       <div class="m-home">G组第1</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">小组第3(A/E/H/I/J)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">西雅图 · Lumen Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-02 08:00</div>
       <div class="m-home">D组第1</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">小组第3(B/E/F/I/J)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">旧金山湾区 · Levi&#x27;s Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-03 03:00</div>
       <div class="m-home">H组第1</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">J组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-03 07:00</div>
       <div class="m-home">K组第2</div>
       <div class="m-score"><span class="vs">07:00 vs</span></div>
       <div class="m-away">L组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">多伦多 · BMO Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-03 11:00</div>
       <div class="m-home">B组第1</div>
       <div class="m-score"><span class="vs">11:00 vs</span></div>
       <div class="m-away">小组第3(E/F/G/I/J)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">温哥华 · BC Place</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-04 02:00</div>
       <div class="m-home">D组第2</div>
       <div class="m-score"><span class="vs">02:00 vs</span></div>
       <div class="m-away">G组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-04 06:00</div>
       <div class="m-home">J组第1</div>
       <div class="m-score"><span class="vs">06:00 vs</span></div>
       <div class="m-away">H组第2</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-04 09:30</div>
       <div class="m-home">K组第1</div>
       <div class="m-score"><span class="vs">09:30 vs</span></div>
       <div class="m-away">小组第3(D/E/I/J/L)</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-05 01:00</div>
       <div class="m-home">32强第1场胜者</div>
       <div class="m-score"><span class="vs">01:00 vs</span></div>
       <div class="m-away">32强第3场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">休斯顿 · NRG Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-05 05:00</div>
       <div class="m-home">32强第2场胜者</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">32强第5场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">费城 · Lincoln Financial Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-06 04:00</div>
       <div class="m-home">32强第4场胜者</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">32强第6场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-06 08:00</div>
       <div class="m-home">32强第7场胜者</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">32强第8场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-07 03:00</div>
       <div class="m-home">32强第11场胜者</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">32强第12场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-07 08:00</div>
       <div class="m-home">32强第9场胜者</div>
       <div class="m-score"><span class="vs">08:00 vs</span></div>
       <div class="m-away">32强第10场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">西雅图 · Lumen Field</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-08 00:00</div>
       <div class="m-home">32强第14场胜者</div>
       <div class="m-score"><span class="vs">00:00 vs</span></div>
       <div class="m-away">32强第16场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-08 04:00</div>
       <div class="m-home">32强第13场胜者</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">32强第15场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">温哥华 · BC Place</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-10 04:00</div>
       <div class="m-home">16强第1场胜者</div>
       <div class="m-score"><span class="vs">04:00 vs</span></div>
       <div class="m-away">16强第2场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">波士顿 · Gillette Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-11 03:00</div>
       <div class="m-home">16强第5场胜者</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">16强第6场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">洛杉矶 · SoFi Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-12 05:00</div>
       <div class="m-home">16强第3场胜者</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">16强第4场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-12 09:00</div>
       <div class="m-home">16强第7场胜者</div>
       <div class="m-score"><span class="vs">09:00 vs</span></div>
       <div class="m-away">16强第8场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-15 03:00</div>
       <div class="m-home">1/4决赛第1场胜者</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">1/4决赛第2场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">达拉斯 · AT&amp;T Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-16 03:00</div>
       <div class="m-home">1/4决赛第3场胜者</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">1/4决赛第4场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">亚特兰大 · Mercedes-Benz Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-19 05:00</div>
       <div class="m-home">半决赛第1场负者</div>
       <div class="m-score"><span class="vs">05:00 vs</span></div>
       <div class="m-away">半决赛第2场负者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">迈阿密 · Hard Rock Stadium</span></div>
+      
     </div><div class="match">
       <div class="m-date">2026-07-20 03:00</div>
       <div class="m-home">半决赛第1场胜者</div>
       <div class="m-score"><span class="vs">03:00 vs</span></div>
       <div class="m-away">半决赛第2场胜者</div>
       <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">纽约 · MetLife Stadium</span></div>
+      
     </div></div></section>
 
-  <footer>页面生成于 2026-06-16 22:59:47 · 绿色行为小组前两名（晋级区）· 数据自动推算自比赛结果</footer>
+  <footer>页面生成于 2026-06-17 04:03:34 · 绿色行为小组前两名（晋级区）· 数据自动推算自比赛结果</footer>
 </div>
 </body>
 </html>

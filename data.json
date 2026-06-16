@@ -2,7 +2,7 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-16 22:59 (北京时间)",
+    "lastUpdated": "2026-06-17 04:01 (北京时间)",
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -28,7 +28,37 @@
           "as": 0,
           "status": "FT",
           "venue": "Estadio Banorte",
-          "city": "Mexico City"
+          "city": "Mexico City",
+          "goals": [
+            {
+              "min": "9'",
+              "scorer": "Julián Quiñones",
+              "assist": "Érik Lira",
+              "type": "Goal",
+              "team": "Mexico"
+            },
+            {
+              "min": "67'",
+              "scorer": "Raúl Jiménez",
+              "assist": "Roberto Alvarado",
+              "type": "Goal - Header",
+              "team": "Mexico"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Keller: Mexico 'could have set the tone' for the group",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Keller_Mexico_could_have_set_the_tone_for_the_group/dm_260611_Keller_Mexico_could_have_set_the_tone_for_the_group_360p30_1464k.mp4"
+            },
+            {
+              "title": "Gomez on South Africa's red cards: 'I have no idea what got into them'",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Gomez_on_South_Africas_red_cards_I_have_no_idea_what_got_into_them/dm_260611_Gomez_on_South_Africas_red_cards_I_have_no_idea_what_got_into_them_360p30_1464k.mp4"
+            },
+            {
+              "title": "Laurens: South Africa 'need to improve massively' to advance",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-12",
@@ -39,7 +69,36 @@
           "as": 1,
           "status": "FT",
           "venue": "Estadio Akron",
-          "city": "Guadalajara"
+          "city": "Guadalajara",
+          "goals": [
+            {
+              "min": "59'",
+              "scorer": "Ladislav Krejcí",
+              "assist": "Vladimír Coufal",
+              "type": "Goal - Header",
+              "team": "Czechia"
+            },
+            {
+              "min": "67'",
+              "scorer": "Hwang In-Beom",
+              "assist": "Lee Kang-In",
+              "type": "Goal",
+              "team": "South Korea"
+            },
+            {
+              "min": "80'",
+              "scorer": "Oh Hyeon-Gyu",
+              "assist": "Hwang In-Beom",
+              "type": "Goal",
+              "team": "South Korea"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Are South Korea the best team in Group A?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-19",
@@ -105,7 +164,33 @@
           "as": 1,
           "status": "FT",
           "venue": "BMO Field",
-          "city": "Toronto"
+          "city": "Toronto",
+          "goals": [
+            {
+              "min": "21'",
+              "scorer": "Jovo Lukic",
+              "assist": "Sead Kolasinac",
+              "type": "Goal - Header",
+              "team": "Bosnia-Herzegovina"
+            },
+            {
+              "min": "78'",
+              "scorer": "Cyle Larin",
+              "assist": "Promise David",
+              "type": "Goal",
+              "team": "Canada"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Will Canada regret a missed opportunity vs. Bosnia-Herzegovina?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_COM_SOC_ANALYSIS_Will_Canada_regret_a_missed_opportunity_vs_Bosnia-Herzegovina_2026_6_12/dm_260612_COM_SOC_ANALYSIS_Will_Canada_regret_a_missed_opportunity_vs_Bosnia-Herzegovina_2026_6_12_360p30_1464k.mp4"
+            },
+            {
+              "title": "Bosnia fan zone celebrates taking the lead vs. Canada by setting off flares",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-14",
@@ -116,7 +201,29 @@
           "as": 1,
           "status": "FT",
           "venue": "Levi's Stadium",
-          "city": "Santa Clara, California"
+          "city": "Santa Clara, California",
+          "goals": [
+            {
+              "min": "17'",
+              "scorer": "Breel Embolo",
+              "assist": null,
+              "type": "Penalty - Scored",
+              "team": "Switzerland"
+            },
+            {
+              "min": "90'+4'",
+              "scorer": "Miro Muheim",
+              "assist": "Homam Ahmed",
+              "type": "Own Goal",
+              "team": "Qatar"
+            }
+          ],
+          "videos": [
+            {
+              "title": "How Qatar earned their first ever World Cup point",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-19",
@@ -182,7 +289,37 @@
           "as": 1,
           "status": "FT",
           "venue": "MetLife Stadium",
-          "city": "East Rutherford, New Jersey"
+          "city": "East Rutherford, New Jersey",
+          "goals": [
+            {
+              "min": "21'",
+              "scorer": "Ismael Saibari",
+              "assist": "Brahim Díaz",
+              "type": "Goal",
+              "team": "Morocco"
+            },
+            {
+              "min": "32'",
+              "scorer": "Vinícius Júnior",
+              "assist": "Bruno Guimarães",
+              "type": "Goal",
+              "team": "Brazil"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Burley: Brazil aren't scary anymore",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Presser_Burley_Brazil_arent_scary_anymore_20260613_GLOBAL_FIFA_WORLD_CUP/dm_260613_COM_SOC_Presser_Burley_Brazil_arent_scary_anymore_20260613_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
+            },
+            {
+              "title": "Dove on Bouaddi: 'A star was born' for Morocco in Brazil draw",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Dove_on_Bouaddi_A_star_was_born_for_Morocco_in_Brazil_draw/dm_260614_Dove_on_Bouaddi_A_star_was_born_for_Morocco_in_Brazil_draw_360p30_1464k.mp4"
+            },
+            {
+              "title": "Fans on Copacabana Beach celebrate Brazil's equalizer vs. Morocco",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-14",
@@ -193,7 +330,22 @@
           "as": 1,
           "status": "FT",
           "venue": "Gillette Stadium",
-          "city": "Foxborough, Massachusetts"
+          "city": "Foxborough, Massachusetts",
+          "goals": [
+            {
+              "min": "28'",
+              "scorer": "John McGinn",
+              "assist": null,
+              "type": "Goal",
+              "team": "Scotland"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Burley: Scotland will be hoping three points is enough for knockouts",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-20",
@@ -259,7 +411,58 @@
           "as": 1,
           "status": "FT",
           "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
+          "city": "Inglewood, California",
+          "goals": [
+            {
+              "min": "7'",
+              "scorer": "Damián Bobadilla",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "United States"
+            },
+            {
+              "min": "31'",
+              "scorer": "Folarin Balogun",
+              "assist": "Christian Pulisic",
+              "type": "Goal",
+              "team": "United States"
+            },
+            {
+              "min": "45'+5'",
+              "scorer": "Folarin Balogun",
+              "assist": "Malik Tillman",
+              "type": "Goal",
+              "team": "United States"
+            },
+            {
+              "min": "73'",
+              "scorer": "Maurício",
+              "assist": "Julio Enciso",
+              "type": "Goal",
+              "team": "Paraguay"
+            },
+            {
+              "min": "90'+8'",
+              "scorer": "Giovanni Reyna",
+              "assist": "Alex Freeman",
+              "type": "Goal",
+              "team": "United States"
+            }
+          ],
+          "videos": [
+            {
+              "title": "USMNT fans celebrate team's first goal of 2026 World Cup",
+              "url": "https://media.video-cdn.espn.com/motion/wsc/2026/0613/57760942-70f4-400f-b483-6b7201facdac/57760942-70f4-400f-b483-6b7201facdac_360p30_1464k.mp4"
+            },
+            {
+              "title": "Fans go wild at the LA Memorial Coliseum as USMNT scores again",
+              "url": "https://media.video-cdn.espn.com/motion/wsc/2026/0613/59f51625-cc47-4010-9fd4-ecee93b47324/59f51625-cc47-4010-9fd4-ecee93b47324_360p30_1464k.mp4"
+            },
+            {
+              "title": "Bedlam at the Coliseum as USMNT fans celebrate Gio Reyna's wondergoal",
+              "url": "https://media.video-cdn.espn.com/motion/wsc/2026/0613/6c4d8ac3-5330-4c68-827d-b992191ba7f0/6c4d8ac3-5330-4c68-827d-b992191ba7f0_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-14",
@@ -270,7 +473,37 @@
           "as": 0,
           "status": "FT",
           "venue": "BC Place",
-          "city": "Vancouver"
+          "city": "Vancouver",
+          "goals": [
+            {
+              "min": "27'",
+              "scorer": "Nestory Irankunda",
+              "assist": "Paul Okon-Engstler",
+              "type": "Goal",
+              "team": "Australia"
+            },
+            {
+              "min": "75'",
+              "scorer": "Connor Metcalfe",
+              "assist": null,
+              "type": "Goal",
+              "team": "Australia"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Patrick Beach stars in FIFA World Cup debut",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Soccer_Analysis_Patrick_Beach_stars_in_FIFA_World_Cup_debut__20260614/dm_260614_Soccer_Analysis_Patrick_Beach_stars_in_FIFA_World_Cup_debut__20260614_360p30_1464k.mp4"
+            },
+            {
+              "title": "Popovic: Turkey win a 'special night for the Socceroos'",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos_360p30_1464k.mp4"
+            },
+            {
+              "title": "Montella says Australia loss gives Türkiye 'more motivation'",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-20",
@@ -336,7 +569,71 @@
           "as": 1,
           "status": "FT",
           "venue": "NRG Stadium",
-          "city": "Houston, Texas"
+          "city": "Houston, Texas",
+          "goals": [
+            {
+              "min": "6'",
+              "scorer": "Felix Nmecha",
+              "assist": "Florian Wirtz",
+              "type": "Goal",
+              "team": "Germany"
+            },
+            {
+              "min": "21'",
+              "scorer": "Livano Comenencia",
+              "assist": null,
+              "type": "Goal",
+              "team": "Curaçao"
+            },
+            {
+              "min": "38'",
+              "scorer": "Nico Schlotterbeck",
+              "assist": "Nathaniel Brown",
+              "type": "Goal - Header",
+              "team": "Germany"
+            },
+            {
+              "min": "45'+5'",
+              "scorer": "Kai Havertz",
+              "assist": null,
+              "type": "Penalty - Scored",
+              "team": "Germany"
+            },
+            {
+              "min": "47'",
+              "scorer": "Jamal Musiala",
+              "assist": "Joshua Kimmich",
+              "type": "Goal",
+              "team": "Germany"
+            },
+            {
+              "min": "68'",
+              "scorer": "Nathaniel Brown",
+              "assist": "Deniz Undav",
+              "type": "Goal - Volley",
+              "team": "Germany"
+            },
+            {
+              "min": "78'",
+              "scorer": "Deniz Undav",
+              "assist": "Joshua Kimmich",
+              "type": "Goal",
+              "team": "Germany"
+            },
+            {
+              "min": "88'",
+              "scorer": "Kai Havertz",
+              "assist": "Deniz Undav",
+              "type": "Goal",
+              "team": "Germany"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Lone Curaçao supporter in Berlin celebrates goal vs. Germany",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-15",
@@ -347,7 +644,22 @@
           "as": 0,
           "status": "FT",
           "venue": "Lincoln Financial Field",
-          "city": "Philadelphia, Pennsylvania"
+          "city": "Philadelphia, Pennsylvania",
+          "goals": [
+            {
+              "min": "90'",
+              "scorer": "Amad Diallo",
+              "assist": "Wilfried Singo",
+              "type": "Goal",
+              "team": "Ivory Coast"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Onuoha praises Diomande's impact in Ivory Coast's win over Ecuador",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-21",
@@ -413,7 +725,43 @@
           "as": 2,
           "status": "FT",
           "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
+          "city": "Arlington, Texas",
+          "goals": [
+            {
+              "min": "51'",
+              "scorer": "Virgil van Dijk",
+              "assist": "Ryan Gravenberch",
+              "type": "Goal - Header",
+              "team": "Netherlands"
+            },
+            {
+              "min": "57'",
+              "scorer": "Keito Nakamura",
+              "assist": "Takefusa Kubo",
+              "type": "Goal",
+              "team": "Japan"
+            },
+            {
+              "min": "64'",
+              "scorer": "Crysencio Summerville",
+              "assist": "Ryan Gravenberch",
+              "type": "Goal",
+              "team": "Netherlands"
+            },
+            {
+              "min": "89'",
+              "scorer": "Daichi Kamada",
+              "assist": "Koki Ogawa",
+              "type": "Goal - Header",
+              "team": "Japan"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Will Japan go further than the Netherlands at the World Cup?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-15",
@@ -424,7 +772,57 @@
           "as": 1,
           "status": "FT",
           "venue": "Estadio BBVA",
-          "city": "Guadalupe"
+          "city": "Guadalupe",
+          "goals": [
+            {
+              "min": "7'",
+              "scorer": "Yasin Ayari",
+              "assist": null,
+              "type": "Goal",
+              "team": "Sweden"
+            },
+            {
+              "min": "30'",
+              "scorer": "Alexander Isak",
+              "assist": "Viktor Gyökeres",
+              "type": "Goal",
+              "team": "Sweden"
+            },
+            {
+              "min": "43'",
+              "scorer": "Omar Rekik",
+              "assist": "Hannibal Mejbri",
+              "type": "Goal - Header",
+              "team": "Tunisia"
+            },
+            {
+              "min": "59'",
+              "scorer": "Viktor Gyökeres",
+              "assist": "Alexander Isak",
+              "type": "Goal",
+              "team": "Sweden"
+            },
+            {
+              "min": "84'",
+              "scorer": "Mattias Svanberg",
+              "assist": "Alexander Isak",
+              "type": "Goal",
+              "team": "Sweden"
+            },
+            {
+              "min": "90'+6'",
+              "scorer": "Yasin Ayari",
+              "assist": "Lucas Bergvall",
+              "type": "Goal",
+              "team": "Sweden"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Potter: Isak-Gyokeres partnership showed quality in Tunisia win",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-21",
@@ -490,7 +888,29 @@
           "as": 1,
           "status": "FT",
           "venue": "Lumen Field",
-          "city": "Seattle, Washington"
+          "city": "Seattle, Washington",
+          "goals": [
+            {
+              "min": "20'",
+              "scorer": "Emam Ashour",
+              "assist": "Mohamed Salah",
+              "type": "Goal",
+              "team": "Egypt"
+            },
+            {
+              "min": "66'",
+              "scorer": "Mohamed Hany",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "Belgium"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Are Belgium too reliant on De Bruyne and Lukaku?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-16",
@@ -501,7 +921,47 @@
           "as": 2,
           "status": "FT",
           "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
+          "city": "Inglewood, California",
+          "goals": [
+            {
+              "min": "7'",
+              "scorer": "Elijah Just",
+              "assist": "Chris Wood",
+              "type": "Goal - Volley",
+              "team": "New Zealand"
+            },
+            {
+              "min": "32'",
+              "scorer": "Ramin Rezaeian",
+              "assist": null,
+              "type": "Goal",
+              "team": "Iran"
+            },
+            {
+              "min": "54'",
+              "scorer": "Elijah Just",
+              "assist": "Chris Wood",
+              "type": "Goal",
+              "team": "New Zealand"
+            },
+            {
+              "min": "64'",
+              "scorer": "Mohammad Mohebbi",
+              "assist": "Ramin Rezaeian",
+              "type": "Goal - Header",
+              "team": "Iran"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Inside Iran's tense World Cup opener",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_schaap_on_iran/dm_260616_schaap_on_iran_360p30_1464k.mp4"
+            },
+            {
+              "title": "Moreno: Iran, New Zealand 'not good enough' to advance in WC",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-22",
@@ -567,7 +1027,17 @@
           "as": 0,
           "status": "FT",
           "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
+          "city": "Atlanta, Georgia",
+          "videos": [
+            {
+              "title": "Burley slams 'extremely pedestrian' Spain after Cape Verde draw",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw_360p30_1464k.mp4"
+            },
+            {
+              "title": "Burley: Cape Verde couldn't have given a better account of themselves",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-16",
@@ -578,7 +1048,29 @@
           "as": 1,
           "status": "FT",
           "venue": "Hard Rock Stadium",
-          "city": "Miami Gardens, Florida"
+          "city": "Miami Gardens, Florida",
+          "goals": [
+            {
+              "min": "41'",
+              "scorer": "Abdulelah Al-Amri",
+              "assist": null,
+              "type": "Goal",
+              "team": "Saudi Arabia"
+            },
+            {
+              "min": "80'",
+              "scorer": "Maxi Araújo",
+              "assist": null,
+              "type": "Goal - Volley",
+              "team": "Uruguay"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Ale Moreno: Uruguay missed a golden opportunity to take control of Group H",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0615/ss_20260615_203722805_3565788/ss_20260615_203722805_3565788_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-22",
@@ -640,9 +1132,9 @@
           "time": "03:00",
           "home": "France",
           "away": "Senegal",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 0,
+          "as": 0,
+          "status": "LIVE",
           "venue": "MetLife Stadium",
           "city": "East Rutherford, New Jersey"
         },

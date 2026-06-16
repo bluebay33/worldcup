@@ -144,7 +144,42 @@ def match_row(m, show_group=False):
       <div class="m-score">{score_cell(m)}</div>
       <div class="m-away">{esc(cn(m["away"]))}</div>
       <div class="m-meta">{badge}{venue}</div>
+      {goals_html(m)}{videos_html(m)}
     </div>"""
+
+
+def _goal_mark(t):
+    t = t or ""
+    if "Penalty" in t:
+        return "(点球)"
+    if "Own" in t:
+        return "(乌龙)"
+    if "Header" in t:
+        return "(头球)"
+    return ""
+
+
+def goals_html(m):
+    goals = m.get("goals") or []
+    if not goals:
+        return ""
+    parts = []
+    for g in goals:
+        nm = g.get("scorer") or "?"
+        team = cn(g.get("team", ""))
+        parts.append(f'<span class="gitem">{esc(g.get("min", ""))} {esc(nm)}{_goal_mark(g.get("type"))}'
+                     f'<span class="gteam">{esc(team)}</span></span>')
+    return '<div class="m-goals">⚽ ' + "".join(parts) + "</div>"
+
+
+def videos_html(m):
+    vids = m.get("videos") or []
+    if not vids:
+        return ""
+    links = "".join(
+        f'<a class="vlink" href="{esc(v.get("url", ""))}" target="_blank" rel="noopener">▶ {esc((v.get("title") or "视频")[:26])}</a>'
+        for v in vids)
+    return f'<div class="m-videos">{links}</div>'
 
 
 def group_block(group):
@@ -265,6 +300,42 @@ def build():
         recent_html += "".join(match_row(m, show_group=True) for m in recent)
         recent_html += "</div></section>"
 
+    # 球员进球榜：汇总各场进球者（乌龙球不计个人）。
+    scorers = {}
+
+    def _collect_goals(matches):
+        for mm in matches:
+            for goal in mm.get("goals", []):
+                t = goal.get("type", "") or ""
+                if "Own" in t:
+                    continue
+                nm = goal.get("scorer")
+                if not nm:
+                    continue
+                rec = scorers.setdefault(nm, {"name": nm, "team": goal.get("team", ""), "goals": 0, "pens": 0})
+                rec["goals"] += 1
+                if "Penalty" in t:
+                    rec["pens"] += 1
+
+    for g in data.get("groups", []):
+        _collect_goals(g.get("matches", []))
+    _collect_goals(data.get("knockout", []))
+    top = sorted(scorers.values(), key=lambda r: (-r["goals"], r["name"]))
+    scorers_html = ""
+    if top:
+        rows = []
+        for i, r in enumerate(top[:20]):
+            pen = f'<span class="pen">含{r["pens"]}点</span>' if r["pens"] else ""
+            rows.append(f'<tr><td class="rank">{i+1}</td>'
+                        f'<td class="tname">{esc(r["name"])}{pen}</td>'
+                        f'<td>{esc(cn(r["team"]))}</td><td class="pts">{r["goals"]}</td></tr>')
+        more = (f'<div class="more">仅显示前 20 名，共 {len(top)} 名球员有进球</div>'
+                if len(top) > 20 else "")
+        scorers_html = ('<section class="scorers"><h2>⚽ 球员进球榜</h2>'
+                        '<table class="scoretable"><thead><tr><th>#</th>'
+                        '<th class="tname">球员</th><th>球队</th><th>进球</th></tr></thead>'
+                        '<tbody>' + "".join(rows) + '</tbody></table>' + more + '</section>')
+
     knockout = data.get("knockout", [])
     knockout_html = ""
     if knockout:
@@ -337,6 +408,23 @@ def build():
   .badge.sched {{ background:rgba(212,160,23,0.15); color:var(--gold); }}
   .venue {{ color:var(--muted); font-size:11px; }}
   .tag {{ background:#21262d; color:var(--muted); padding:0 5px; border-radius:4px; font-size:10px; }}
+  .m-goals {{ grid-column:1 / -1; font-size:12px; color:var(--txt); display:flex; flex-wrap:wrap;
+    gap:6px 12px; padding:4px 2px 0; }}
+  .gitem {{ color:#cdd6e0; }}
+  .gteam {{ color:var(--muted); font-size:10.5px; margin-left:3px; }}
+  .m-videos {{ grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:6px 10px; padding:4px 2px 0; }}
+  .vlink {{ color:var(--accent); font-size:11px; text-decoration:none; border:1px solid #2f4636;
+    padding:1px 7px; border-radius:10px; }}
+  .vlink:hover {{ background:rgba(63,185,80,0.12); }}
+  .scorers {{ margin-top:18px; }}
+  table.scoretable {{ width:100%; max-width:560px; border-collapse:collapse; font-size:13px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }}
+  table.scoretable th {{ color:var(--muted); font-weight:500; text-align:center; padding:8px 6px; border-bottom:1px solid var(--line); }}
+  table.scoretable td {{ text-align:center; padding:7px 6px; border-bottom:1px solid #222c38; }}
+  table.scoretable td.tname {{ text-align:left; }}
+  table.scoretable td.pts {{ font-weight:700; color:var(--accent); }}
+  .pen {{ color:var(--muted); font-size:10.5px; margin-left:6px; }}
+  .more {{ color:var(--muted); font-size:12px; margin-top:8px; }}
   .fix-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:8px; }}
   .fix-grid .match {{ background:var(--card); border:1px solid var(--line); padding:10px 12px; }}
   .fixtures.hero {{ background:linear-gradient(180deg,#1c2a22,#161d27); border:1px solid var(--accent);
@@ -373,6 +461,8 @@ def build():
 
   <h2>小组积分榜</h2>
   <div class="groups">{groups_html}</div>
+
+  {scorers_html}
 
   {knockout_html}
 

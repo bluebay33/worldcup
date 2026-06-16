@@ -24,6 +24,7 @@ GROUPS_CACHE = os.path.join(HERE, "groups_cache.json")
 
 SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates={}"
 STANDINGS = "https://site.web.api.espn.com/apis/v2/sports/soccer/fifa.world/standings?season=2026"
+SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event={}"
 
 START = datetime(2026, 6, 11).date()
 END = datetime(2026, 7, 19).date()
@@ -160,24 +161,63 @@ def parse_event(e):
     }
 
 
+def fetch_match_detail(event_id):
+    """对已结束比赛，抓进球者名单(participants)和 ESPN 赛事视频。返回 (goals, videos)。"""
+    goals, vids = [], []
+    if not event_id:
+        return goals, vids
+    try:
+        s = get_json(SUMMARY.format(event_id), retries=3)
+    except Exception as ex:
+        print(f"[warn] summary {event_id} 失败：", repr(ex))
+        return goals, vids
+    for k in s.get("keyEvents", []):
+        if not k.get("scoringPlay"):
+            continue
+        parts = k.get("participants") or []
+        scorer = (parts[0].get("athlete") or {}).get("displayName") if parts else None
+        assist = (parts[1].get("athlete") or {}).get("displayName") if len(parts) > 1 else None
+        goals.append({
+            "min": (k.get("clock") or {}).get("displayValue", ""),
+            "scorer": scorer,
+            "assist": assist,
+            "type": (k.get("type") or {}).get("text", ""),
+            "team": (k.get("team") or {}).get("displayName", ""),
+        })
+    for v in (s.get("videos") or [])[:3]:
+        href = ((v.get("links") or {}).get("source") or {}).get("href")
+        if href:
+            vids.append({"title": v.get("headline", ""), "url": href})
+    return goals, vids
+
+
 def main():
     groups_order, team2group = fetch_groups()
     events = fetch_events()
     print(f"[info] 拉到 {len(events)} 场比赛、{len(groups_order)} 个组")
 
-    # 按组装配 matches；跨组进 knockout
+    # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频。
     gmatches = {g["name"]: [] for g in groups_order}
     knockout = []
+    detail_n = 0
     for e in events:
         m = parse_event(e)
         if not m:
             continue
+        if m["status"] == "FT":
+            goals, vids = fetch_match_detail(e.get("id"))
+            if goals:
+                m["goals"] = goals
+            if vids:
+                m["videos"] = vids
+            detail_n += 1
         gh = team2group.get(m["home"])
         ga = team2group.get(m["away"])
         if gh and ga and gh == ga:
             gmatches[gh].append(m)
         else:
             knockout.append(m)
+    print(f"[info] 已为 {detail_n} 场已结束比赛抓取进球/视频明细")
 
     for name in gmatches:
         gmatches[name].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))
