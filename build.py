@@ -299,23 +299,30 @@ def build():
         _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in upcoming) + '</div>'
         fixtures_html = collap(_title, _body, open_=True, cls="fixtures hero")
 
-    # 最近战果（已赛）：取「最近 6 场」与「最近 24 小时内」中数量更多的一组，时间倒序展示。
-    played_pool = []
+    # 最近战果：正在进行(LIVE)的场必须包含、且置顶；其后接「最近6场」与「最近24小时」中较多的一组。
+    played_pool, live_pool = [], []
+
+    def _push(m, grp):
+        st = m.get("status")
+        if st == "LIVE":
+            mm = dict(m); mm["group"] = grp; live_pool.append(mm)
+        elif st == "FT" and m.get("hs") is not None:
+            mm = dict(m); mm["group"] = grp; played_pool.append(mm)
+
     for g in data.get("groups", []):
         for m in g.get("matches", []):
-            if m.get("status") == "FT" and m.get("hs") is not None:
-                mm = dict(m); mm["group"] = g["name"]; played_pool.append(mm)
+            _push(m, g["name"])
     for m in data.get("knockout", []):
-        if m.get("status") == "FT" and m.get("hs") is not None:
-            mm = dict(m); mm.setdefault("group", "淘汰赛"); played_pool.append(mm)
+        _push(m, "淘汰赛")
     _far = datetime.min.replace(tzinfo=BJT)
     played_desc = sorted(played_pool, key=lambda m: (_mdt(m) or _far), reverse=True)
     last6 = played_desc[:6]
     last24 = [m for m in played_desc if _mdt(m) and (now - timedelta(hours=24)) <= _mdt(m) <= now]
-    if len(last24) > len(last6):
-        recent, recent_label = last24, "最近 24 小时"
-    else:
-        recent, recent_label = last6, "最近 6 场"
+    base = last24 if len(last24) > len(last6) else last6
+    base_label = "最近 24 小时" if len(last24) > len(last6) else "最近 6 场"
+    live_sorted = sorted(live_pool, key=lambda m: (_mdt(m) or _far), reverse=True)
+    recent = live_sorted + base
+    recent_label = ("进行中 + " + base_label) if live_sorted else base_label
     recent_html = ""
     if recent:
         _title = (f'🏁 最近战果 · {recent_label} <span class="cnt">{len(recent)} 场</span>'
