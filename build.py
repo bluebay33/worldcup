@@ -25,6 +25,13 @@ def esc(s):
     return html.escape(str(s))
 
 
+def collap(title, body, *, open_=True, cls=""):
+    """把一个板块包成可折叠的 <details>。title 已是 HTML，body 已是 HTML。"""
+    op = " open" if open_ else ""
+    return (f'<details class="sec {cls}"{op}><summary class="sec-h">{title}</summary>'
+            f'<div class="sec-body">{body}</div></details>')
+
+
 # ESPN 英文队名 -> 中文（含常见写法变体，缺失则回退英文）
 TEAM_CN = {
     "South Africa": "南非", "Mexico": "墨西哥", "South Korea": "韩国", "Korea Republic": "韩国",
@@ -267,12 +274,10 @@ def build():
         fix_label = "即将开赛"
     fixtures_html = ""
     if upcoming:
-        fixtures_html = ('<section class="fixtures hero">'
-                         f'<h2>🔥 近期赛程 · {fix_label} <span class="cnt">{len(upcoming)} 场</span>'
-                         '<span style="font-size:13px;color:var(--muted);font-weight:400;">（时间为北京时间）</span>'
-                         '</h2><div class="fix-grid">')
-        fixtures_html += "".join(match_row(m, show_group=True) for m in upcoming)
-        fixtures_html += "</div></section>"
+        _title = (f'🔥 近期赛程 · {fix_label} <span class="cnt">{len(upcoming)} 场</span>'
+                  '<span class="note">（北京时间）</span>')
+        _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in upcoming) + '</div>'
+        fixtures_html = collap(_title, _body, open_=True, cls="fixtures hero")
 
     # 最近战果（已赛）：取「最近 6 场」与「最近 24 小时内」中数量更多的一组，时间倒序展示。
     played_pool = []
@@ -293,12 +298,10 @@ def build():
         recent, recent_label = last6, "最近 6 场"
     recent_html = ""
     if recent:
-        recent_html = ('<section class="results hero">'
-                       f'<h2>🏁 最近战果 · {recent_label} <span class="cnt">{len(recent)} 场</span>'
-                       '<span style="font-size:13px;color:var(--muted);font-weight:400;">（时间为北京时间）</span>'
-                       '</h2><div class="fix-grid">')
-        recent_html += "".join(match_row(m, show_group=True) for m in recent)
-        recent_html += "</div></section>"
+        _title = (f'🏁 最近战果 · {recent_label} <span class="cnt">{len(recent)} 场</span>'
+                  '<span class="note">（北京时间）</span>')
+        _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in recent) + '</div>'
+        recent_html = collap(_title, _body, open_=True, cls="results hero")
 
     # 球员进球榜：汇总各场进球者（乌龙球不计个人）。
     scorers = {}
@@ -323,27 +326,35 @@ def build():
     top = sorted(scorers.values(), key=lambda r: (-r["goals"], r["name"]))
     scorers_html = ""
     if top:
-        rows = []
-        for i, r in enumerate(top[:20]):
-            pen = f'<span class="pen">含{r["pens"]}点</span>' if r["pens"] else ""
-            rows.append(f'<tr><td class="rank">{i+1}</td>'
-                        f'<td class="tname">{esc(r["name"])}{pen}</td>'
-                        f'<td>{esc(cn(r["team"]))}</td><td class="pts">{r["goals"]}</td></tr>')
+        def _score_table(items, start):
+            rs = []
+            for j, r in enumerate(items):
+                pen = f'<span class="pen">含{r["pens"]}点</span>' if r["pens"] else ""
+                rs.append(f'<tr><td class="rank">{start + j}</td>'
+                          f'<td class="tname">{esc(r["name"])}{pen}</td>'
+                          f'<td>{esc(cn(r["team"]))}</td><td class="pts">{r["goals"]}</td></tr>')
+            return ('<table class="scoretable"><thead><tr><th>#</th><th class="tname">球员</th>'
+                    '<th>球队</th><th>进</th></tr></thead><tbody>' + "".join(rs) + '</tbody></table>')
+
+        topn = top[:20]
+        half = (len(topn) + 1) // 2
+        cols = '<div class="scorer-cols">' + _score_table(topn[:half], 1)
+        if topn[half:]:
+            cols += _score_table(topn[half:], half + 1)
+        cols += '</div>'
         more = (f'<div class="more">仅显示前 20 名，共 {len(top)} 名球员有进球</div>'
                 if len(top) > 20 else "")
-        scorers_html = ('<section class="scorers"><h2>⚽ 球员进球榜</h2>'
-                        '<table class="scoretable"><thead><tr><th>#</th>'
-                        '<th class="tname">球员</th><th>球队</th><th>进球</th></tr></thead>'
-                        '<tbody>' + "".join(rows) + '</tbody></table>' + more + '</section>')
+        scorers_html = collap('⚽ 球员进球榜', cols + more, open_=False, cls="scorers")
+
+    standings_html = collap('小组积分榜', f'<div class="groups">{groups_html}</div>',
+                            open_=False, cls="standings")
 
     knockout = data.get("knockout", [])
-    knockout_html = ""
     if knockout:
-        knockout_html = '<section class="knockout"><h2>淘汰赛</h2><div class="fix-grid">'
-        knockout_html += "".join(match_row(m, show_group=True) for m in knockout)
-        knockout_html += "</div></section>"
+        _kbody = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in knockout) + '</div>'
     else:
-        knockout_html = '<section class="knockout"><h2>淘汰赛</h2><div class="empty">小组赛进行中，淘汰赛对阵未产生</div></section>'
+        _kbody = '<div class="empty">小组赛进行中，淘汰赛对阵未产生</div>'
+    knockout_html = collap('淘汰赛', _kbody, open_=False, cls="knockout")
 
     sources = " · ".join(esc(s) for s in meta.get("sources", []))
     built_at = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
@@ -370,6 +381,16 @@ def build():
   .notes {{ background:#1c2733; border-left:3px solid var(--gold); padding:10px 14px;
     border-radius:0 6px 6px 0; margin-top:14px; font-size:13px; color:var(--muted); }}
   h2 {{ font-size:20px; margin:32px 0 14px; padding-left:10px; border-left:4px solid var(--accent); }}
+  .sec {{ margin:0 0 16px; }}
+  .sec > .sec-h {{ list-style:none; cursor:pointer; user-select:none; font-size:20px; font-weight:600;
+    margin:26px 0 14px; padding-left:10px; border-left:4px solid var(--accent);
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap; }}
+  .sec > .sec-h::-webkit-details-marker {{ display:none; }}
+  .sec > .sec-h::after {{ content:"▸ 展开"; color:var(--muted); font-size:12px; font-weight:400; margin-left:auto; }}
+  .sec[open] > .sec-h::after {{ content:"▾ 收起"; }}
+  .sec > .sec-h:hover {{ color:var(--accent); }}
+  .sec .note {{ font-size:12px; color:var(--muted); font-weight:400; }}
+  .scorer-cols {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:14px; align-items:start; }}
   .groups {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:18px; }}
   .group {{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }}
   .group h3 {{ margin:0 0 10px; font-size:16px; color:var(--gold); }}
@@ -417,7 +438,7 @@ def build():
     padding:1px 7px; border-radius:10px; }}
   .vlink:hover {{ background:rgba(63,185,80,0.12); }}
   .scorers {{ margin-top:18px; }}
-  table.scoretable {{ width:100%; max-width:560px; border-collapse:collapse; font-size:13px;
+  table.scoretable {{ width:100%; border-collapse:collapse; font-size:13px;
     background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }}
   table.scoretable th {{ color:var(--muted); font-weight:500; text-align:center; padding:8px 6px; border-bottom:1px solid var(--line); }}
   table.scoretable td {{ text-align:center; padding:7px 6px; border-bottom:1px solid #222c38; }}
@@ -429,13 +450,13 @@ def build():
   .fix-grid .match {{ background:var(--card); border:1px solid var(--line); padding:10px 12px; }}
   .fixtures.hero {{ background:linear-gradient(180deg,#1c2a22,#161d27); border:1px solid var(--accent);
     border-radius:12px; padding:14px 18px 18px; margin-bottom:10px; box-shadow:0 0 0 3px rgba(63,185,80,0.08); }}
-  .fixtures.hero h2 {{ margin:4px 0 14px; border-left-color:var(--gold); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }}
+  .fixtures.hero > .sec-h {{ margin:2px 0 12px; border-left-color:var(--gold); }}
   .fixtures.hero .cnt {{ background:var(--accent); color:#06210f; font-size:13px; font-weight:700;
     padding:1px 9px; border-radius:10px; }}
   .fixtures.hero .fix-grid .match {{ background:#10171f; border-color:#2f4636; }}
   .results.hero {{ background:linear-gradient(180deg,#2a2418,#161d27); border:1px solid var(--gold);
     border-radius:12px; padding:14px 18px 18px; margin-bottom:10px; box-shadow:0 0 0 3px rgba(212,160,23,0.08); }}
-  .results.hero h2 {{ margin:4px 0 14px; border-left-color:var(--gold); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }}
+  .results.hero > .sec-h {{ margin:2px 0 12px; border-left-color:var(--gold); }}
   .results.hero .cnt {{ background:var(--gold); color:#211900; font-size:13px; font-weight:700;
     padding:1px 9px; border-radius:10px; }}
   .results.hero .fix-grid .match {{ background:#10171f; border-color:#463a2f; }}
@@ -459,8 +480,7 @@ def build():
 
   {fixtures_html}
 
-  <h2>小组积分榜</h2>
-  <div class="groups">{groups_html}</div>
+  {standings_html}
 
   {scorers_html}
 

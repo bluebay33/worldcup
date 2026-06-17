@@ -2,7 +2,7 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-17 04:01 (北京时间)",
+    "lastUpdated": "2026-06-17 11:11 (北京时间)",
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -1132,22 +1132,105 @@
           "time": "03:00",
           "home": "France",
           "away": "Senegal",
-          "hs": 0,
-          "as": 0,
-          "status": "LIVE",
+          "hs": 3,
+          "as": 1,
+          "status": "FT",
           "venue": "MetLife Stadium",
-          "city": "East Rutherford, New Jersey"
+          "city": "East Rutherford, New Jersey",
+          "goals": [
+            {
+              "min": "66'",
+              "scorer": "Kylian Mbappé",
+              "assist": "Michael Olise",
+              "type": "Goal",
+              "team": "France"
+            },
+            {
+              "min": "82'",
+              "scorer": "Bradley Barcola",
+              "assist": "Adrien Rabiot",
+              "type": "Goal",
+              "team": "France"
+            },
+            {
+              "min": "90'+5'",
+              "scorer": "Ibrahim Mbaye",
+              "assist": "Iliman Ndiaye",
+              "type": "Goal",
+              "team": "Senegal"
+            },
+            {
+              "min": "90'+6'",
+              "scorer": "Kylian Mbappé",
+              "assist": null,
+              "type": "Goal",
+              "team": "France"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Are France World Cup favorites after victory vs. Senegal?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Are_France_World_Cup_favourites_after_victory_vs_Senegal3F_GLOBAL_2026-06-16/dm_260616_COM_SOC_Analysis_Are_France_World_Cup_favourites_after_victory_vs_Senegal3F_GLOBAL_2026-06-16_360p30_1464k.mp4"
+            },
+            {
+              "title": "Mbappé proud to 'make a mark' on France's history with record goal",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-17",
           "time": "06:00",
           "home": "Iraq",
           "away": "Norway",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 4,
+          "status": "FT",
           "venue": "Gillette Stadium",
-          "city": "Foxborough, Massachusetts"
+          "city": "Foxborough, Massachusetts",
+          "goals": [
+            {
+              "min": "29'",
+              "scorer": "Erling Haaland",
+              "assist": "David Møller Wolfe",
+              "type": "Goal",
+              "team": "Norway"
+            },
+            {
+              "min": "39'",
+              "scorer": "Aymen Hussein",
+              "assist": "Amir Al-Ammari",
+              "type": "Goal - Header",
+              "team": "Iraq"
+            },
+            {
+              "min": "43'",
+              "scorer": "Erling Haaland",
+              "assist": null,
+              "type": "Goal",
+              "team": "Norway"
+            },
+            {
+              "min": "76'",
+              "scorer": "Leo Østigard",
+              "assist": "Martin Ødegaard",
+              "type": "Goal - Header",
+              "team": "Norway"
+            },
+            {
+              "min": "90'+6'",
+              "scorer": "Aymen Hussein",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "Norway"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Moreno full of praise for Haaland after brace on World Cup debut",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_full_of_praise_for_Haaland_after_brace_on_World_Cup_debut_20260616_GLOBA/dm_260616_COM_SOC_Analysis_Moreno_full_of_praise_for_Haaland_after_brace_on_World_Cup_debut_20260616_GLOBA_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-23",
@@ -1209,11 +1292,48 @@
           "time": "09:00",
           "home": "Argentina",
           "away": "Algeria",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 3,
+          "as": 0,
+          "status": "FT",
           "venue": "GEHA Field at Arrowhead Stadium",
-          "city": "Kansas City, Missouri"
+          "city": "Kansas City, Missouri",
+          "goals": [
+            {
+              "min": "17'",
+              "scorer": "Lionel Messi",
+              "assist": "Rodrigo De Paul",
+              "type": "Goal",
+              "team": "Argentina"
+            },
+            {
+              "min": "60'",
+              "scorer": "Lionel Messi",
+              "assist": null,
+              "type": "Goal",
+              "team": "Argentina"
+            },
+            {
+              "min": "76'",
+              "scorer": "Lionel Messi",
+              "assist": "Nico González",
+              "type": "Goal",
+              "team": "Argentina"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Lionel Messi nets screamer in Argentina's World Cup opener",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY_360p30_1464k.mp4"
+            },
+            {
+              "title": "Fans in Argentina celebrate Messi's spectacular goal vs. Algeria",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI_360p30_1464k.mp4"
+            },
+            {
+              "title": "Argentina fans in Buenos Aires react to Messi's hat trick goal vs. Algeria",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Presser_Argentina_fans_in_Buenos_Aires_react_to_Messis_hat_trick_goal_vs_Algeria_202606/dm_260616_COM_SOC_Presser_Argentina_fans_in_Buenos_Aires_react_to_Messis_hat_trick_goal_vs_Algeria_202606_360p30_1464k.mp4"
+            }
+          ]
         },
         {
           "date": "2026-06-17",
