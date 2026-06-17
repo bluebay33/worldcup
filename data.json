@@ -2,7 +2,7 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-17 11:49 (北京时间)",
+    "lastUpdated": "2026-06-18 02:02 (北京时间)",
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -58,7 +58,11 @@
               "title": "Laurens: South Africa 'need to improve massively' to advance",
               "url": "https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=PmevGCkUtM8",
+            "title": "Highlights | Mexico 2-0 South Africa | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-12",
@@ -98,7 +102,11 @@
               "title": "Are South Korea the best team in Group A?",
               "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=6k18EJY8zIc",
+            "title": "Highlights | Korea Republic 2-1 Czechia | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-19",
@@ -190,7 +198,11 @@
               "title": "Bosnia fan zone celebrates taking the lead vs. Canada by setting off flares",
               "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=w-_rY5morQY",
+            "title": "Highlights | Canada 1-1 Bosnia and Herzegovina | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-14",
@@ -223,7 +235,11 @@
               "title": "How Qatar earned their first ever World Cup point",
               "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=KVz43-eddIQ",
+            "title": "Highlights | Qatar 1-1 Switzerland | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-19",
@@ -319,7 +335,11 @@
               "title": "Fans on Copacabana Beach celebrate Brazil's equalizer vs. Morocco",
               "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=ECnK7UzAjIs",
+            "title": "Highlights | Brazil 1-1 Morocco | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-14",
@@ -345,7 +365,11 @@
               "title": "Burley: Scotland will be hoping three points is enough for knockouts",
               "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=TcCufmPCsu4",
+            "title": "Highlights | Haiti 0-1 Scotland | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-20",
@@ -462,7 +486,11 @@
               "title": "Bedlam at the Coliseum as USMNT fans celebrate Gio Reyna's wondergoal",
               "url": "https://media.video-cdn.espn.com/motion/wsc/2026/0613/6c4d8ac3-5330-4c68-827d-b992191ba7f0/6c4d8ac3-5330-4c68-827d-b992191ba7f0_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=0PVo3bk-TMk",
+            "title": "Highlights | USA 4-1 Paraguay | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-14",
@@ -492,10 +520,6 @@
           ],
           "videos": [
             {
-              "title": "Patrick Beach stars in FIFA World Cup debut",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Soccer_Analysis_Patrick_Beach_stars_in_FIFA_World_Cup_debut__20260614/dm_260614_Soccer_Analysis_Patrick_Beach_stars_in_FIFA_World_Cup_debut__20260614_360p30_1464k.mp4"
-            },
-            {
               "title": "Popovic: Turkey win a 'special night for the Socceroos'",
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos_360p30_1464k.mp4"
             },
@@ -503,7 +527,11 @@
               "title": "Montella says Australia loss gives Türkiye 'more motivation'",
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=5eqzEDe8wHs",
+            "title": "Highlights | Australia 2-0 Türkiye | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-20",
@@ -633,7 +661,11 @@
               "title": "Lone Curaçao supporter in Berlin celebrates goal vs. Germany",
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=B6-Z5ul2ccQ",
+            "title": "Highlights | Germany 7-1 Curacao | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-15",
@@ -659,7 +691,11 @@
               "title": "Onuoha praises Diomande's impact in Ivory Coast's win over Ecuador",
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=84xvEwRc0iQ",
+            "title": "Highlights | Côte d'Ivoire 1-0 Ecuador | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-21",
@@ -761,7 +797,11 @@
               "title": "Will Japan go further than the Netherlands at the World Cup?",
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=r8SvHZxALQs",
+            "title": "Highlights | Netherlands 2-2 Japan | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-15",
@@ -822,7 +862,11 @@
               "title": "Potter: Isak-Gyokeres partnership showed quality in Tunisia win",
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=MM5hUuEzH3g",
+            "title": "Highlights | Sweden 5-1 Tunisia | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-21",
@@ -910,7 +954,11 @@
               "title": "Are Belgium too reliant on De Bruyne and Lukaku?",
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=i8sD2Aea9_M",
+            "title": "Highlights | Belgium 1-1 Egypt | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-16",
@@ -927,7 +975,7 @@
               "min": "7'",
               "scorer": "Elijah Just",
               "assist": "Chris Wood",
-              "type": "Goal - Volley",
+              "type": "Goal",
               "team": "New Zealand"
             },
             {
@@ -961,7 +1009,11 @@
               "title": "Moreno: Iran, New Zealand 'not good enough' to advance in WC",
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=memCfdob60w",
+            "title": "Highlights | IR Iran 2-2 New Zealand | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-22",
@@ -1037,7 +1089,11 @@
               "title": "Burley: Cape Verde couldn't have given a better account of themselves",
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=W9Z4ER9oX0k",
+            "title": "Highlights | Spain 0-0 Cabo Verde | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-16",
@@ -1061,7 +1117,7 @@
               "min": "80'",
               "scorer": "Maxi Araújo",
               "assist": null,
-              "type": "Goal - Volley",
+              "type": "Goal",
               "team": "Uruguay"
             }
           ],
@@ -1070,7 +1126,11 @@
               "title": "Ale Moreno: Uruguay missed a golden opportunity to take control of Group H",
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/ss_20260615_203722805_3565788/ss_20260615_203722805_3565788_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=XrDExPcLCXY",
+            "title": "Highlights | Saudi Arabia 1-1 Uruguay | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-22",
@@ -1173,10 +1233,18 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Are_France_World_Cup_favourites_after_victory_vs_Senegal3F_GLOBAL_2026-06-16/dm_260616_COM_SOC_Analysis_Are_France_World_Cup_favourites_after_victory_vs_Senegal3F_GLOBAL_2026-06-16_360p30_1464k.mp4"
             },
             {
+              "title": "Leboeuf backs Mbappé to break Klose's World Cup goal record",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Leboeuf_backs_Mbappe_to_break_Kloses_World_Cup_goal_record/dm_260616_Leboeuf_backs_Mbappe_to_break_Kloses_World_Cup_goal_record_360p30_1464k.mp4"
+            },
+            {
               "title": "Mbappé proud to 'make a mark' on France's history with record goal",
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=354ajiLZcEE",
+            "title": "Kylian Mbappe Goal | France 3-1 Senegal | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-17",
@@ -1229,8 +1297,16 @@
             {
               "title": "Moreno full of praise for Haaland after brace on World Cup debut",
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_full_of_praise_for_Haaland_after_brace_on_World_Cup_debut_20260616_GLOBA/dm_260616_COM_SOC_Analysis_Moreno_full_of_praise_for_Haaland_after_brace_on_World_Cup_debut_20260616_GLOBA_360p30_1464k.mp4"
+            },
+            {
+              "title": "Why Haaland's World Cup debut was no surprise",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_haaland_ia/dm_260617_haaland_ia_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=4_J-f3zQu_o",
+            "title": "Erling Haaland Goal | Iraq 1-4 Norway | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-23",
@@ -1330,21 +1406,65 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA_360p30_1464k.mp4"
             },
             {
-              "title": "Fans in Argentina celebrate Messi's spectacular goal vs. Algeria",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI_360p30_1464k.mp4"
+              "title": "'100% a red card' Should Lionel Messi have been on the pitch for his hat trick?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_100_a_red_card_Should_Lionel_Messi_have_been_on_the_pitch_for_his_hat_trick3F/dm_260617_100_a_red_card_Should_Lionel_Messi_have_been_on_the_pitch_for_his_hat_trick3F_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=jx7x1Q8-YGM",
+            "title": "Argentina vs Algeria 3-0 Extended Highlights & All Goals | FIFA World Cup 2026 | Messi Hattrick"
+          }
         },
         {
           "date": "2026-06-17",
           "time": "12:00",
           "home": "Austria",
           "away": "Jordan",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 3,
+          "as": 1,
+          "status": "FT",
           "venue": "Levi's Stadium",
-          "city": "Santa Clara, California"
+          "city": "Santa Clara, California",
+          "goals": [
+            {
+              "min": "21'",
+              "scorer": "Romano Schmid",
+              "assist": "Xaver Schlager",
+              "type": "Goal",
+              "team": "Austria"
+            },
+            {
+              "min": "50'",
+              "scorer": "Ali Olwan",
+              "assist": "Noor Al-Rawabdeh",
+              "type": "Goal",
+              "team": "Jordan"
+            },
+            {
+              "min": "76'",
+              "scorer": "Yazan Al-Arab",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "Austria"
+            },
+            {
+              "min": "90'+12'",
+              "scorer": "Marko Arnautovic",
+              "assist": null,
+              "type": "Penalty - Scored",
+              "team": "Austria"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Rangnick credits WC debutants Jordan for 'exceeding expectations' vs. Austria",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Presser_Rangnick_credits_WC_debutants_Jordan_for_exceeding_expectations_vs_Austria_2026/dm_260617_COM_SOC_Presser_Rangnick_credits_WC_debutants_Jordan_for_exceeding_expectations_vs_Austria_2026_360p30_1464k.mp4"
+            }
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=ZPL_rcYJYS4",
+            "title": "Marko Arnautovic Goal | Austria 3-1 Jordan | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-23",
@@ -1406,9 +1526,9 @@
           "time": "01:00",
           "home": "Portugal",
           "away": "Congo DR",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 1,
+          "status": "LIVE",
           "venue": "NRG Stadium",
           "city": "Houston, Texas"
         },

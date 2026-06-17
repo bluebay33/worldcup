@@ -14,8 +14,10 @@
 """
 import json
 import os
+import re
 import time
 import urllib.request
+from urllib.parse import quote_plus
 from datetime import datetime, timedelta, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -191,15 +193,68 @@ def fetch_match_detail(event_id):
     return goals, vids
 
 
+def fetch_youtube_highlight(home, away, hs, as_):
+    """抓 YouTube 搜索结果里的官方/最相关集锦，返回 {'url','title'} 或 None。
+    优先 FIFA 官方频道；其次标题含队名的第一条；都没有则首条。云端被拦时返回 None（由 build.py 退回搜索链接）。"""
+    q = f"{home} {hs}-{as_} {away} FIFA World Cup 2026 highlights"
+    url = "https://www.youtube.com/results?search_query=" + quote_plus(q) + "&hl=en&gl=US"
+    try:
+        req = urllib.request.Request(url, headers={
+            "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                           "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"),
+            "Accept-Language": "en-US,en;q=0.9",
+            "Cookie": "CONSENT=YES+1",
+        })
+        with urllib.request.urlopen(req, timeout=20) as r:
+            h = r.read().decode("utf-8", "ignore")
+    except Exception as ex:
+        print(f"[warn] youtube 搜索失败 {home}-{away}:", repr(ex))
+        return None
+    items = re.findall(
+        r'"videoRenderer":\{"videoId":"([\w-]{11})".*?"title":\{"runs":\[\{"text":"([^"]+)"'
+        r'.*?(?:"ownerText"|"longBylineText"):\{"runs":\[\{"text":"([^"]+)"', h)
+    if not items:
+        return None
+
+    def clean(t):
+        return t.replace("\\u0026", "&").replace("\\u003d", "=").replace("\\/", "/")
+
+    def watch(vid, title):
+        return {"url": f"https://www.youtube.com/watch?v={vid}", "title": clean(title)}
+
+    for vid, title, ch in items:                      # 1) FIFA 官方频道优先
+        if ch.strip().lower() == "fifa":
+            return watch(vid, title)
+    hl, al = home.split()[-1].lower(), away.split()[-1].lower()
+    for vid, title, ch in items:                      # 2) 标题含队名
+        t = title.lower()
+        if hl in t or al in t:
+            return watch(vid, title)
+    return watch(items[0][0], items[0][1])            # 3) 首条
+
+
 def main():
     groups_order, team2group = fetch_groups()
     events = fetch_events()
     print(f"[info] 拉到 {len(events)} 场比赛、{len(groups_order)} 个组")
 
-    # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频。
+    # 复用上次已找到的 YouTube 集锦链接（避免每次重抓、云端被拦时仍有上次结果）
+    prev_hl = {}
+    if os.path.exists(DATA):
+        try:
+            old = json.load(open(DATA, encoding="utf-8"))
+            allm = [mm for g in old.get("groups", []) for mm in g.get("matches", [])] + old.get("knockout", [])
+            for mm in allm:
+                if mm.get("highlight"):
+                    prev_hl[(mm.get("home"), mm.get("away"), mm.get("date"))] = mm["highlight"]
+        except Exception:
+            pass
+
+    # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频+集锦。
     gmatches = {g["name"]: [] for g in groups_order}
     knockout = []
     detail_n = 0
+    hl_hit = hl_new = 0
     for e in events:
         m = parse_event(e)
         if not m:
@@ -210,6 +265,13 @@ def main():
                 m["goals"] = goals
             if vids:
                 m["videos"] = vids
+            key = (m["home"], m["away"], m["date"])
+            if key in prev_hl:
+                m["highlight"] = prev_hl[key]; hl_hit += 1
+            else:
+                hl = fetch_youtube_highlight(m["home"], m["away"], m["hs"], m["as"])
+                if hl:
+                    m["highlight"] = hl; hl_new += 1
             detail_n += 1
         gh = team2group.get(m["home"])
         ga = team2group.get(m["away"])
@@ -217,7 +279,7 @@ def main():
             gmatches[gh].append(m)
         else:
             knockout.append(m)
-    print(f"[info] 已为 {detail_n} 场已结束比赛抓取进球/视频明细")
+    print(f"[info] 已为 {detail_n} 场抓进球/视频；集锦链接：复用 {hl_hit}、新抓 {hl_new}")
 
     for name in gmatches:
         gmatches[name].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))

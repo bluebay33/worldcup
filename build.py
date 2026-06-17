@@ -181,12 +181,15 @@ def goals_html(m):
 
 
 def fifa_highlight_link(m):
-    """已结束比赛 -> FIFA 官方集锦的 YouTube 搜索链接(用含比分的精确标题，首条基本即官方集锦)。"""
+    """已结束比赛 -> 集锦链接。优先 fetch 抓到的直链；抓不到则退回 YouTube 搜索链接。"""
     if m.get("status") != "FT" or m.get("hs") is None or m.get("as") is None:
         return ""
+    hl = m.get("highlight") or {}
+    if hl.get("url"):
+        return f'<a class="vlink yt" href="{esc(hl["url"])}" target="_blank" rel="noopener">🎬 FIFA 集锦</a>'
     q = f'{m["home"]} {m["hs"]}-{m["as"]} {m["away"]} FIFA World Cup 2026 highlights'
     url = "https://www.youtube.com/results?search_query=" + quote_plus(q)
-    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 FIFA 集锦</a>'
+    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 FIFA 集锦(搜索)</a>'
 
 
 def videos_html(m):
