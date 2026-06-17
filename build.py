@@ -15,6 +15,7 @@ import os
 import re
 import html
 from datetime import datetime, timezone, timedelta
+from urllib.parse import quote_plus
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "data.json")
@@ -179,14 +180,26 @@ def goals_html(m):
     return '<div class="m-goals">⚽ ' + "".join(parts) + "</div>"
 
 
-def videos_html(m):
-    vids = m.get("videos") or []
-    if not vids:
+def fifa_highlight_link(m):
+    """已结束比赛 -> FIFA 官方集锦的 YouTube 搜索链接(用含比分的精确标题，首条基本即官方集锦)。"""
+    if m.get("status") != "FT" or m.get("hs") is None or m.get("as") is None:
         return ""
-    links = "".join(
-        f'<a class="vlink" href="{esc(v.get("url", ""))}" target="_blank" rel="noopener">▶ {esc((v.get("title") or "视频")[:26])}</a>'
-        for v in vids)
-    return f'<div class="m-videos">{links}</div>'
+    q = f'{m["home"]} {m["hs"]}-{m["as"]} {m["away"]} FIFA World Cup 2026 highlights'
+    url = "https://www.youtube.com/results?search_query=" + quote_plus(q)
+    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 FIFA 集锦</a>'
+
+
+def videos_html(m):
+    links = []
+    yt = fifa_highlight_link(m)
+    if yt:
+        links.append(yt)
+    for v in (m.get("videos") or []):
+        links.append(f'<a class="vlink" href="{esc(v.get("url", ""))}" target="_blank" rel="noopener">'
+                     f'▶ {esc((v.get("title") or "视频")[:26])}</a>')
+    if not links:
+        return ""
+    return f'<div class="m-videos">{"".join(links)}</div>'
 
 
 def group_block(group):
@@ -439,6 +452,8 @@ def build():
   .vlink {{ color:var(--accent); font-size:11px; text-decoration:none; border:1px solid #2f4636;
     padding:1px 7px; border-radius:10px; }}
   .vlink:hover {{ background:rgba(63,185,80,0.12); }}
+  .vlink.yt {{ color:#ff6b6b; border-color:#5a2f2f; }}
+  .vlink.yt:hover {{ background:rgba(248,81,73,0.12); }}
   .scorers {{ margin-top:18px; }}
   table.scoretable {{ width:100%; border-collapse:collapse; font-size:13px;
     background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }}
