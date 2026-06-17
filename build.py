@@ -126,8 +126,7 @@ def compute_table(group):
 
 def score_cell(m):
     if m.get("hs") is None or m.get("as") is None:
-        t = m.get("time", "")
-        return f'<span class="vs">{esc(t)} vs</span>' if t else '<span class="vs">vs</span>'
+        return '<span class="vs">vs</span>'
     return f'<span class="score">{m["hs"]} : {m["as"]}</span>'
 
 
@@ -145,7 +144,9 @@ def match_row(m, show_group=False):
     _vname = m.get("venue", "")
     _loc = f"{_city} · {_vname}" if (_city and _vname) else (_city or _vname)
     venue = f'<span class="venue">{esc(_loc)}</span>' if _loc else ""
-    dt = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
+    _fb = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
+    ts = m.get("ts")
+    dt = f'<span class="ltime" data-ts="{ts}">{_fb}</span>' if ts else _fb
     return f"""<div class="match">
       <div class="m-date">{grp}{dt}</div>
       <div class="m-home">{esc(cn(m["home"]))}</div>
@@ -259,6 +260,9 @@ def build():
     BJT = timezone(timedelta(hours=8))
 
     def _mdt(m):
+        ts = m.get("ts")
+        if ts:
+            return datetime.fromtimestamp(ts / 1000, tz=timezone.utc)
         try:
             return datetime.strptime(m.get("date", "") + " " + (m.get("time") or "00:00"),
                                      "%Y-%m-%d %H:%M").replace(tzinfo=BJT)
@@ -291,7 +295,7 @@ def build():
     fixtures_html = ""
     if upcoming:
         _title = (f'🔥 近期赛程 · {fix_label} <span class="cnt">{len(upcoming)} 场</span>'
-                  '<span class="note">（北京时间）</span>')
+                  '<span class="note">（本地时间）</span>')
         _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in upcoming) + '</div>'
         fixtures_html = collap(_title, _body, open_=True, cls="fixtures hero")
 
@@ -315,7 +319,7 @@ def build():
     recent_html = ""
     if recent:
         _title = (f'🏁 最近战果 · {recent_label} <span class="cnt">{len(recent)} 场</span>'
-                  '<span class="note">（北京时间）</span>')
+                  '<span class="note">（本地时间）</span>')
         _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in recent) + '</div>'
         recent_html = collap(_title, _body, open_=True, cls="results hero")
 
@@ -373,7 +377,9 @@ def build():
     knockout_html = collap('淘汰赛', _kbody, open_=False, cls="knockout")
 
     sources = " · ".join(esc(s) for s in meta.get("sources", []))
-    built_at = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+    _built = datetime.now(timezone.utc)
+    built_at = _built.astimezone(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
+    built_ms = int(_built.timestamp() * 1000)
 
     page = f"""<!DOCTYPE html>
 <html lang="zh">
@@ -492,7 +498,7 @@ def build():
     <h1>⚽ {esc(meta.get('tournament','世界杯'))} 战报</h1>
     <div class="sub">
       <span>主办：<b>{esc(meta.get('host',''))}</b></span>
-      <span>数据更新：<b>{esc(meta.get('lastUpdated',''))}</b></span>
+      <span>数据更新：<b data-ts="{meta.get('lastUpdatedTs','')}">{esc(meta.get('lastUpdated',''))}</b>（本地时间）</span>
     </div>
   </header>
 
@@ -506,8 +512,23 @@ def build():
 
   {knockout_html}
 
-  <footer>页面生成于 {built_at} · 绿色行为小组前两名（晋级区）· 数据自动推算自比赛结果</footer>
+  <footer>页面生成于 <span data-ts="{built_ms}">{built_at}</span> · 时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算</footer>
 </div>
+<script>
+(function(){{
+  function p(n){{return String(n).padStart(2,'0');}}
+  function fmt(ms){{
+    var d=new Date(Number(ms));
+    if(isNaN(d.getTime()))return null;
+    return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
+  }}
+  var els=document.querySelectorAll('[data-ts]');
+  for(var i=0;i<els.length;i++){{
+    var ms=els[i].getAttribute('data-ts');
+    if(ms){{var s=fmt(ms);if(s)els[i].textContent=s;}}
+  }}
+}})();
+</script>
 </body>
 </html>"""
 

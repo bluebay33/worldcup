@@ -2,7 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-18 02:46 (北京时间)",
+    "lastUpdated": "2026-06-18 02:57 (北京时间)",
+    "lastUpdatedTs": 1781722627070,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -22,6 +23,7 @@
         {
           "date": "2026-06-12",
           "time": "03:00",
+          "ts": 1781204400000,
           "home": "Mexico",
           "away": "South Africa",
           "hs": 2,
@@ -67,6 +69,7 @@
         {
           "date": "2026-06-12",
           "time": "10:00",
+          "ts": 1781229600000,
           "home": "South Korea",
           "away": "Czechia",
           "hs": 2,
@@ -111,6 +114,7 @@
         {
           "date": "2026-06-19",
           "time": "00:00",
+          "ts": 1781798400000,
           "home": "Czechia",
           "away": "South Africa",
           "hs": null,
@@ -122,6 +126,7 @@
         {
           "date": "2026-06-19",
           "time": "09:00",
+          "ts": 1781830800000,
           "home": "Mexico",
           "away": "South Korea",
           "hs": null,
@@ -133,6 +138,7 @@
         {
           "date": "2026-06-25",
           "time": "09:00",
+          "ts": 1782349200000,
           "home": "Czechia",
           "away": "Mexico",
           "hs": null,
@@ -144,6 +150,7 @@
         {
           "date": "2026-06-25",
           "time": "09:00",
+          "ts": 1782349200000,
           "home": "South Africa",
           "away": "South Korea",
           "hs": null,
@@ -166,6 +173,7 @@
         {
           "date": "2026-06-13",
           "time": "03:00",
+          "ts": 1781290800000,
           "home": "Canada",
           "away": "Bosnia-Herzegovina",
           "hs": 1,
@@ -207,6 +215,7 @@
         {
           "date": "2026-06-14",
           "time": "03:00",
+          "ts": 1781377200000,
           "home": "Qatar",
           "away": "Switzerland",
           "hs": 1,
@@ -244,6 +253,7 @@
         {
           "date": "2026-06-19",
           "time": "03:00",
+          "ts": 1781809200000,
           "home": "Switzerland",
           "away": "Bosnia-Herzegovina",
           "hs": null,
@@ -255,6 +265,7 @@
         {
           "date": "2026-06-19",
           "time": "06:00",
+          "ts": 1781820000000,
           "home": "Canada",
           "away": "Qatar",
           "hs": null,
@@ -266,6 +277,7 @@
         {
           "date": "2026-06-25",
           "time": "03:00",
+          "ts": 1782327600000,
           "home": "Bosnia-Herzegovina",
           "away": "Qatar",
           "hs": null,
@@ -277,6 +289,7 @@
         {
           "date": "2026-06-25",
           "time": "03:00",
+          "ts": 1782327600000,
           "home": "Switzerland",
           "away": "Canada",
           "hs": null,
@@ -299,6 +312,7 @@
         {
           "date": "2026-06-14",
           "time": "06:00",
+          "ts": 1781388000000,
           "home": "Brazil",
           "away": "Morocco",
           "hs": 1,
@@ -344,6 +358,7 @@
         {
           "date": "2026-06-14",
           "time": "09:00",
+          "ts": 1781398800000,
           "home": "Haiti",
           "away": "Scotland",
           "hs": 0,
@@ -374,6 +389,7 @@
         {
           "date": "2026-06-20",
           "time": "06:00",
+          "ts": 1781906400000,
           "home": "Scotland",
           "away": "Morocco",
           "hs": null,
@@ -385,6 +401,7 @@
         {
           "date": "2026-06-20",
           "time": "08:30",
+          "ts": 1781915400000,
           "home": "Brazil",
           "away": "Haiti",
           "hs": null,
@@ -396,6 +413,7 @@
         {
           "date": "2026-06-25",
           "time": "06:00",
+          "ts": 1782338400000,
           "home": "Morocco",
           "away": "Haiti",
           "hs": null,
@@ -407,6 +425,7 @@
         {
           "date": "2026-06-25",
           "time": "06:00",
+          "ts": 1782338400000,
           "home": "Scotland",
           "away": "Brazil",
           "hs": null,
@@ -429,6 +448,7 @@
         {
           "date": "2026-06-13",
           "time": "09:00",
+          "ts": 1781312400000,
           "home": "United States",
           "away": "Paraguay",
           "hs": 4,
@@ -495,6 +515,7 @@
         {
           "date": "2026-06-14",
           "time": "12:00",
+          "ts": 1781409600000,
           "home": "Australia",
           "away": "Türkiye",
           "hs": 2,
@@ -536,6 +557,7 @@
         {
           "date": "2026-06-20",
           "time": "03:00",
+          "ts": 1781895600000,
           "home": "United States",
           "away": "Australia",
           "hs": null,
@@ -547,6 +569,7 @@
         {
           "date": "2026-06-20",
           "time": "11:00",
+          "ts": 1781924400000,
           "home": "Türkiye",
           "away": "Paraguay",
           "hs": null,
@@ -558,6 +581,7 @@
         {
           "date": "2026-06-26",
           "time": "10:00",
+          "ts": 1782439200000,
           "home": "Paraguay",
           "away": "Australia",
           "hs": null,
@@ -569,6 +593,7 @@
         {
           "date": "2026-06-26",
           "time": "10:00",
+          "ts": 1782439200000,
           "home": "Türkiye",
           "away": "United States",
           "hs": null,
@@ -591,6 +616,7 @@
         {
           "date": "2026-06-15",
           "time": "01:00",
+          "ts": 1781456400000,
           "home": "Germany",
           "away": "Curaçao",
           "hs": 7,
@@ -670,6 +696,7 @@
         {
           "date": "2026-06-15",
           "time": "07:00",
+          "ts": 1781478000000,
           "home": "Ivory Coast",
           "away": "Ecuador",
           "hs": 1,
@@ -700,6 +727,7 @@
         {
           "date": "2026-06-21",
           "time": "04:00",
+          "ts": 1781985600000,
           "home": "Germany",
           "away": "Ivory Coast",
           "hs": null,
@@ -711,6 +739,7 @@
         {
           "date": "2026-06-21",
           "time": "08:00",
+          "ts": 1782000000000,
           "home": "Ecuador",
           "away": "Curaçao",
           "hs": null,
@@ -722,6 +751,7 @@
         {
           "date": "2026-06-26",
           "time": "04:00",
+          "ts": 1782417600000,
           "home": "Curaçao",
           "away": "Ivory Coast",
           "hs": null,
@@ -733,6 +763,7 @@
         {
           "date": "2026-06-26",
           "time": "04:00",
+          "ts": 1782417600000,
           "home": "Ecuador",
           "away": "Germany",
           "hs": null,
@@ -755,6 +786,7 @@
         {
           "date": "2026-06-15",
           "time": "04:00",
+          "ts": 1781467200000,
           "home": "Netherlands",
           "away": "Japan",
           "hs": 2,
@@ -806,6 +838,7 @@
         {
           "date": "2026-06-15",
           "time": "10:00",
+          "ts": 1781488800000,
           "home": "Sweden",
           "away": "Tunisia",
           "hs": 5,
@@ -871,6 +904,7 @@
         {
           "date": "2026-06-21",
           "time": "01:00",
+          "ts": 1781974800000,
           "home": "Netherlands",
           "away": "Sweden",
           "hs": null,
@@ -882,6 +916,7 @@
         {
           "date": "2026-06-21",
           "time": "12:00",
+          "ts": 1782014400000,
           "home": "Tunisia",
           "away": "Japan",
           "hs": null,
@@ -893,6 +928,7 @@
         {
           "date": "2026-06-26",
           "time": "07:00",
+          "ts": 1782428400000,
           "home": "Japan",
           "away": "Sweden",
           "hs": null,
@@ -904,6 +940,7 @@
         {
           "date": "2026-06-26",
           "time": "07:00",
+          "ts": 1782428400000,
           "home": "Tunisia",
           "away": "Netherlands",
           "hs": null,
@@ -926,6 +963,7 @@
         {
           "date": "2026-06-16",
           "time": "03:00",
+          "ts": 1781550000000,
           "home": "Belgium",
           "away": "Egypt",
           "hs": 1,
@@ -963,6 +1001,7 @@
         {
           "date": "2026-06-16",
           "time": "09:00",
+          "ts": 1781571600000,
           "home": "Iran",
           "away": "New Zealand",
           "hs": 2,
@@ -1018,6 +1057,7 @@
         {
           "date": "2026-06-22",
           "time": "03:00",
+          "ts": 1782068400000,
           "home": "Belgium",
           "away": "Iran",
           "hs": null,
@@ -1029,6 +1069,7 @@
         {
           "date": "2026-06-22",
           "time": "09:00",
+          "ts": 1782090000000,
           "home": "New Zealand",
           "away": "Egypt",
           "hs": null,
@@ -1040,6 +1081,7 @@
         {
           "date": "2026-06-27",
           "time": "11:00",
+          "ts": 1782529200000,
           "home": "Egypt",
           "away": "Iran",
           "hs": null,
@@ -1051,6 +1093,7 @@
         {
           "date": "2026-06-27",
           "time": "11:00",
+          "ts": 1782529200000,
           "home": "New Zealand",
           "away": "Belgium",
           "hs": null,
@@ -1073,6 +1116,7 @@
         {
           "date": "2026-06-16",
           "time": "00:00",
+          "ts": 1781539200000,
           "home": "Spain",
           "away": "Cape Verde",
           "hs": 0,
@@ -1098,6 +1142,7 @@
         {
           "date": "2026-06-16",
           "time": "06:00",
+          "ts": 1781560800000,
           "home": "Saudi Arabia",
           "away": "Uruguay",
           "hs": 1,
@@ -1135,6 +1180,7 @@
         {
           "date": "2026-06-22",
           "time": "00:00",
+          "ts": 1782057600000,
           "home": "Spain",
           "away": "Saudi Arabia",
           "hs": null,
@@ -1146,6 +1192,7 @@
         {
           "date": "2026-06-22",
           "time": "06:00",
+          "ts": 1782079200000,
           "home": "Uruguay",
           "away": "Cape Verde",
           "hs": null,
@@ -1157,6 +1204,7 @@
         {
           "date": "2026-06-27",
           "time": "08:00",
+          "ts": 1782518400000,
           "home": "Cape Verde",
           "away": "Saudi Arabia",
           "hs": null,
@@ -1168,6 +1216,7 @@
         {
           "date": "2026-06-27",
           "time": "08:00",
+          "ts": 1782518400000,
           "home": "Uruguay",
           "away": "Spain",
           "hs": null,
@@ -1190,6 +1239,7 @@
         {
           "date": "2026-06-17",
           "time": "03:00",
+          "ts": 1781636400000,
           "home": "France",
           "away": "Senegal",
           "hs": 3,
@@ -1249,6 +1299,7 @@
         {
           "date": "2026-06-17",
           "time": "06:00",
+          "ts": 1781647200000,
           "home": "Iraq",
           "away": "Norway",
           "hs": 1,
@@ -1311,6 +1362,7 @@
         {
           "date": "2026-06-23",
           "time": "05:00",
+          "ts": 1782162000000,
           "home": "France",
           "away": "Iraq",
           "hs": null,
@@ -1322,6 +1374,7 @@
         {
           "date": "2026-06-23",
           "time": "08:00",
+          "ts": 1782172800000,
           "home": "Norway",
           "away": "Senegal",
           "hs": null,
@@ -1333,6 +1386,7 @@
         {
           "date": "2026-06-27",
           "time": "03:00",
+          "ts": 1782500400000,
           "home": "Norway",
           "away": "France",
           "hs": null,
@@ -1344,6 +1398,7 @@
         {
           "date": "2026-06-27",
           "time": "03:00",
+          "ts": 1782500400000,
           "home": "Senegal",
           "away": "Iraq",
           "hs": null,
@@ -1366,6 +1421,7 @@
         {
           "date": "2026-06-17",
           "time": "09:00",
+          "ts": 1781658000000,
           "home": "Argentina",
           "away": "Algeria",
           "hs": 3,
@@ -1418,6 +1474,7 @@
         {
           "date": "2026-06-17",
           "time": "12:00",
+          "ts": 1781668800000,
           "home": "Austria",
           "away": "Jordan",
           "hs": 3,
@@ -1469,6 +1526,7 @@
         {
           "date": "2026-06-23",
           "time": "01:00",
+          "ts": 1782147600000,
           "home": "Argentina",
           "away": "Austria",
           "hs": null,
@@ -1480,6 +1538,7 @@
         {
           "date": "2026-06-23",
           "time": "11:00",
+          "ts": 1782183600000,
           "home": "Jordan",
           "away": "Algeria",
           "hs": null,
@@ -1491,6 +1550,7 @@
         {
           "date": "2026-06-28",
           "time": "10:00",
+          "ts": 1782612000000,
           "home": "Algeria",
           "away": "Austria",
           "hs": null,
@@ -1502,6 +1562,7 @@
         {
           "date": "2026-06-28",
           "time": "10:00",
+          "ts": 1782612000000,
           "home": "Jordan",
           "away": "Argentina",
           "hs": null,
@@ -1524,6 +1585,7 @@
         {
           "date": "2026-06-18",
           "time": "01:00",
+          "ts": 1781715600000,
           "home": "Portugal",
           "away": "Congo DR",
           "hs": 1,
@@ -1535,6 +1597,7 @@
         {
           "date": "2026-06-18",
           "time": "10:00",
+          "ts": 1781748000000,
           "home": "Uzbekistan",
           "away": "Colombia",
           "hs": null,
@@ -1546,6 +1609,7 @@
         {
           "date": "2026-06-24",
           "time": "01:00",
+          "ts": 1782234000000,
           "home": "Portugal",
           "away": "Uzbekistan",
           "hs": null,
@@ -1557,6 +1621,7 @@
         {
           "date": "2026-06-24",
           "time": "10:00",
+          "ts": 1782266400000,
           "home": "Colombia",
           "away": "Congo DR",
           "hs": null,
@@ -1568,6 +1633,7 @@
         {
           "date": "2026-06-28",
           "time": "07:30",
+          "ts": 1782603000000,
           "home": "Colombia",
           "away": "Portugal",
           "hs": null,
@@ -1579,6 +1645,7 @@
         {
           "date": "2026-06-28",
           "time": "07:30",
+          "ts": 1782603000000,
           "home": "Congo DR",
           "away": "Uzbekistan",
           "hs": null,
@@ -1601,6 +1668,7 @@
         {
           "date": "2026-06-18",
           "time": "04:00",
+          "ts": 1781726400000,
           "home": "England",
           "away": "Croatia",
           "hs": null,
@@ -1612,6 +1680,7 @@
         {
           "date": "2026-06-18",
           "time": "07:00",
+          "ts": 1781737200000,
           "home": "Ghana",
           "away": "Panama",
           "hs": null,
@@ -1623,6 +1692,7 @@
         {
           "date": "2026-06-24",
           "time": "04:00",
+          "ts": 1782244800000,
           "home": "England",
           "away": "Ghana",
           "hs": null,
@@ -1634,6 +1704,7 @@
         {
           "date": "2026-06-24",
           "time": "07:00",
+          "ts": 1782255600000,
           "home": "Panama",
           "away": "Croatia",
           "hs": null,
@@ -1645,6 +1716,7 @@
         {
           "date": "2026-06-28",
           "time": "05:00",
+          "ts": 1782594000000,
           "home": "Croatia",
           "away": "Ghana",
           "hs": null,
@@ -1656,6 +1728,7 @@
         {
           "date": "2026-06-28",
           "time": "05:00",
+          "ts": 1782594000000,
           "home": "Panama",
           "away": "England",
           "hs": null,
@@ -1671,6 +1744,7 @@
     {
       "date": "2026-06-29",
       "time": "03:00",
+      "ts": 1782673200000,
       "home": "Group A 2nd Place",
       "away": "Group B 2nd Place",
       "hs": null,
@@ -1682,6 +1756,7 @@
     {
       "date": "2026-06-30",
       "time": "01:00",
+      "ts": 1782752400000,
       "home": "Group C Winner",
       "away": "Group F 2nd Place",
       "hs": null,
@@ -1693,6 +1768,7 @@
     {
       "date": "2026-06-30",
       "time": "04:30",
+      "ts": 1782765000000,
       "home": "Group E Winner",
       "away": "Third Place Group A/B/C/D/F",
       "hs": null,
@@ -1704,6 +1780,7 @@
     {
       "date": "2026-06-30",
       "time": "09:00",
+      "ts": 1782781200000,
       "home": "Group F Winner",
       "away": "Group C 2nd Place",
       "hs": null,
@@ -1715,6 +1792,7 @@
     {
       "date": "2026-07-01",
       "time": "01:00",
+      "ts": 1782838800000,
       "home": "Group E 2nd Place",
       "away": "Group I 2nd Place",
       "hs": null,
@@ -1726,6 +1804,7 @@
     {
       "date": "2026-07-01",
       "time": "05:00",
+      "ts": 1782853200000,
       "home": "Group I Winner",
       "away": "Third Place Group C/D/F/G/H",
       "hs": null,
@@ -1737,6 +1816,7 @@
     {
       "date": "2026-07-01",
       "time": "09:00",
+      "ts": 1782867600000,
       "home": "Group A Winner",
       "away": "Third Place Group C/E/F/H/I",
       "hs": null,
@@ -1748,6 +1828,7 @@
     {
       "date": "2026-07-02",
       "time": "00:00",
+      "ts": 1782921600000,
       "home": "Group L Winner",
       "away": "Third Place Group E/H/I/J/K",
       "hs": null,
@@ -1759,6 +1840,7 @@
     {
       "date": "2026-07-02",
       "time": "04:00",
+      "ts": 1782936000000,
       "home": "Group G Winner",
       "away": "Third Place Group A/E/H/I/J",
       "hs": null,
@@ -1770,6 +1852,7 @@
     {
       "date": "2026-07-02",
       "time": "08:00",
+      "ts": 1782950400000,
       "home": "Group D Winner",
       "away": "Third Place Group B/E/F/I/J",
       "hs": null,
@@ -1781,6 +1864,7 @@
     {
       "date": "2026-07-03",
       "time": "03:00",
+      "ts": 1783018800000,
       "home": "Group H Winner",
       "away": "Group J 2nd Place",
       "hs": null,
@@ -1792,6 +1876,7 @@
     {
       "date": "2026-07-03",
       "time": "07:00",
+      "ts": 1783033200000,
       "home": "Group K 2nd Place",
       "away": "Group L 2nd Place",
       "hs": null,
@@ -1803,6 +1888,7 @@
     {
       "date": "2026-07-03",
       "time": "11:00",
+      "ts": 1783047600000,
       "home": "Group B Winner",
       "away": "Third Place Group E/F/G/I/J",
       "hs": null,
@@ -1814,6 +1900,7 @@
     {
       "date": "2026-07-04",
       "time": "02:00",
+      "ts": 1783101600000,
       "home": "Group D 2nd Place",
       "away": "Group G 2nd Place",
       "hs": null,
@@ -1825,6 +1912,7 @@
     {
       "date": "2026-07-04",
       "time": "06:00",
+      "ts": 1783116000000,
       "home": "Group J Winner",
       "away": "Group H 2nd Place",
       "hs": null,
@@ -1836,6 +1924,7 @@
     {
       "date": "2026-07-04",
       "time": "09:30",
+      "ts": 1783128600000,
       "home": "Group K Winner",
       "away": "Third Place Group D/E/I/J/L",
       "hs": null,
@@ -1847,6 +1936,7 @@
     {
       "date": "2026-07-05",
       "time": "01:00",
+      "ts": 1783184400000,
       "home": "Round of 32 1 Winner",
       "away": "Round of 32 3 Winner",
       "hs": null,
@@ -1858,6 +1948,7 @@
     {
       "date": "2026-07-05",
       "time": "05:00",
+      "ts": 1783198800000,
       "home": "Round of 32 2 Winner",
       "away": "Round of 32 5 Winner",
       "hs": null,
@@ -1869,6 +1960,7 @@
     {
       "date": "2026-07-06",
       "time": "04:00",
+      "ts": 1783281600000,
       "home": "Round of 32 4 Winner",
       "away": "Round of 32 6 Winner",
       "hs": null,
@@ -1880,6 +1972,7 @@
     {
       "date": "2026-07-06",
       "time": "08:00",
+      "ts": 1783296000000,
       "home": "Round of 32 7 Winner",
       "away": "Round of 32 8 Winner",
       "hs": null,
@@ -1891,6 +1984,7 @@
     {
       "date": "2026-07-07",
       "time": "03:00",
+      "ts": 1783364400000,
       "home": "Round of 32 11 Winner",
       "away": "Round of 32 12 Winner",
       "hs": null,
@@ -1902,6 +1996,7 @@
     {
       "date": "2026-07-07",
       "time": "08:00",
+      "ts": 1783382400000,
       "home": "Round of 32 9 Winner",
       "away": "Round of 32 10 Winner",
       "hs": null,
@@ -1913,6 +2008,7 @@
     {
       "date": "2026-07-08",
       "time": "00:00",
+      "ts": 1783440000000,
       "home": "Round of 32 14 Winner",
       "away": "Round of 32 16 Winner",
       "hs": null,
@@ -1924,6 +2020,7 @@
     {
       "date": "2026-07-08",
       "time": "04:00",
+      "ts": 1783454400000,
       "home": "Round of 32 13 Winner",
       "away": "Round of 32 15 Winner",
       "hs": null,
@@ -1935,6 +2032,7 @@
     {
       "date": "2026-07-10",
       "time": "04:00",
+      "ts": 1783627200000,
       "home": "Round of 16 1 Winner",
       "away": "Round of 16 2 Winner",
       "hs": null,
@@ -1946,6 +2044,7 @@
     {
       "date": "2026-07-11",
       "time": "03:00",
+      "ts": 1783710000000,
       "home": "Round of 16 5 Winner",
       "away": "Round of 16 6 Winner",
       "hs": null,
@@ -1957,6 +2056,7 @@
     {
       "date": "2026-07-12",
       "time": "05:00",
+      "ts": 1783803600000,
       "home": "Round of 16 3 Winner",
       "away": "Round of 16 4 Winner",
       "hs": null,
@@ -1968,6 +2068,7 @@
     {
       "date": "2026-07-12",
       "time": "09:00",
+      "ts": 1783818000000,
       "home": "Round of 16 7 Winner",
       "away": "Round of 16 8 Winner",
       "hs": null,
@@ -1979,6 +2080,7 @@
     {
       "date": "2026-07-15",
       "time": "03:00",
+      "ts": 1784055600000,
       "home": "Quarterfinal 1 Winner",
       "away": "Quarterfinal 2 Winner",
       "hs": null,
@@ -1990,6 +2092,7 @@
     {
       "date": "2026-07-16",
       "time": "03:00",
+      "ts": 1784142000000,
       "home": "Quarterfinal 3 Winner",
       "away": "Quarterfinal 4 Winner",
       "hs": null,
@@ -2001,6 +2104,7 @@
     {
       "date": "2026-07-19",
       "time": "05:00",
+      "ts": 1784408400000,
       "home": "Semifinal 1 Loser",
       "away": "Semifinal 2 Loser",
       "hs": null,
@@ -2012,6 +2116,7 @@
     {
       "date": "2026-07-20",
       "time": "03:00",
+      "ts": 1784487600000,
       "home": "Semifinal 1 Winner",
       "away": "Semifinal 2 Winner",
       "hs": null,

@@ -63,6 +63,17 @@ def to_bjt(iso):
     return b.strftime("%Y-%m-%d"), b.strftime("%H:%M")
 
 
+def to_ms(iso):
+    """ESPN UTC ISO -> epoch 毫秒(UTC)；供浏览器按读者本地时区显示。无法解析返回 None。"""
+    s = (iso or "").replace("Z", "+00:00")
+    for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M%z"):
+        try:
+            return int(datetime.strptime(s, fmt).timestamp() * 1000)
+        except ValueError:
+            continue
+    return None
+
+
 def map_status(ev):
     name = (ev.get("status", {}).get("type", {}) or {}).get("name", "")
     state = (ev.get("status", {}).get("type", {}) or {}).get("state", "")
@@ -144,6 +155,7 @@ def parse_event(e):
             return None
     status = map_status(e)
     date, t = to_bjt(e.get("date", ""))
+    ts = to_ms(e.get("date", ""))
     vobj = comp.get("venue") or {}
     venue = vobj.get("fullName") or ""
     city = (vobj.get("address") or {}).get("city") or ""
@@ -156,7 +168,7 @@ def parse_event(e):
     hs = to_int(home[1]) if status != "sched" else None
     as_ = to_int(away[1]) if status != "sched" else None
     return {
-        "date": date, "time": t,
+        "date": date, "time": t, "ts": ts,
         "home": home[0], "away": away[0],
         "hs": hs, "as": as_,
         "status": status, "venue": venue, "city": city,
@@ -286,12 +298,14 @@ def main():
     groups = [{"name": g["name"], "teams": g["teams"],
                "matches": gmatches[g["name"]]} for g in groups_order]
 
-    now_bjt = datetime.now(BJT).strftime("%Y-%m-%d %H:%M") + " (北京时间)"
+    now_utc = datetime.now(timezone.utc)
+    now_bjt = now_utc.astimezone(BJT).strftime("%Y-%m-%d %H:%M") + " (北京时间)"
     data = {
         "meta": {
             "tournament": "2026世界杯",
             "host": "美国 / 加拿大 / 墨西哥",
             "lastUpdated": now_bjt,
+            "lastUpdatedTs": int(now_utc.timestamp() * 1000),
             "updatedBy": "ESPN 自动拉取",
             "sources": ["ESPN"],
             "notes": "数据来自 ESPN 公开结构化端点，开球时间已转北京时间。比赛结果是唯一事实源，积分榜由 build.py 自动推算（胜3平1负0）。同组两队记小组赛，跨组记淘汰赛。",
