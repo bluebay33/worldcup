@@ -193,10 +193,10 @@ def fetch_match_detail(event_id):
     return goals, vids
 
 
-def fetch_youtube_highlight(home, away, hs, as_):
-    """抓 YouTube 搜索结果里的官方/最相关集锦，返回 {'url','title'} 或 None。
-    优先 FIFA 官方频道；其次标题含队名的第一条；都没有则首条。云端被拦时返回 None（由 build.py 退回搜索链接）。"""
-    q = f"{home} {hs}-{as_} {away} FIFA World Cup 2026 highlights"
+def fetch_youtube_highlight(home, away):
+    """搜 '队名A 队名B highlights world cup 2026'（不带比分——带比分会搜到蹭标题的二次上传），
+    取官方集锦：优先 FIFA 官方频道，否则取首条。返回 {'url','title'} 或 None。"""
+    q = f"{home} {away} highlights world cup 2026"
     url = "https://www.youtube.com/results?search_query=" + quote_plus(q) + "&hl=en&gl=US"
     try:
         req = urllib.request.Request(url, headers={
@@ -222,15 +222,13 @@ def fetch_youtube_highlight(home, away, hs, as_):
     def watch(vid, title):
         return {"url": f"https://www.youtube.com/watch?v={vid}", "title": clean(title)}
 
-    for vid, title, ch in items:                      # 1) FIFA 官方频道优先
-        if ch.strip().lower() == "fifa":
+    # 只认 FIFA 官方频道的"完整集锦"：标题以 Highlights 开头、且非 shorts。
+    # （排除二次上传/单球/shorts/存档老比赛如"15-Minute Match ... 2002"）
+    for vid, title, ch in items:
+        tl = title.strip().lower()
+        if ch.strip().lower() == "fifa" and tl.startswith("highlights") and "shorts" not in tl:
             return watch(vid, title)
-    hl, al = home.split()[-1].lower(), away.split()[-1].lower()
-    for vid, title, ch in items:                      # 2) 标题含队名
-        t = title.lower()
-        if hl in t or al in t:
-            return watch(vid, title)
-    return watch(items[0][0], items[0][1])            # 3) 首条
+    return None                                        # 没有官方完整集锦 -> build.py 退回搜索链接
 
 
 def main():
@@ -269,7 +267,7 @@ def main():
             if key in prev_hl:
                 m["highlight"] = prev_hl[key]; hl_hit += 1
             else:
-                hl = fetch_youtube_highlight(m["home"], m["away"], m["hs"], m["as"])
+                hl = fetch_youtube_highlight(m["home"], m["away"])
                 if hl:
                     m["highlight"] = hl; hl_new += 1
             detail_n += 1
