@@ -16,6 +16,7 @@ import json
 import os
 import re
 import time
+import unicodedata
 import urllib.request
 from urllib.parse import quote_plus
 from datetime import datetime, timedelta, timezone
@@ -205,6 +206,35 @@ def fetch_match_detail(event_id):
     return goals, vids
 
 
+def _norm(s):
+    """小写 + 去音标(Curaçao->curacao, Türkiye->turkiye),便于匹配。"""
+    s = unicodedata.normalize("NFKD", s or "")
+    return "".join(c for c in s if not unicodedata.combining(c)).lower()
+
+# ESPN 数据队名 与 FIFA 标题队名 无词重叠的，给别名(其余靠去音标/共同词即可)
+_TEAM_ALIAS = {
+    "united states": ["usa", "united states"],
+    "ivory coast": ["cote", "ivoire", "ivory coast"],
+}
+_STOP = {"and", "the", "of", "dr", "fc", "ir", "republic"}
+
+
+def _team_tokens(name):
+    al = _TEAM_ALIAS.get(_norm(name))
+    if al:
+        return al
+    words = [w for w in re.split(r"[\s'\-]+", _norm(name)) if len(w) >= 3 and w not in _STOP]
+    return words or [_norm(name)]
+
+
+def _relevant(title, home, away):
+    """标题是否同时提到主、客两队(去音标后子串匹配)。"""
+    t = _norm(title)
+    h = any(tok in t for tok in _team_tokens(home))
+    a = any(tok in t for tok in _team_tokens(away))
+    return h and a
+
+
 def fetch_youtube_highlight(home, away):
     """搜 '队名A 队名B highlights world cup 2026'（不带比分——带比分会搜到蹭标题的二次上传），
     取官方集锦：优先 FIFA 官方频道，否则取首条。返回 {'url','title'} 或 None。"""
@@ -234,13 +264,21 @@ def fetch_youtube_highlight(home, away):
     def watch(vid, title):
         return {"url": f"https://www.youtube.com/watch?v={vid}", "title": clean(title)}
 
-    # 优先 FIFA 官方频道的"完整集锦"：标题以 Highlights 开头、且非 shorts。
-    # （排除单球/shorts/存档老比赛如"15-Minute Match ... 2002"）
-    for vid, title, ch in items:
-        tl = title.strip().lower()
-        if ch.strip().lower() == "fifa" and tl.startswith("highlights") and "shorts" not in tl:
+    # 候选必须「标题同时提到主客两队」——否则会抓到某队的另一场(如 Congo vs Jamaica)。
+    rel = [(vid, title, ch) for vid, title, ch in items
+           if _relevant(title, home, away) and "shorts" not in title.lower()]
+    if not rel:
+        return None                                    # 没有匹配本场的 -> build.py 退回搜索链接
+    # 1) FIFA 官方频道、标题以 Highlights 开头
+    for vid, title, ch in rel:
+        if ch.strip().lower() == "fifa" and title.strip().lower().startswith("highlights"):
             return watch(vid, title)
-    return watch(items[0][0], items[0][1])             # 没有官方的，直接取搜索首条视频
+    # 2) 任意频道、标题含 highlight 的完整集锦
+    for vid, title, ch in rel:
+        if "highlight" in title.lower():
+            return watch(vid, title)
+    # 3) 匹配本场的首条
+    return watch(rel[0][0], rel[0][1])
 
 
 def main():
