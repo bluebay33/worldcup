@@ -381,10 +381,12 @@ def build():
   .notes {{ background:#1c2733; border-left:3px solid var(--gold); padding:10px 14px;
     border-radius:0 6px 6px 0; margin-top:14px; font-size:13px; color:var(--muted); }}
   h2 {{ font-size:20px; margin:32px 0 14px; padding-left:10px; border-left:4px solid var(--accent); }}
-  .sec {{ margin:0 0 16px; }}
+  .sec {{ margin:0 0 12px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:14px 18px; }}
   .sec > .sec-h {{ list-style:none; cursor:pointer; user-select:none; font-size:20px; font-weight:600;
-    margin:26px 0 14px; padding-left:10px; border-left:4px solid var(--accent);
+    margin:0; padding-left:10px; border-left:4px solid var(--accent);
     display:flex; align-items:center; gap:10px; flex-wrap:wrap; }}
+  .sec[open] > .sec-h {{ margin-bottom:14px; }}
   .sec > .sec-h::-webkit-details-marker {{ display:none; }}
   .sec > .sec-h::after {{ content:"▸ 展开"; color:var(--muted); font-size:12px; font-weight:400; margin-left:auto; }}
   .sec[open] > .sec-h::after {{ content:"▾ 收起"; }}

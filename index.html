@@ -20,10 +20,12 @@
   .notes { background:#1c2733; border-left:3px solid var(--gold); padding:10px 14px;
     border-radius:0 6px 6px 0; margin-top:14px; font-size:13px; color:var(--muted); }
   h2 { font-size:20px; margin:32px 0 14px; padding-left:10px; border-left:4px solid var(--accent); }
-  .sec { margin:0 0 16px; }
+  .sec { margin:0 0 12px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:14px 18px; }
   .sec > .sec-h { list-style:none; cursor:pointer; user-select:none; font-size:20px; font-weight:600;
-    margin:26px 0 14px; padding-left:10px; border-left:4px solid var(--accent);
+    margin:0; padding-left:10px; border-left:4px solid var(--accent);
     display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .sec[open] > .sec-h { margin-bottom:14px; }
   .sec > .sec-h::-webkit-details-marker { display:none; }
   .sec > .sec-h::after { content:"▸ 展开"; color:var(--muted); font-size:12px; font-weight:400; margin-left:auto; }
   .sec[open] > .sec-h::after { content:"▾ 收起"; }
@@ -111,7 +113,7 @@
     <h1>⚽ 2026世界杯 战报</h1>
     <div class="sub">
       <span>主办：<b>美国 / 加拿大 / 墨西哥</b></span>
-      <span>数据更新：<b>2026-06-17 11:11 (北京时间)</b></span>
+      <span>数据更新：<b>2026-06-17 11:49 (北京时间)</b></span>
     </div>
   </header>
 
@@ -121,7 +123,7 @@
       <div class="m-score"><span class="score">3 : 0</span></div>
       <div class="m-away">阿尔及利亚</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
-      <div class="m-goals">⚽ <span class="gitem">17&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">60&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">76&#x27; Lionel Messi<span class="gteam">阿根廷</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Lionel Messi nets screamer</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Fans in Argentina celebrat</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Presser_Argentina_fans_in_Buenos_Aires_react_to_Messis_hat_trick_goal_vs_Algeria_202606/dm_260616_COM_SOC_Presser_Argentina_fans_in_Buenos_Aires_react_to_Messis_hat_trick_goal_vs_Algeria_202606_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Argentina fans in Buenos A</a></div>
+      <div class="m-goals">⚽ <span class="gitem">17&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">60&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">76&#x27; Lionel Messi<span class="gteam">阿根廷</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Lionel Messi nets screamer</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Moreno: There is no argume</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Fans in Argentina celebrat</a></div>
     </div><div class="match">
       <div class="m-date"><span class="tag">I</span> 2026-06-17 06:00</div>
       <div class="m-home">伊拉克</div>
@@ -947,7 +949,7 @@
       <div class="m-score"><span class="score">3 : 0</span></div>
       <div class="m-away">阿尔及利亚</div>
       <div class="m-meta"><span class="badge ft">完场</span><span class="venue">堪萨斯城 · GEHA Field at Arrowhead Stadium</span></div>
-      <div class="m-goals">⚽ <span class="gitem">17&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">60&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">76&#x27; Lionel Messi<span class="gteam">阿根廷</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Lionel Messi nets screamer</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Fans in Argentina celebrat</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Presser_Argentina_fans_in_Buenos_Aires_react_to_Messis_hat_trick_goal_vs_Algeria_202606/dm_260616_COM_SOC_Presser_Argentina_fans_in_Buenos_Aires_react_to_Messis_hat_trick_goal_vs_Algeria_202606_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Argentina fans in Buenos A</a></div>
+      <div class="m-goals">⚽ <span class="gitem">17&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">60&#x27; Lionel Messi<span class="gteam">阿根廷</span></span><span class="gitem">76&#x27; Lionel Messi<span class="gteam">阿根廷</span></span></div><div class="m-videos"><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Lionel Messi nets screamer</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Moreno: There is no argume</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI/dm_260616_COM_SOC_News_Fans_in_Argentina_celebrate_Messis_spectacular_goal_vs_Algeria_20260616_GLOBAL_FI_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Fans in Argentina celebrat</a></div>
     </div><div class="match">
       <div class="m-date">2026-06-17 12:00</div>
       <div class="m-home">奥地利</div>
@@ -1366,7 +1368,7 @@
       
     </div></div></div></details>
 
-  <footer>页面生成于 2026-06-17 11:35:32 · 绿色行为小组前两名（晋级区）· 数据自动推算自比赛结果</footer>
+  <footer>页面生成于 2026-06-17 11:54:26 · 绿色行为小组前两名（晋级区）· 数据自动推算自比赛结果</footer>
 </div>
 </body>
 </html>
