@@ -264,21 +264,24 @@ def fetch_youtube_highlight(home, away):
     def watch(vid, title):
         return {"url": f"https://www.youtube.com/watch?v={vid}", "title": clean(title)}
 
-    # 候选必须「标题同时提到主客两队」——否则会抓到某队的另一场(如 Congo vs Jamaica)。
-    rel = [(vid, title, ch) for vid, title, ch in items
-           if _relevant(title, home, away) and "shorts" not in title.lower()]
-    if not rel:
-        return None                                    # 没有匹配本场的 -> build.py 退回搜索链接
-    # 1) FIFA 官方频道、标题以 Highlights 开头
-    for vid, title, ch in rel:
-        if ch.strip().lower() == "fifa" and title.strip().lower().startswith("highlights"):
+    # 候选必须含「完整关键字」:主客两队 + fifa + world cup + 2026 + highlight,且非 shorts。
+    # 挡掉:蹭队名的动画/预测、直播/预告、资格赛、单球、老世界杯重传、某队的另一场等。
+    def _ok(title):
+        t = _norm(title)
+        return (_relevant(title, home, away)
+                and "fifa" in t
+                and ("world cup" in t or "worldcup" in t)
+                and "2026" in t
+                and "highlight" in t
+                and "shorts" not in t)
+
+    cands = [(vid, title, ch) for vid, title, ch in items if _ok(title)]
+    if not cands:
+        return None                                    # 没有合格的 -> build.py 退回搜索链接
+    for vid, title, ch in cands:                       # 优先 FIFA 官方频道
+        if ch.strip().lower() == "fifa":
             return watch(vid, title)
-    # 2) 任意频道、标题含 highlight 的完整集锦
-    for vid, title, ch in rel:
-        if "highlight" in title.lower():
-            return watch(vid, title)
-    # 3) 匹配本场的首条
-    return watch(rel[0][0], rel[0][1])
+    return watch(cands[0][0], cands[0][1])             # 否则首条合格的
 
 
 def main():
