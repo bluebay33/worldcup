@@ -187,7 +187,9 @@ def fifa_highlight_link(m):
         return ""
     hl = m.get("highlight") or {}
     if hl.get("url"):
-        return f'<a class="vlink yt" href="{esc(hl["url"])}" target="_blank" rel="noopener">🎬 FIFA 集锦</a>'
+        src = (hl.get("channel") or "").strip()
+        label = f"🎬 集锦 · {esc(src[:16])}" if src else "🎬 集锦"
+        return f'<a class="vlink yt" href="{esc(hl["url"])}" target="_blank" rel="noopener">{label}</a>'
     q = f'{m["home"]} {m["away"]} highlights world cup 2026'
     url = "https://www.youtube.com/results?search_query=" + quote_plus(q)
     return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 FIFA 集锦(搜索)</a>'

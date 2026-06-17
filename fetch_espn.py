@@ -235,6 +235,18 @@ def _relevant(title, home, away):
     return h and a
 
 
+# 发布者可信度(越靠前越优先):FIFA 官方 > 官方转播商 > 其它
+_TRUSTED = ["fifa", "tsn", "fox soccer", "fox sports", "cbs sports", "telemundo", "itv", "bbc sport"]
+
+
+def _pub_rank(channel):
+    c = _norm(channel)
+    for i, name in enumerate(_TRUSTED):
+        if name in c:
+            return i
+    return len(_TRUSTED)   # 非可信发布者排最后(仍保留,作兜底)
+
+
 def fetch_youtube_highlight(home, away):
     """搜 '队名A 队名B highlights world cup 2026'（不带比分——带比分会搜到蹭标题的二次上传），
     取官方集锦：优先 FIFA 官方频道，否则取首条。返回 {'url','title'} 或 None。"""
@@ -261,8 +273,10 @@ def fetch_youtube_highlight(home, away):
     def clean(t):
         return t.replace("\\u0026", "&").replace("\\u003d", "=").replace("\\/", "/")
 
-    def watch(vid, title):
-        return {"url": f"https://www.youtube.com/watch?v={vid}", "title": clean(title)}
+    def watch(vid, title, ch):
+        c = clean(ch).split("•")[0].split("\\n")[0].strip()   # 去掉 "• 1.1M views • ..." 等附加
+        return {"url": f"https://www.youtube.com/watch?v={vid}",
+                "title": clean(title), "channel": c}
 
     # 候选必须含「完整关键字」:主客两队 + fifa + world cup + 2026 + highlight,且非 shorts。
     # 挡掉:蹭队名的动画/预测、直播/预告、资格赛、单球、老世界杯重传、某队的另一场等。
@@ -278,10 +292,9 @@ def fetch_youtube_highlight(home, away):
     cands = [(vid, title, ch) for vid, title, ch in items if _ok(title)]
     if not cands:
         return None                                    # 没有合格的 -> build.py 退回搜索链接
-    for vid, title, ch in cands:                       # 优先 FIFA 官方频道
-        if ch.strip().lower() == "fifa":
-            return watch(vid, title)
-    return watch(cands[0][0], cands[0][1])             # 否则首条合格的
+    # 按发布者可信度排序(稳定排序:同级保持原相关性顺序);FIFA>TSN等官方转播>其它
+    cands.sort(key=lambda c: _pub_rank(c[2]))
+    return watch(*cands[0])
 
 
 def main():
