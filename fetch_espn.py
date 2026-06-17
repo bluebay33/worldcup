@@ -222,13 +222,13 @@ def fetch_youtube_highlight(home, away):
     def watch(vid, title):
         return {"url": f"https://www.youtube.com/watch?v={vid}", "title": clean(title)}
 
-    # 只认 FIFA 官方频道的"完整集锦"：标题以 Highlights 开头、且非 shorts。
-    # （排除二次上传/单球/shorts/存档老比赛如"15-Minute Match ... 2002"）
+    # 优先 FIFA 官方频道的"完整集锦"：标题以 Highlights 开头、且非 shorts。
+    # （排除单球/shorts/存档老比赛如"15-Minute Match ... 2002"）
     for vid, title, ch in items:
         tl = title.strip().lower()
         if ch.strip().lower() == "fifa" and tl.startswith("highlights") and "shorts" not in tl:
             return watch(vid, title)
-    return None                                        # 没有官方完整集锦 -> build.py 退回搜索链接
+    return watch(items[0][0], items[0][1])             # 没有官方的，直接取搜索首条视频
 
 
 def main():

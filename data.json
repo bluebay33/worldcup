@@ -2,7 +2,7 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-18 02:36 (北京时间)",
+    "lastUpdated": "2026-06-18 02:46 (北京时间)",
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -1240,7 +1240,11 @@
               "title": "Mbappé proud to 'make a mark' on France's history with record goal",
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=EGxjq279Flw",
+            "title": "France 3-1 Senegal | Full Match Highlights | FIFA World Cup 2026 | Mbappé Shines As Les Bleus Win"
+          }
         },
         {
           "date": "2026-06-17",
@@ -1298,7 +1302,11 @@
               "title": "Why Haaland's World Cup debut was no surprise",
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_haaland_ia/dm_260617_haaland_ia_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=4_J-f3zQu_o",
+            "title": "Erling Haaland Goal | Iraq 1-4 Norway | FIFA World Cup 2026™"
+          }
         },
         {
           "date": "2026-06-23",
@@ -1401,7 +1409,11 @@
               "title": "'100% a red card' Should Lionel Messi have been on the pitch for his hat trick?",
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_100_a_red_card_Should_Lionel_Messi_have_been_on_the_pitch_for_his_hat_trick3F/dm_260617_100_a_red_card_Should_Lionel_Messi_have_been_on_the_pitch_for_his_hat_trick3F_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=MyuwRn3M4Xw",
+            "title": "ARGENTINA vs ALGERIA 3-0 | 2026 FIFA World Cup | Match Highlights"
+          }
         },
         {
           "date": "2026-06-17",
@@ -1448,7 +1460,11 @@
               "title": "Rangnick credits WC debutants Jordan for 'exceeding expectations' vs. Austria",
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Presser_Rangnick_credits_WC_debutants_Jordan_for_exceeding_expectations_vs_Austria_2026/dm_260617_COM_SOC_Presser_Rangnick_credits_WC_debutants_Jordan_for_exceeding_expectations_vs_Austria_2026_360p30_1464k.mp4"
             }
-          ]
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=v7tqbB3N_Aw",
+            "title": "Austria vs Jordan 3-1 Highlights | Ali Olwan Scores Jordan's First Ever FIFA WORLD CUP 2026 Goal"
+          }
         },
         {
           "date": "2026-06-23",
