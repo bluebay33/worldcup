@@ -1,16 +1,17 @@
 name: 更新世界杯战报
 
-# 在 GitHub 云端每 6 小时跑一次：拉 ESPN 真实数据 -> 生成页面 -> 部署到 Cloudflare Pages。
-# 全程纯 Python + wrangler，不依赖你的电脑、不使用 Claude。
+# 按需刷新:每小时触发一次「看一眼」,但只有临近比赛(gate.py 判断)时才真正拉数据+部署。
+# 小组赛比赛密集 -> 活跃刷新多;淘汰赛稀疏 -> 大多空转跳过。空转那次只 checkout+判断,几乎不耗额度。
+# 全程纯 Python(标准库,无需装依赖)+ wrangler,不依赖你的电脑、不使用 Claude。
 on:
   schedule:
-    - cron: '0 */2 * * *'    # 每 2 小时一次(UTC 偶数点)。约 360 次/月,稳在私有库 2000 分钟额度内
-  workflow_dispatch: {}        # 允许在 Actions 页面手动点「Run workflow」
+    - cron: '0 * * * *'        # 每小时看一眼;是否真正刷新由 gate.py 按日程决定
+  workflow_dispatch: {}          # 手动触发(强制刷新)
   push:
-    branches: [ main ]         # 推代码到 main 时也跑一次（方便首次验证）
+    branches: [ main ]           # 推代码到 main 也跑(强制刷新,方便验证)
 
 permissions:
-  contents: read               # 只读仓库，最小权限
+  contents: read                 # 只读仓库,最小权限
 
 jobs:
   update:
@@ -19,23 +20,28 @@ jobs:
       - name: 拉取仓库
         uses: actions/checkout@v4
 
-      - name: 安装 Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: 按比赛日程判断是否需要刷新
+        id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: python3 gate.py
 
       - name: 拉 ESPN 真实数据
-        run: python fetch_espn.py
+        if: steps.gate.outputs.active == 'true'
+        run: python3 fetch_espn.py
 
       - name: 生成页面
-        run: python build.py
+        if: steps.gate.outputs.active == 'true'
+        run: python3 build.py
 
       - name: 整理发布目录（只放静态文件）
+        if: steps.gate.outputs.active == 'true'
         run: |
           mkdir -p _site
           cp index.html report.html data.json manifest.webmanifest sw.js icon-192.png icon-512.png apple-touch-icon.png _site/
 
       - name: 部署到 Cloudflare Pages
+        if: steps.gate.outputs.active == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
