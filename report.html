@@ -1416,7 +1416,7 @@
       
     </div></div></div></details>
 
-  <footer>页面生成于 <span data-ts="1781785761500">2026-06-18 20:29</span> · 时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算</footer>
+  <footer>页面生成于 <span data-ts="1781790509115">2026-06-18 21:48</span> · 时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算</footer>
 </div>
 <script>
 (function(){
@@ -1430,6 +1430,10 @@
   for(var i=0;i<els.length;i++){
     var ms=els[i].getAttribute('data-ts');
     if(ms){var s=fmt(ms);if(s)els[i].textContent=s;}
+  }
+  // 注册极简 service worker,让本站可被「安装」为独立 APP(强制手机版渲染,无视桌面版开关)
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
   }
 })();
 </script>

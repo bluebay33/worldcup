@@ -589,6 +589,10 @@ def build():
     var ms=els[i].getAttribute('data-ts');
     if(ms){{var s=fmt(ms);if(s)els[i].textContent=s;}}
   }}
+  // 注册极简 service worker,让本站可被「安装」为独立 APP(强制手机版渲染,无视桌面版开关)
+  if('serviceWorker' in navigator){{
+    navigator.serviceWorker.register('sw.js').catch(function(){{}});
+  }}
 }})();
 </script>
 </body>

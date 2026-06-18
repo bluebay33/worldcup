@@ -16,7 +16,7 @@ Copy-Item (Join-Path $root 'index.html')  (Join-Path $site 'index.html')
 Copy-Item (Join-Path $root 'report.html') (Join-Path $site 'report.html')
 Copy-Item (Join-Path $root 'data.json')   (Join-Path $site 'data.json')
 # PWA:manifest + 图标
-foreach ($f in 'manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png') {
+foreach ($f in 'manifest.webmanifest','sw.js','icon-192.png','icon-512.png','apple-touch-icon.png') {
     Copy-Item (Join-Path $root $f) (Join-Path $site $f)
 }
 
