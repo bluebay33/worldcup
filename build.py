@@ -395,6 +395,11 @@ def build():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta name="HandheldFriendly" content="true">
+<meta name="MobileOptimized" content="width">
+<meta name="applicable-device" content="mobile">
 <title>{esc(meta.get('tournament','世界杯'))} · 战报</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0f1419">
