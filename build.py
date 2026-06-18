@@ -514,6 +514,34 @@ def build():
     background:var(--card); border:1px dashed var(--line); border-radius:8px; }}
   footer {{ margin-top:40px; padding-top:16px; border-top:1px solid var(--line);
     color:var(--muted); font-size:12px; text-align:center; }}
+  /* 防止长英文(场馆/标题)撑破布局导致整页缩小 */
+  html {{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }}
+  body {{ overflow-wrap:break-word; }}
+  .venue, td.tname, .gitem {{ overflow-wrap:anywhere; }}
+  /* 手机端:普通浏览器按原始 px 会偏小,这里整体放大字号 */
+  @media (max-width:600px) {{
+    .wrap {{ padding-left:calc(10px + env(safe-area-inset-left));
+             padding-right:calc(10px + env(safe-area-inset-right)); }}
+    header.top h1 {{ font-size:23px; }}
+    .sub {{ font-size:13.5px; }}
+    .sec {{ padding:13px 13px; }}
+    .sec > .sec-h {{ font-size:18px; }}
+    .cnt, .note {{ font-size:13px; }}
+    .group h3 {{ font-size:17px; }}
+    .match {{ font-size:15px; }}
+    .m-date {{ font-size:13px; }}
+    .score {{ font-size:17px; }}
+    .m-goals {{ font-size:14px; }}
+    .gteam {{ font-size:12px; }}
+    .vlink {{ font-size:13px; padding:3px 10px; }}
+    .badge {{ font-size:12px; }}
+    .venue, .tag {{ font-size:12px; }}
+    table.standings {{ font-size:15px; }}
+    table.standings th, table.standings td {{ padding:7px 2px; }}
+    table.scoretable {{ font-size:15px; }}
+    table.scoretable th, table.scoretable td {{ padding:9px 4px; }}
+    .more {{ font-size:13px; }}
+  }}
 </style>
 </head>
 <body>
