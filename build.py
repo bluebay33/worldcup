@@ -394,8 +394,21 @@ def build():
 <html lang="zh">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(meta.get('tournament','世界杯'))} · 战报</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1419">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="世界杯">
+<meta name="application-name" content="世界杯">
+<meta property="og:title" content="2026世界杯战报">
+<meta property="og:description" content="积分榜 · 进球榜 · TSN集锦,每6小时自动更新">
+<meta property="og:type" content="website">
+<meta name="description" content="2026世界杯实时战报:积分榜、进球榜、TSN集锦">
 <style>
   :root {{
     --bg:#0f1419; --card:#1a212b; --line:#2a3441; --txt:#e6edf3;
@@ -404,7 +417,9 @@ def build():
   * {{ box-sizing:border-box; }}
   body {{ margin:0; background:var(--bg); color:var(--txt);
     font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.5; }}
-  .wrap {{ max-width:1100px; margin:0 auto; padding:24px 16px 60px; }}
+  .wrap {{ max-width:1100px; margin:0 auto;
+    padding:calc(24px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+            calc(60px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left)); }}
   header.top {{ border-bottom:2px solid var(--line); padding-bottom:16px; margin-bottom:24px; }}
   header.top h1 {{ margin:0 0 6px; font-size:28px; }}
   .sub {{ color:var(--muted); font-size:13px; display:flex; flex-wrap:wrap; gap:6px 16px; }}

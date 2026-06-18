@@ -33,7 +33,7 @@ jobs:
       - name: 整理发布目录（只放静态文件）
         run: |
           mkdir -p _site
-          cp index.html report.html data.json _site/
+          cp index.html report.html data.json manifest.webmanifest icon-192.png icon-512.png apple-touch-icon.png _site/
 
       - name: 部署到 Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
