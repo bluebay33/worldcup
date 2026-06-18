@@ -307,6 +307,9 @@ def main():
         except Exception:
             pass
 
+    now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
+    RECENT_MS = 48 * 3600 * 1000   # 最近48h内结束的,每次都重抓集锦(TSN常在赛后几小时才发)
+
     # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频+集锦。
     gmatches = {g["name"]: [] for g in groups_order}
     knockout = []
@@ -323,12 +326,16 @@ def main():
             if vids:
                 m["videos"] = vids
             key = (m["home"], m["away"], m["date"])
-            if key in prev_hl:
-                m["highlight"] = prev_hl[key]; hl_hit += 1
+            mts = m.get("ts") or 0
+            recent = bool(mts) and (now_ms - mts) <= RECENT_MS
+            if key in prev_hl and not recent:
+                m["highlight"] = prev_hl[key]; hl_hit += 1     # 老比赛:复用缓存
             else:
-                hl = fetch_youtube_highlight(m["home"], m["away"])
+                hl = fetch_youtube_highlight(m["home"], m["away"])   # 最近/无缓存:重抓
                 if hl:
                     m["highlight"] = hl; hl_new += 1
+                elif key in prev_hl:
+                    m["highlight"] = prev_hl[key]; hl_hit += 1  # 重抓没拿到,保留上次,别丢
             detail_n += 1
         gh = team2group.get(m["home"])
         ga = team2group.get(m["away"])

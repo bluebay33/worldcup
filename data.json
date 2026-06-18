@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-18 08:31 (北京时间)",
-    "lastUpdatedTs": 1781742672645,
+    "lastUpdated": "2026-06-18 20:28 (北京时间)",
+    "lastUpdatedTs": 1781785734241,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -903,8 +903,8 @@
           ],
           "videos": [
             {
-              "title": "Potter: Isak-Gyokeres partnership showed quality in Tunisia win",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL/dm_260615_COM_SOC_Presser_Potter_Isak_Gyokeres_partnership_showed_quality_in_Tunisia_win_20260615_GLOBAL_360p30_1464k.mp4"
+              "title": "Why is Sabri Lamouchi set for Tunisia departure?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Analysis_Why_is_Sabri_Lamouchi_set_for_Tunisia_departure3F_GLOBAL_2026-06-15/dm_260615_COM_SOC_Analysis_Why_is_Sabri_Lamouchi_set_for_Tunisia_departure3F_GLOBAL_2026-06-15_360p30_1464k.mp4"
             }
           ],
           "highlight": {
@@ -1639,8 +1639,8 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_Did_Ronaldo_hinder_Portugal_in_draw_against_Congo_DR/dm_260617_Did_Ronaldo_hinder_Portugal_in_draw_against_Congo_DR_360p30_1464k.mp4"
             },
             {
-              "title": "Congo DR fans in Lisbon celebrate surrounded by Portugal supporters",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_News_DR_Congo_fans_in_Lisbon_celebrate_surrounded_by_Portugal_supporters_20260617_GLOBAL/dm_260617_COM_SOC_News_DR_Congo_fans_in_Lisbon_celebrate_surrounded_by_Portugal_supporters_20260617_GLOBAL_360p30_1464k.mp4"
+              "title": "Dove backs Congo DR to reach the World Cup knockouts",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Analysis_Dove_backs_Congo_DR_to_reach_the_World_Cup_knockouts_20260617_GLOBAL_FIFA_WORLD/dm_260617_COM_SOC_Analysis_Dove_backs_Congo_DR_to_reach_the_World_Cup_knockouts_20260617_GLOBAL_FIFA_WORLD_360p30_1464k.mp4"
             }
           ],
           "highlight": {
@@ -1655,11 +1655,52 @@
           "ts": 1781748000000,
           "home": "Uzbekistan",
           "away": "Colombia",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 3,
+          "status": "FT",
           "venue": "Estadio Banorte",
-          "city": "Mexico City"
+          "city": "Mexico City",
+          "goals": [
+            {
+              "min": "40'",
+              "scorer": "Daniel Muñoz",
+              "assist": "Luis Díaz",
+              "type": "Goal - Volley",
+              "team": "Colombia"
+            },
+            {
+              "min": "60'",
+              "scorer": "Abbosbek Fayzullaev",
+              "assist": null,
+              "type": "Goal - Header",
+              "team": "Uzbekistan"
+            },
+            {
+              "min": "65'",
+              "scorer": "Luis Díaz",
+              "assist": "Gustavo Puerta",
+              "type": "Goal",
+              "team": "Colombia"
+            },
+            {
+              "min": "90'+9'",
+              "scorer": "Jáminton Campaz",
+              "assist": "Cucho Hernández",
+              "type": "Goal - Header",
+              "team": "Colombia"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Moreno believes Colombia still has work to do after a 3-1 victory",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/ss_20260618_005823322_3568169/ss_20260618_005823322_3568169_360p30_1464k.mp4"
+            }
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=cH1vbMrtbvM",
+            "title": "Uzbekistan vs. Colombia Full Highlights | FIFA World Cup 2026",
+            "channel": "TSN"
+          }
         },
         {
           "date": "2026-06-24",
@@ -1757,7 +1798,7 @@
               "min": "45'+5'",
               "scorer": "Petar Musa",
               "assist": "Ivan Perisic",
-              "type": "Goal",
+              "type": "Goal - Volley",
               "team": "Croatia"
             },
             {
@@ -1801,11 +1842,31 @@
           "ts": 1781737200000,
           "home": "Ghana",
           "away": "Panama",
-          "hs": 0,
+          "hs": 1,
           "as": 0,
-          "status": "LIVE",
+          "status": "FT",
           "venue": "BMO Field",
-          "city": "Toronto"
+          "city": "Toronto",
+          "goals": [
+            {
+              "min": "90'+5'",
+              "scorer": "Caleb Yirenkyi",
+              "assist": "Brandon Thomas-Asante",
+              "type": "Goal",
+              "team": "Ghana"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Yirenkyi's last-gasp winner lifts Ghana to victory over Panama",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_World_Cup_Highlight_Yirenkyis_last-gasp_winner_lifts_Ghana_to_victory_over_Panama_20260618_AUS/dm_260617_World_Cup_Highlight_Yirenkyis_last-gasp_winner_lifts_Ghana_to_victory_over_Panama_20260618_AUS_360p30_1464k.mp4"
+            }
+          ],
+          "highlight": {
+            "url": "https://www.youtube.com/watch?v=DzuFQGOkQwA",
+            "title": "Ghana vs. Panama Full Highlights | FIFA World Cup 2026",
+            "channel": "TSN"
+          }
         },
         {
           "date": "2026-06-24",
