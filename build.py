@@ -26,6 +26,22 @@ def esc(s):
     return html.escape(str(s))
 
 
+def bi(zh, en):
+    """双语文本:输出一个 span,默认显示中文;页面 JS 按浏览器语言切到英文。
+    zh/en 都存进 data-* 属性,支持来回切换。"""
+    return (f'<span class="i18n" data-zh="{esc(zh)}" data-en="{esc(en)}">{esc(zh)}</span>')
+
+
+def team_bi(name):
+    """队名双语:中文用 TEAM_CN/占位规则,英文用 ESPN 原名(本就是英文)。"""
+    return bi(cn(name), name)
+
+
+def grp_label(g):
+    """match 行左上角的分组小标签:字母组直接显示,'淘汰赛' 做双语。"""
+    return bi("淘汰赛", "KO") if g == "淘汰赛" else esc(g)
+
+
 def collap(title, body, *, open_=True, cls=""):
     """把一个板块包成可折叠的 <details>。title 已是 HTML，body 已是 HTML。"""
     op = " open" if open_ else ""
@@ -131,27 +147,29 @@ def score_cell(m):
 
 
 def match_row(m, show_group=False):
-    grp = f'<span class="tag">{esc(m["group"])}</span> ' if show_group and m.get("group") else ""
+    grp = f'<span class="tag">{grp_label(m["group"])}</span> ' if show_group and m.get("group") else ""
     status = m.get("status", "")
     badge = ""
     if status == "FT":
-        badge = '<span class="badge ft">完场</span>'
+        badge = f'<span class="badge ft">{bi("完场", "FT")}</span>'
     elif status == "LIVE":
-        badge = '<span class="badge live">进行中</span>'
+        badge = f'<span class="badge live">{bi("进行中", "LIVE")}</span>'
     elif status == "sched":
-        badge = '<span class="badge sched">未开赛</span>'
-    _city = city_cn(m.get("city", ""))
+        badge = f'<span class="badge sched">{bi("未开赛", "Sched")}</span>'
+    _city = m.get("city", "")
     _vname = m.get("venue", "")
-    _loc = f"{_city} · {_vname}" if (_city and _vname) else (_city or _vname)
-    venue = f'<span class="venue">{esc(_loc)}</span>' if _loc else ""
+    _czh = city_cn(_city)
+    _loc_zh = f"{_czh} · {_vname}" if (_czh and _vname) else (_czh or _vname)
+    _loc_en = f"{_city} · {_vname}" if (_city and _vname) else (_city or _vname)
+    venue = f'<span class="venue">{bi(_loc_zh, _loc_en)}</span>' if _loc_zh else ""
     _fb = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
     ts = m.get("ts")
     dt = f'<span class="ltime" data-ts="{ts}">{_fb}</span>' if ts else _fb
     return f"""<div class="match">
       <div class="m-date">{grp}{dt}</div>
-      <div class="m-home">{esc(cn(m["home"]))}</div>
+      <div class="m-home">{team_bi(m["home"])}</div>
       <div class="m-score">{score_cell(m)}</div>
-      <div class="m-away">{esc(cn(m["away"]))}</div>
+      <div class="m-away">{team_bi(m["away"])}</div>
       <div class="m-meta">{badge}{venue}</div>
       {goals_html(m)}{videos_html(m)}
     </div>"""
@@ -160,11 +178,11 @@ def match_row(m, show_group=False):
 def _goal_mark(t):
     t = t or ""
     if "Penalty" in t:
-        return "(点球)"
+        return bi("(点球)", "(P)")
     if "Own" in t:
-        return "(乌龙)"
+        return bi("(乌龙)", "(OG)")
     if "Header" in t:
-        return "(头球)"
+        return bi("(头球)", "(H)")
     return ""
 
 
@@ -175,9 +193,8 @@ def goals_html(m):
     parts = []
     for g in goals:
         nm = g.get("scorer") or "?"
-        team = cn(g.get("team", ""))
         parts.append(f'<span class="gitem">{esc(g.get("min", ""))} {esc(nm)}{_goal_mark(g.get("type"))}'
-                     f'<span class="gteam">{esc(team)}</span></span>')
+                     f'<span class="gteam">{team_bi(g.get("team", ""))}</span></span>')
     return '<div class="m-goals">⚽ ' + "".join(parts) + "</div>"
 
 
@@ -188,11 +205,13 @@ def fifa_highlight_link(m):
     hl = m.get("highlight") or {}
     if hl.get("url"):
         src = (hl.get("channel") or "").strip()
-        label = f"🎬 集锦 · {esc(src[:16])}" if src else "🎬 集锦"
+        tail = f" · {esc(src[:16])}" if src else ""
+        label = "🎬 " + bi("集锦", "Highlights") + tail
         return f'<a class="vlink yt" href="{esc(hl["url"])}" target="_blank" rel="noopener">{label}</a>'
     q = f'TSN {m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
     url = "https://www.youtube.com/results?search_query=" + quote_plus(q)
-    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 集锦(搜索)</a>'
+    label = "🎬 " + bi("集锦(搜索)", "Highlights (search)")
+    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">{label}</a>'
 
 
 def videos_html(m):
@@ -201,8 +220,10 @@ def videos_html(m):
     if yt:
         links.append(yt)
     for v in (m.get("videos") or []):
+        _t = v.get("title")
+        _label = esc(_t[:26]) if _t else bi("视频", "Video")
         links.append(f'<a class="vlink" href="{esc(v.get("url", ""))}" target="_blank" rel="noopener">'
-                     f'▶ {esc((v.get("title") or "视频")[:26])}</a>')
+                     f'▶ {_label}</a>')
     if not links:
         return ""
     return f'<div class="m-videos">{"".join(links)}</div>'
@@ -218,7 +239,7 @@ def group_block(group):
         gd_s = f"+{gd}" if gd > 0 else str(gd)
         trs.append(f"""<tr class="{cls}">
           <td class="rank">{i+1}</td>
-          <td class="tname">{esc(cn(r['team']))}</td>
+          <td class="tname">{team_bi(r['team'])}</td>
           <td>{r['p']}</td><td>{r['w']}</td><td>{r['d']}</td><td>{r['l']}</td>
           <td>{r['gf']}</td><td>{r['ga']}</td><td class="gd">{gd_s}</td>
           <td class="pts">{r['pts']}</td>
@@ -232,16 +253,17 @@ def group_block(group):
         matches_html += match_row(m)
     n = len(played) + len(sched)
     if matches_html:
-        body = (f'<details class="g-details"><summary>比赛详情 · {n} 场</summary>'
+        _sm = bi(f"比赛详情 · {n} 场", f"Matches · {n}")
+        body = (f'<details class="g-details"><summary>{_sm}</summary>'
                 f'<div class="g-matches">{matches_html}</div></details>')
     else:
-        body = '<div class="empty">暂无比赛</div>'
+        body = f'<div class="empty">{bi("暂无比赛", "No matches")}</div>'
     return f"""<section class="group">
-      <h3>小组 {esc(name)}</h3>
+      <h3>{bi("小组 " + name, "Group " + name)}</h3>
       <table class="standings">
         <thead><tr>
-          <th>#</th><th class="tname">球队</th><th>赛</th><th>胜</th><th>平</th>
-          <th>负</th><th>进</th><th>失</th><th>净</th><th>分</th>
+          <th>#</th><th class="tname">{bi("球队", "Team")}</th><th>{bi("赛", "P")}</th><th>{bi("胜", "W")}</th><th>{bi("平", "D")}</th>
+          <th>{bi("负", "L")}</th><th>{bi("进", "GF")}</th><th>{bi("失", "GA")}</th><th>{bi("净", "GD")}</th><th>{bi("分", "Pts")}</th>
         </tr></thead>
         <tbody>{''.join(trs)}</tbody>
       </table>
@@ -289,15 +311,17 @@ def build():
     in48 = [m for dt, m in win if dt is not None and now <= dt <= end48]
     if in48:
         upcoming = in48
-        fix_label = "未来 48 小时"
+        fix_zh, fix_en = "未来 48 小时", "Next 48h"
     else:
         # 当前时段没有 48h 内的比赛，退而显示最近即将开赛的 8 场
         upcoming = [m for dt, m in win if dt is not None and dt >= now][:8]
-        fix_label = "即将开赛"
+        fix_zh, fix_en = "即将开赛", "Upcoming"
     fixtures_html = ""
     if upcoming:
-        _title = (f'🔥 近期赛程 · {fix_label} <span class="cnt">{len(upcoming)} 场</span>'
-                  '<span class="note">（本地时间）</span>')
+        _t = "🔥 " + bi("近期赛程 · " + fix_zh, "Up Next · " + fix_en)
+        _cnt = f'<span class="cnt">{bi(f"{len(upcoming)} 场", str(len(upcoming)))}</span>'
+        _note = f'<span class="note">{bi("（本地时间）", "(local time)")}</span>'
+        _title = f"{_t} {_cnt}{_note}"
         _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in upcoming) + '</div>'
         fixtures_html = collap(_title, _body, open_=True, cls="fixtures hero")
 
@@ -321,14 +345,19 @@ def build():
     last6 = played_desc[:6]
     last24 = [m for m in played_desc if _mdt(m) and (now - timedelta(hours=24)) <= _mdt(m) <= now]
     base = last24 if len(last24) > len(last6) else last6
-    base_label = "最近 24 小时" if len(last24) > len(last6) else "最近 6 场"
+    _more24 = len(last24) > len(last6)
+    base_zh = "最近 24 小时" if _more24 else "最近 6 场"
+    base_en = "Last 24h" if _more24 else "Last 6"
     live_sorted = sorted(live_pool, key=lambda m: (_mdt(m) or _far), reverse=True)
     recent = live_sorted + base
-    recent_label = ("进行中 + " + base_label) if live_sorted else base_label
+    rec_zh = ("进行中 + " + base_zh) if live_sorted else base_zh
+    rec_en = ("Live + " + base_en) if live_sorted else base_en
     recent_html = ""
     if recent:
-        _title = (f'🏁 最近战果 · {recent_label} <span class="cnt">{len(recent)} 场</span>'
-                  '<span class="note">（本地时间）</span>')
+        _t = "🏁 " + bi("最近战果 · " + rec_zh, "Recent · " + rec_en)
+        _cnt = f'<span class="cnt">{bi(f"{len(recent)} 场", str(len(recent)))}</span>'
+        _note = f'<span class="note">{bi("（本地时间）", "(local time)")}</span>'
+        _title = f"{_t} {_cnt}{_note}"
         _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in recent) + '</div>'
         recent_html = collap(_title, _body, open_=True, cls="results hero")
 
@@ -358,12 +387,18 @@ def build():
         def _score_table(items, start):
             rs = []
             for j, r in enumerate(items):
-                pen = f'<span class="pen">含{r["pens"]}点</span>' if r["pens"] else ""
+                pen = ""
+                if r["pens"]:
+                    _pz = f'含{r["pens"]}点'
+                    _pe = f'{r["pens"]} pen'
+                    pen = f'<span class="pen">{bi(_pz, _pe)}</span>'
                 rs.append(f'<tr><td class="rank">{start + j}</td>'
                           f'<td class="tname">{esc(r["name"])}{pen}</td>'
-                          f'<td>{esc(cn(r["team"]))}</td><td class="pts">{r["goals"]}</td></tr>')
-            return ('<table class="scoretable"><thead><tr><th>#</th><th class="tname">球员</th>'
-                    '<th>球队</th><th>进</th></tr></thead><tbody>' + "".join(rs) + '</tbody></table>')
+                          f'<td>{team_bi(r["team"])}</td><td class="pts">{r["goals"]}</td></tr>')
+            return ('<table class="scoretable"><thead><tr><th>#</th>'
+                    f'<th class="tname">{bi("球员", "Player")}</th>'
+                    f'<th>{bi("球队", "Team")}</th><th>{bi("进", "G")}</th></tr></thead><tbody>'
+                    + "".join(rs) + '</tbody></table>')
 
         topn = top[:20]
         half = (len(topn) + 1) // 2
@@ -371,19 +406,19 @@ def build():
         if topn[half:]:
             cols += _score_table(topn[half:], half + 1)
         cols += '</div>'
-        more = (f'<div class="more">仅显示前 20 名，共 {len(top)} 名球员有进球</div>'
+        more = (f'<div class="more">{bi(f"仅显示前 20 名，共 {len(top)} 名球员有进球", f"Top 20 of {len(top)} scorers")}</div>'
                 if len(top) > 20 else "")
-        scorers_html = collap('⚽ 球员进球榜', cols + more, open_=False, cls="scorers")
+        scorers_html = collap("⚽ " + bi("球员进球榜", "Top Scorers"), cols + more, open_=False, cls="scorers")
 
-    standings_html = collap('小组积分榜', f'<div class="groups">{groups_html}</div>',
+    standings_html = collap(bi("小组积分榜", "Group Standings"), f'<div class="groups">{groups_html}</div>',
                             open_=False, cls="standings")
 
     knockout = data.get("knockout", [])
     if knockout:
         _kbody = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in knockout) + '</div>'
     else:
-        _kbody = '<div class="empty">小组赛进行中，淘汰赛对阵未产生</div>'
-    knockout_html = collap('淘汰赛', _kbody, open_=False, cls="knockout")
+        _kbody = f'<div class="empty">{bi("小组赛进行中，淘汰赛对阵未产生", "Group stage in progress; knockout bracket not set yet")}</div>'
+    knockout_html = collap(bi("淘汰赛", "Knockout"), _kbody, open_=False, cls="knockout")
 
     sources = " · ".join(esc(s) for s in meta.get("sources", []))
     _built = datetime.now(timezone.utc)
@@ -552,15 +587,28 @@ def build():
     table.scoretable th, table.scoretable td {{ padding:9px 4px; }}
     .more {{ font-size:13px; }}
   }}
+  /* 语言切换按钮 */
+  header.top {{ position:relative; }}
+  .langtog {{ position:absolute; top:0; right:0; background:var(--card); color:var(--muted);
+    border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-size:13px;
+    cursor:pointer; font-family:inherit; line-height:1.2; }}
+  .langtog:hover {{ color:var(--txt); border-color:var(--accent); }}
+  @media (max-width:900px) {{ .langtog {{ font-size:14px; padding:6px 13px; }} }}
+  /* 英文模式下的折叠标记文案 */
+  html[data-lang=en] .sec > .sec-h::after {{ content:"▸ Expand"; }}
+  html[data-lang=en] .sec[open] > .sec-h::after {{ content:"▾ Collapse"; }}
+  html[data-lang=en] .g-details > summary::after {{ content:"▸ Show"; }}
+  html[data-lang=en] .g-details[open] > summary::after {{ content:"▾ Hide"; }}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>⚽ {esc(meta.get('tournament','世界杯'))} 战报</h1>
+    <button id="langtog" class="langtog" type="button" aria-label="language">EN</button>
+    <h1>⚽ {bi(esc(meta.get('tournament','世界杯')) + " 战报", "2026 World Cup · Match Report")}</h1>
     <div class="sub">
-      <span>主办：<b>{esc(meta.get('host',''))}</b></span>
-      <span>数据更新：<b data-ts="{meta.get('lastUpdatedTs','')}">{esc(meta.get('lastUpdated',''))}</b>（本地时间）</span>
+      <span>{bi("主办：", "Hosts: ")}<b>{bi(meta.get('host',''), "USA / Canada / Mexico")}</b></span>
+      <span>{bi("数据更新：", "Updated: ")}<b data-ts="{meta.get('lastUpdatedTs','')}">{esc(meta.get('lastUpdated',''))}</b>{bi("（本地时间）", " (local time)")}</span>
     </div>
   </header>
 
@@ -574,7 +622,7 @@ def build():
 
   {knockout_html}
 
-  <footer>页面生成于 <span data-ts="{built_ms}">{built_at}</span> · 时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算</footer>
+  <footer>{bi("页面生成于", "Generated")} <span data-ts="{built_ms}">{built_at}</span> · {bi("时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算", "Times shown in your browser timezone · Data from ESPN, standings auto-computed")}</footer>
 </div>
 <script>
 (function(){{
@@ -593,6 +641,29 @@ def build():
   if('serviceWorker' in navigator){{
     navigator.serviceWorker.register('sw.js').catch(function(){{}});
   }}
+  // 双语:中文系统显示中文,其余显示英文;可点右上角按钮手动切换并记忆
+  function applyLang(en){{
+    document.documentElement.setAttribute('data-lang', en?'en':'zh');
+    document.documentElement.setAttribute('lang', en?'en':'zh');
+    var ns=document.querySelectorAll('.i18n');
+    for(var k=0;k<ns.length;k++){{
+      var v=ns[k].getAttribute(en?'data-en':'data-zh');
+      if(v!=null) ns[k].textContent=v;
+    }}
+    document.title = en ? '2026 World Cup · Report' : '2026世界杯 · 战报';
+    var b=document.getElementById('langtog');
+    if(b) b.textContent = en ? '中文' : 'EN';
+  }}
+  var navl=(navigator.languages&&navigator.languages[0])||navigator.language||'';
+  var saved=null; try{{saved=localStorage.getItem('wc_lang');}}catch(e){{}}
+  var en0 = saved ? (saved==='en') : !/^zh/i.test(navl);
+  applyLang(en0);
+  var tog=document.getElementById('langtog');
+  if(tog) tog.addEventListener('click',function(){{
+    var nowEn=document.documentElement.getAttribute('data-lang')!=='en';
+    try{{localStorage.setItem('wc_lang', nowEn?'en':'zh');}}catch(e){{}}
+    applyLang(nowEn);
+  }});
 }})();
 </script>
 </body>
