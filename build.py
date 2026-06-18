@@ -94,6 +94,47 @@ def cn(name):
     return name
 
 
+# 队名 -> ISO 3166-1 alpha-2(用于生成 emoji 国旗;英/苏/威用特殊 emoji)
+TEAM_ISO = {
+    "South Africa": "ZA", "Mexico": "MX", "South Korea": "KR", "Korea Republic": "KR",
+    "Czechia": "CZ", "Czech Republic": "CZ", "Switzerland": "CH", "Canada": "CA", "Qatar": "QA",
+    "Bosnia and Herzegovina": "BA", "Bosnia & Herzegovina": "BA", "Bosnia-Herzegovina": "BA",
+    "Croatia": "HR", "Brazil": "BR", "Morocco": "MA", "Haiti": "HT",
+    "United States": "US", "USA": "US", "Australia": "AU", "Türkiye": "TR", "Turkey": "TR",
+    "Paraguay": "PY", "Germany": "DE", "Ecuador": "EC", "Curaçao": "CW",
+    "Côte d'Ivoire": "CI", "Ivory Coast": "CI", "Netherlands": "NL", "Japan": "JP", "Tunisia": "TN",
+    "Sweden": "SE", "Belgium": "BE", "New Zealand": "NZ", "Egypt": "EG", "Iran": "IR", "IR Iran": "IR",
+    "Spain": "ES", "Uruguay": "UY", "Saudi Arabia": "SA", "Cape Verde": "CV", "France": "FR",
+    "Norway": "NO", "Senegal": "SN", "Iraq": "IQ", "Argentina": "AR", "Austria": "AT", "Algeria": "DZ",
+    "Jordan": "JO", "Colombia": "CO", "Uzbekistan": "UZ", "DR Congo": "CD", "Congo DR": "CD",
+    "Portugal": "PT", "Panama": "PA", "Ghana": "GH",
+}
+
+# 英格兰/苏格兰/威尔士不是 ISO 国家,用 emoji tag 序列(手机端能渲染,Windows 桌面可能退化)
+_SPECIAL_FLAG = {
+    "England": "\U0001F3F4\U000E0067\U000E0062\U000E0065\U000E006E\U000E0067\U000E007F",
+    "Scotland": "\U0001F3F4\U000E0067\U000E0062\U000E0073\U000E0063\U000E0074\U000E007F",
+    "Wales": "\U0001F3F4\U000E0067\U000E0062\U000E0077\U000E006C\U000E0073\U000E007F",
+}
+
+
+def flag(name):
+    """队名 -> emoji 国旗;占位名/未知队返回空串。"""
+    if name in _SPECIAL_FLAG:
+        return _SPECIAL_FLAG[name]
+    code = TEAM_ISO.get(name)
+    if not code:
+        return ""
+    return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in code)
+
+
+def team_flag_bi(name, flag_first=True):
+    """国旗(语言无关) + 双语队名。flag_first=False 时旗放队名后(用于右对齐的主队)。"""
+    f = flag(name)
+    fh = f'<span class="flag">{f}</span>' if f else ""
+    return (fh + team_bi(name)) if flag_first else (team_bi(name) + fh)
+
+
 # ESPN 城市字符串 -> 中文主办城市（16 个主办城市；缺失则回退英文原文，不编造）
 CITY_CN = {
     "Arlington, Texas": "达拉斯", "Atlanta, Georgia": "亚特兰大",
@@ -167,9 +208,9 @@ def match_row(m, show_group=False):
     dt = f'<span class="ltime" data-ts="{ts}">{_fb}</span>' if ts else _fb
     return f"""<div class="match">
       <div class="m-date">{grp}{dt}</div>
-      <div class="m-home">{team_bi(m["home"])}</div>
+      <div class="m-home">{team_flag_bi(m["home"], flag_first=False)}</div>
       <div class="m-score">{score_cell(m)}</div>
-      <div class="m-away">{team_bi(m["away"])}</div>
+      <div class="m-away">{team_flag_bi(m["away"], flag_first=True)}</div>
       <div class="m-meta">{badge}{venue}</div>
       {goals_html(m)}{videos_html(m)}
     </div>"""
@@ -239,7 +280,7 @@ def group_block(group):
         gd_s = f"+{gd}" if gd > 0 else str(gd)
         trs.append(f"""<tr class="{cls}">
           <td class="rank">{i+1}</td>
-          <td class="tname">{team_bi(r['team'])}</td>
+          <td class="tname">{team_flag_bi(r['team'])}</td>
           <td>{r['p']}</td><td>{r['w']}</td><td>{r['d']}</td><td>{r['l']}</td>
           <td>{r['gf']}</td><td>{r['ga']}</td><td class="gd">{gd_s}</td>
           <td class="pts">{r['pts']}</td>
@@ -394,7 +435,7 @@ def build():
                     pen = f'<span class="pen">{bi(_pz, _pe)}</span>'
                 rs.append(f'<tr><td class="rank">{start + j}</td>'
                           f'<td class="tname">{esc(r["name"])}{pen}</td>'
-                          f'<td>{team_bi(r["team"])}</td><td class="pts">{r["goals"]}</td></tr>')
+                          f'<td>{team_flag_bi(r["team"])}</td><td class="pts">{r["goals"]}</td></tr>')
             return ('<table class="scoretable"><thead><tr><th>#</th>'
                     f'<th class="tname">{bi("球员", "Player")}</th>'
                     f'<th>{bi("球队", "Team")}</th><th>{bi("进", "G")}</th></tr></thead><tbody>'
@@ -517,6 +558,7 @@ def build():
   .badge.sched {{ background:rgba(212,160,23,0.15); color:var(--gold); }}
   .venue {{ color:var(--muted); font-size:11px; }}
   .tag {{ background:#21262d; color:var(--muted); padding:0 5px; border-radius:4px; font-size:10px; }}
+  .flag {{ margin:0 4px; font-size:1.15em; line-height:1; vertical-align:-1px; }}
   .m-goals {{ grid-column:1 / -1; font-size:12px; color:var(--txt); display:flex; flex-wrap:wrap;
     gap:6px 12px; padding:4px 2px 0; }}
   .gitem {{ color:#cdd6e0; }}
@@ -630,19 +672,33 @@ def build():
 <script>
 (function(){{
   function p(n){{return String(n).padStart(2,'0');}}
-  function fmt(ms){{
+  function abs(ms){{
     var d=new Date(Number(ms));
     if(isNaN(d.getTime()))return null;
     return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
   }}
-  var els=document.querySelectorAll('[data-ts]');
-  for(var i=0;i<els.length;i++){{
-    var ms=els[i].getAttribute('data-ts');
-    if(ms){{var s=fmt(ms);if(s)els[i].textContent=s;}}
+  // 比赛时间:今天/明天/昨天用词代替日期(按本地时区),其余日子显示完整日期
+  function rel(ms,en){{
+    var d=new Date(Number(ms));
+    if(isNaN(d.getTime()))return null;
+    var now=new Date();
+    var a=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    var b=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    var diff=Math.round((a-b)/86400000);
+    var hm=p(d.getHours())+':'+p(d.getMinutes());
+    if(diff===0) return (en?'Today':'今天')+' '+hm;
+    if(diff===1) return (en?'Tomorrow':'明天')+' '+hm;
+    if(diff===-1) return (en?'Yesterday':'昨天')+' '+hm;
+    return abs(ms);
   }}
-  // 注册极简 service worker,让本站可被「安装」为独立 APP(强制手机版渲染,无视桌面版开关)
-  if('serviceWorker' in navigator){{
-    navigator.serviceWorker.register('sw.js').catch(function(){{}});
+  function renderTimes(en){{
+    var els=document.querySelectorAll('[data-ts]');
+    for(var i=0;i<els.length;i++){{
+      var ms=els[i].getAttribute('data-ts');
+      if(!ms) continue;
+      var s=els[i].classList.contains('ltime') ? rel(ms,en) : abs(ms);
+      if(s) els[i].textContent=s;
+    }}
   }}
   // 双语:中文系统显示中文,其余显示英文;可点右上角按钮手动切换并记忆
   function applyLang(en){{
@@ -656,6 +712,7 @@ def build():
     document.title = en ? '2026 World Cup · Report' : '2026世界杯 · 战报';
     var b=document.getElementById('langtog');
     if(b) b.textContent = en ? '中文' : 'EN';
+    renderTimes(en);  // 日期用词随语言切换(今天<->Today)
   }}
   var navl=(navigator.languages&&navigator.languages[0])||navigator.language||'';
   var saved=null; try{{saved=localStorage.getItem('wc_lang');}}catch(e){{}}
@@ -667,6 +724,10 @@ def build():
     try{{localStorage.setItem('wc_lang', nowEn?'en':'zh');}}catch(e){{}}
     applyLang(nowEn);
   }});
+  // 注册极简 service worker,让本站可被「安装」为独立 APP(强制手机版渲染,无视桌面版开关)
+  if('serviceWorker' in navigator){{
+    navigator.serviceWorker.register('sw.js').catch(function(){{}});
+  }}
 }})();
 </script>
 </body>
