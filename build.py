@@ -528,6 +528,9 @@ def build():
   .vlink.yt {{ color:#ff6b6b; border-color:#5a2f2f; }}
   .vlink.yt:hover {{ background:rgba(248,81,73,0.12); }}
   .scorers {{ margin-top:18px; }}
+  /* 下方三个板块:与上面 hero 卡保持一致的卡片框(边框+柔和发光),但比 hero 略淡以维持层级 */
+  .sec.standings, .sec.scorers, .sec.knockout {{
+    border:1px solid #36434f; box-shadow:0 0 0 3px rgba(63,185,80,0.06); }}
   table.scoretable {{ width:100%; border-collapse:collapse; font-size:13px;
     background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }}
   table.scoretable th {{ color:var(--muted); font-weight:500; text-align:center; padding:8px 6px; border-bottom:1px solid var(--line); }}
