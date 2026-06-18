@@ -4,7 +4,7 @@ name: 更新世界杯战报
 # 全程纯 Python + wrangler，不依赖你的电脑、不使用 Claude。
 on:
   schedule:
-    - cron: '0 */6 * * *'    # UTC 的 0/6/12/18 点，约合北京时间 08/14/20/02 点
+    - cron: '0 */2 * * *'    # 每 2 小时一次(UTC 偶数点)。约 360 次/月,稳在私有库 2000 分钟额度内
   workflow_dispatch: {}        # 允许在 Actions 页面手动点「Run workflow」
   push:
     branches: [ main ]         # 推代码到 main 时也跑一次（方便首次验证）
