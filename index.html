@@ -51,8 +51,8 @@
   .sec[open] > .sec-h::after { content:"▾ 收起"; }
   .sec > .sec-h:hover { color:var(--accent); }
   .sec .note { font-size:12px; color:var(--muted); font-weight:400; }
-  .scorer-cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:14px; align-items:start; }
-  .groups { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:18px; }
+  .scorer-cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:14px; align-items:start; }
+  .groups { display:grid; grid-template-columns:repeat(auto-fill,minmax(480px,1fr)); gap:18px; }
   .group { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
   .group h3 { margin:0 0 10px; font-size:16px; color:var(--gold); }
   table.standings { width:100%; border-collapse:collapse; font-size:13px; }
@@ -109,7 +109,7 @@
   table.scoretable td.pts { font-weight:700; color:var(--accent); }
   .pen { color:var(--muted); font-size:10.5px; margin-left:6px; }
   .more { color:var(--muted); font-size:12px; margin-top:8px; }
-  .fix-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:8px; }
+  .fix-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(480px,1fr)); gap:8px; }
   .fix-grid .match { background:var(--card); border:1px solid var(--line); padding:10px 12px; }
   .fixtures.hero { background:linear-gradient(180deg,#1c2a22,#161d27); border:1px solid var(--accent);
     border-radius:12px; padding:14px 18px 18px; margin-bottom:10px; box-shadow:0 0 0 3px rgba(63,185,80,0.08); }
@@ -132,7 +132,7 @@
   body { overflow-wrap:break-word; }
   .venue, td.tname, .gitem { overflow-wrap:anywhere; }
   /* 手机端:普通浏览器按原始 px 会偏小,这里整体放大字号 */
-  @media (max-width:600px) {
+  @media (max-width:900px) {
     .wrap { padding-left:calc(10px + env(safe-area-inset-left));
              padding-right:calc(10px + env(safe-area-inset-right)); }
     header.top h1 { font-size:23px; }
@@ -218,14 +218,7 @@
       <div class="m-goals">⚽ <span class="gitem">66&#x27; Kylian Mbappé<span class="gteam">法国</span></span><span class="gitem">82&#x27; Bradley Barcola<span class="gteam">法国</span></span><span class="gitem">90&#x27;+5&#x27; Ibrahim Mbaye<span class="gteam">塞内加尔</span></span><span class="gitem">90&#x27;+6&#x27; Kylian Mbappé<span class="gteam">法国</span></span></div><div class="m-videos"><a class="vlink yt" href="https://www.youtube.com/watch?v=4F_gxWkr7oo" target="_blank" rel="noopener">🎬 集锦 · TSN</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Are_France_World_Cup_favourites_after_victory_vs_Senegal3F_GLOBAL_2026-06-16/dm_260616_COM_SOC_Analysis_Are_France_World_Cup_favourites_after_victory_vs_Senegal3F_GLOBAL_2026-06-16_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Are France World Cup favor</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Leboeuf_backs_Mbappe_to_break_Kloses_World_Cup_goal_record/dm_260616_Leboeuf_backs_Mbappe_to_break_Kloses_World_Cup_goal_record_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Leboeuf backs Mbappé to br</a><a class="vlink" href="https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal_360p30_1464k.mp4" target="_blank" rel="noopener">▶ Mbappé proud to &#x27;make a ma</a></div>
     </div></div></div></details>
 
-  <details class="sec fixtures hero" open><summary class="sec-h">🔥 近期赛程 · 未来 48 小时 <span class="cnt">8 场</span><span class="note">（本地时间）</span></summary><div class="sec-body"><div class="fix-grid"><div class="match">
-      <div class="m-date"><span class="tag">K</span> <span class="ltime" data-ts="1781748000000">2026-06-18 10:00</span></div>
-      <div class="m-home">乌兹别克斯坦</div>
-      <div class="m-score"><span class="vs">vs</span></div>
-      <div class="m-away">哥伦比亚</div>
-      <div class="m-meta"><span class="badge sched">未开赛</span><span class="venue">墨西哥城 · Estadio Banorte</span></div>
-      
-    </div><div class="match">
+  <details class="sec fixtures hero" open><summary class="sec-h">🔥 近期赛程 · 未来 48 小时 <span class="cnt">7 场</span><span class="note">（本地时间）</span></summary><div class="sec-body"><div class="fix-grid"><div class="match">
       <div class="m-date"><span class="tag">A</span> <span class="ltime" data-ts="1781798400000">2026-06-19 00:00</span></div>
       <div class="m-home">捷克</div>
       <div class="m-score"><span class="vs">vs</span></div>
@@ -1418,7 +1411,7 @@
       
     </div></div></div></details>
 
-  <footer>页面生成于 <span data-ts="1781747935650">2026-06-18 09:58</span> · 时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算</footer>
+  <footer>页面生成于 <span data-ts="1781750130228">2026-06-18 10:35</span> · 时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算</footer>
 </div>
 <script>
 (function(){
