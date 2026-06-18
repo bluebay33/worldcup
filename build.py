@@ -190,9 +190,9 @@ def fifa_highlight_link(m):
         src = (hl.get("channel") or "").strip()
         label = f"🎬 集锦 · {esc(src[:16])}" if src else "🎬 集锦"
         return f'<a class="vlink yt" href="{esc(hl["url"])}" target="_blank" rel="noopener">{label}</a>'
-    q = f'{m["home"]} {m["away"]} highlights world cup 2026'
+    q = f'TSN {m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
     url = "https://www.youtube.com/results?search_query=" + quote_plus(q)
-    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 FIFA 集锦(搜索)</a>'
+    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">🎬 集锦(搜索)</a>'
 
 
 def videos_html(m):

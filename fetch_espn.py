@@ -250,7 +250,7 @@ def _pub_rank(channel):
 def fetch_youtube_highlight(home, away):
     """搜 '队名A 队名B highlights world cup 2026'（不带比分——带比分会搜到蹭标题的二次上传），
     取官方集锦：优先 FIFA 官方频道，否则取首条。返回 {'url','title'} 或 None。"""
-    q = f"{home} {away} highlights world cup 2026"
+    q = f"TSN {home} vs {away} full highlights FIFA world cup 2026"
     url = "https://www.youtube.com/results?search_query=" + quote_plus(q) + "&hl=en&gl=US"
     try:
         req = urllib.request.Request(url, headers={
@@ -278,23 +278,16 @@ def fetch_youtube_highlight(home, away):
         return {"url": f"https://www.youtube.com/watch?v={vid}",
                 "title": clean(title), "channel": c}
 
-    # 候选必须含「完整关键字」:主客两队 + fifa + world cup + 2026 + highlight,且非 shorts。
-    # 挡掉:蹭队名的动画/预测、直播/预告、资格赛、单球、老世界杯重传、某队的另一场等。
-    def _ok(title):
-        t = _norm(title)
-        return (_relevant(title, home, away)
-                and "fifa" in t
-                and ("world cup" in t or "worldcup" in t)
-                and "2026" in t
+    # 只认 TSN(官方转播商)发布的本场集锦——其它来源不准,一律不取。
+    # 仍要求:标题含主客两队 + highlight、非 shorts(挡掉 TSN 自己的预告/GAME IN 30 等非集锦)。
+    for vid, title, ch in items:
+        t = title.lower()
+        if ("tsn" in _norm(ch)
+                and _relevant(title, home, away)
                 and "highlight" in t
-                and "shorts" not in t)
-
-    cands = [(vid, title, ch) for vid, title, ch in items if _ok(title)]
-    if not cands:
-        return None                                    # 没有合格的 -> build.py 退回搜索链接
-    # 按发布者可信度排序(稳定排序:同级保持原相关性顺序);FIFA>TSN等官方转播>其它
-    cands.sort(key=lambda c: _pub_rank(c[2]))
-    return watch(*cands[0])
+                and "shorts" not in t):
+            return watch(vid, title, ch)
+    return None                                        # 没有 TSN 本场集锦 -> build.py 退回搜索链接
 
 
 def main():
