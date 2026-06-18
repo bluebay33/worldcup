@@ -443,8 +443,8 @@ def build():
   .sec[open] > .sec-h::after {{ content:"▾ 收起"; }}
   .sec > .sec-h:hover {{ color:var(--accent); }}
   .sec .note {{ font-size:12px; color:var(--muted); font-weight:400; }}
-  .scorer-cols {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:14px; align-items:start; }}
-  .groups {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(480px,1fr)); gap:18px; }}
+  .scorer-cols {{ display:grid; grid-template-columns:1fr; gap:14px; align-items:start; }}
+  .groups {{ display:grid; grid-template-columns:1fr; gap:18px; }}
   .group {{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }}
   .group h3 {{ margin:0 0 10px; font-size:16px; color:var(--gold); }}
   table.standings {{ width:100%; border-collapse:collapse; font-size:13px; }}
@@ -501,7 +501,12 @@ def build():
   table.scoretable td.pts {{ font-weight:700; color:var(--accent); }}
   .pen {{ color:var(--muted); font-size:10.5px; margin-left:6px; }}
   .more {{ color:var(--muted); font-size:12px; margin-top:8px; }}
-  .fix-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(480px,1fr)); gap:8px; }}
+  .fix-grid {{ display:grid; grid-template-columns:1fr; gap:8px; }}
+  @media (min-width:901px) {{
+    .groups {{ grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); }}
+    .fix-grid {{ grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }}
+    .scorer-cols {{ grid-template-columns:1fr 1fr; }}
+  }}
   .fix-grid .match {{ background:var(--card); border:1px solid var(--line); padding:10px 12px; }}
   .fixtures.hero {{ background:linear-gradient(180deg,#1c2a22,#161d27); border:1px solid var(--accent);
     border-radius:12px; padding:14px 18px 18px; margin-bottom:10px; box-shadow:0 0 0 3px rgba(63,185,80,0.08); }}
