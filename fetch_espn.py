@@ -12,13 +12,14 @@
 
 用法：python fetch_espn.py
 """
+import html
 import json
 import os
 import re
 import time
 import unicodedata
 import urllib.request
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlencode
 from datetime import datetime, timedelta, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -28,6 +29,11 @@ GROUPS_CACHE = os.path.join(HERE, "groups_cache.json")
 SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates={}"
 STANDINGS = "https://site.web.api.espn.com/apis/v2/sports/soccer/fifa.world/standings?season=2026"
 SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event={}"
+
+# YouTube Data API:云端(GitHub Actions 数据中心 IP)用它抓集锦——官方 API 不像网页抓取那样被同意墙/反爬挡。
+# 本地无 key 时自动回退网页抓取(住宅 IP 可用)。key 通过环境变量注入,代码不含明文。
+YT_API_KEY = os.environ.get("YOUTUBE_API_KEY", "").strip()
+YT_API = "https://www.googleapis.com/youtube/v3/search"
 
 START = datetime(2026, 6, 11).date()
 END = datetime(2026, 7, 19).date()
@@ -247,11 +253,32 @@ def _pub_rank(channel):
     return len(_TRUSTED)   # 非可信发布者排最后(仍保留,作兜底)
 
 
-def fetch_youtube_highlight(home, away):
-    """搜 '队名A 队名B highlights world cup 2026'（不带比分——带比分会搜到蹭标题的二次上传），
-    取官方集锦：优先 FIFA 官方频道，否则取首条。返回 {'url','title'} 或 None。"""
-    q = f"TSN {home} vs {away} full highlights FIFA world cup 2026"
-    url = "https://www.youtube.com/results?search_query=" + quote_plus(q) + "&hl=en&gl=US"
+def _yt_api_items(query):
+    """用官方 YouTube Data API 搜索,返回 [(videoId, title, channelTitle)]。无 key 返回 None、失败返回 None。"""
+    if not YT_API_KEY:
+        return None
+    url = YT_API + "?" + urlencode({
+        "part": "snippet", "q": query, "type": "video",
+        "maxResults": "15", "relevanceLanguage": "en", "key": YT_API_KEY,
+    })
+    try:
+        data = get_json(url, retries=2)
+    except Exception as ex:
+        print("[warn] youtube API 搜索失败:", repr(ex))
+        return None
+    items = []
+    for it in data.get("items", []):
+        vid = (it.get("id") or {}).get("videoId")
+        sn = it.get("snippet") or {}
+        if vid:
+            items.append((vid, html.unescape(sn.get("title") or ""),
+                          html.unescape(sn.get("channelTitle") or "")))
+    return items
+
+
+def _yt_scrape_items(query):
+    """网页抓取 YouTube 搜索结果(住宅 IP 可用,数据中心 IP 常被挡),返回 [(videoId, title, channel)]。"""
+    url = "https://www.youtube.com/results?search_query=" + quote_plus(query) + "&hl=en&gl=US"
     try:
         req = urllib.request.Request(url, headers={
             "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -262,11 +289,20 @@ def fetch_youtube_highlight(home, away):
         with urllib.request.urlopen(req, timeout=20) as r:
             h = r.read().decode("utf-8", "ignore")
     except Exception as ex:
-        print(f"[warn] youtube 搜索失败 {home}-{away}:", repr(ex))
-        return None
-    items = re.findall(
+        print(f"[warn] youtube 网页抓取失败:", repr(ex))
+        return []
+    return re.findall(
         r'"videoRenderer":\{"videoId":"([\w-]{11})".*?"title":\{"runs":\[\{"text":"([^"]+)"'
         r'.*?(?:"ownerText"|"longBylineText"):\{"runs":\[\{"text":"([^"]+)"', h)
+
+
+def fetch_youtube_highlight(home, away):
+    """取本场 TSN 官方集锦。云端有 API key 走官方 API(数据中心 IP 可用),否则回退网页抓取(住宅 IP)。
+    只认 TSN(官方转播商)发布、标题含主客两队 + highlight、非 shorts 的视频。返回 {'url','title','channel'} 或 None。"""
+    q = f"TSN {home} vs {away} full highlights FIFA world cup 2026"
+    items = _yt_api_items(q)
+    if items is None:                # 无 key 或 API 失败 -> 回退网页抓取
+        items = _yt_scrape_items(q)
     if not items:
         return None
 
@@ -278,8 +314,6 @@ def fetch_youtube_highlight(home, away):
         return {"url": f"https://www.youtube.com/watch?v={vid}",
                 "title": clean(title), "channel": c}
 
-    # 只认 TSN(官方转播商)发布的本场集锦——其它来源不准,一律不取。
-    # 仍要求:标题含主客两队 + highlight、非 shorts(挡掉 TSN 自己的预告/GAME IN 30 等非集锦)。
     for vid, title, ch in items:
         t = title.lower()
         if ("tsn" in _norm(ch)
@@ -308,7 +342,7 @@ def main():
             pass
 
     now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
-    RECENT_MS = 48 * 3600 * 1000   # 最近48h内结束的,每次都重抓集锦(TSN常在赛后几小时才发)
+    SEARCH_MS = 48 * 3600 * 1000   # 仅对"近48h内完赛且尚无集锦"的比赛去搜(TSN常赛后几小时才发);抓到即永久缓存,不再重搜(省 API 配额)
 
     # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频+集锦。
     gmatches = {g["name"]: [] for g in groups_order}
@@ -327,15 +361,13 @@ def main():
                 m["videos"] = vids
             key = (m["home"], m["away"], m["date"])
             mts = m.get("ts") or 0
-            recent = bool(mts) and (now_ms - mts) <= RECENT_MS
-            if key in prev_hl and not recent:
-                m["highlight"] = prev_hl[key]; hl_hit += 1     # 老比赛:复用缓存
-            else:
-                hl = fetch_youtube_highlight(m["home"], m["away"])   # 最近/无缓存:重抓
+            if key in prev_hl:
+                m["highlight"] = prev_hl[key]; hl_hit += 1     # 已有真集锦:永久保留,不再重搜(省配额)
+            elif bool(mts) and (now_ms - mts) <= SEARCH_MS:
+                hl = fetch_youtube_highlight(m["home"], m["away"])   # 近期且仍缺集锦:去搜
                 if hl:
                     m["highlight"] = hl; hl_new += 1
-                elif key in prev_hl:
-                    m["highlight"] = prev_hl[key]; hl_hit += 1  # 重抓没拿到,保留上次,别丢
+            # 太老仍缺集锦 -> 放弃(不搜),避免无意义消耗配额
             detail_n += 1
         gh = team2group.get(m["home"])
         ga = team2group.get(m["away"])

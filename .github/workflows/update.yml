@@ -32,6 +32,8 @@ jobs:
 
       - name: 拉 ESPN 真实数据
         if: steps.gate.outputs.active == 'true'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python3 fetch_espn.py
 
       - name: 生成页面
