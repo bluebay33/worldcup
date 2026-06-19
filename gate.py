@@ -60,6 +60,9 @@ def decide():
     if data is None:
         return True, "无法读取数据,保守刷新"
 
+    # 只有云端能真正抓集锦(配了 YOUTUBE_API_KEY)时,才为"缺集锦"保持活跃;
+    # 否则云端 IP 抓不到,空转 30h 纯属浪费额度——集锦交给本地跑补。
+    harvest = bool(os.environ.get("YOUTUBE_API_KEY", "").strip())
     now = int(datetime.now(timezone.utc).timestamp() * 1000)
     near_lo, near_hi = now - POST_MS, now + PRE_MS
     hl_lo = now - HILITE_MS
@@ -71,10 +74,11 @@ def decide():
             continue
         if near_lo <= ts <= near_hi:
             return True, f"有比赛在比分窗口内(源={src})"
-        if hl_lo <= ts <= now and m.get("status") == "FT":
+        if harvest and hl_lo <= ts <= now and m.get("status") == "FT":
             if not (m.get("highlight") or {}).get("url"):
                 return True, f"近期完赛比赛缺集锦,继续抓(源={src})"
-    return False, f"无临近比赛、近期完赛均已有集锦(源={src})"
+    tail = "、近期完赛均已有集锦" if harvest else "(无API key,集锦不在云端抓)"
+    return False, f"无临近比赛{tail}(源={src})"
 
 
 def main():
