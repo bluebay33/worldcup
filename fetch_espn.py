@@ -35,10 +35,6 @@ SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summa
 YT_API_KEY = os.environ.get("YOUTUBE_API_KEY", "").strip()
 YT_API = "https://www.googleapis.com/youtube/v3/search"
 
-# 集锦抓取诊断(写进 data.json 的 meta.hlDiag,便于从线上观察云端行为,无需看 Actions 日志)
-API_DIAG = {"hasKey": bool(YT_API_KEY), "calls": 0, "ok": 0, "empty": 0, "err": 0, "lastErr": ""}
-REJECT_SAMPLE = []   # 采样:有结果但全被筛选否决的比赛,记下返回的(频道,标题)前几条,看为什么否决
-
 START = datetime(2026, 6, 11).date()
 END = datetime(2026, 7, 19).date()
 BJT = timezone(timedelta(hours=8))
@@ -265,7 +261,6 @@ def _yt_api_items(query):
     """用官方 YouTube Data API 搜索,返回 [(videoId, title, channelTitle)]。无 key 返回 None、失败返回 None。"""
     if not YT_API_KEY:
         return None
-    API_DIAG["calls"] += 1
     url = YT_API + "?" + urlencode({
         "part": "snippet", "q": query, "type": "video",
         "maxResults": "15", "relevanceLanguage": "en", "key": YT_API_KEY,
@@ -273,8 +268,6 @@ def _yt_api_items(query):
     try:
         data = get_json(url, retries=2)
     except Exception as ex:
-        API_DIAG["err"] += 1
-        API_DIAG["lastErr"] = repr(ex)[:300]
         print("[warn] youtube API 搜索失败:", repr(ex))
         return None
     items = []
@@ -284,7 +277,6 @@ def _yt_api_items(query):
         if vid:
             items.append((vid, html.unescape(sn.get("title") or ""),
                           html.unescape(sn.get("channelTitle") or "")))
-    API_DIAG["ok" if items else "empty"] += 1
     return items
 
 
@@ -337,11 +329,6 @@ def fetch_youtube_highlight(home, away):
                 best, best_rank = (vid, title, ch), r
     if best:
         return watch(*best)
-    if items and len(REJECT_SAMPLE) < 2:               # 采样:看 API 到底返回了哪些(频道|标题)
-        REJECT_SAMPLE.append({
-            "match": f"{home} vs {away}",
-            "got": [f"{clean(ch)[:40]} | {clean(title)[:70]}" for vid, title, ch in items[:8]],
-        })
     return None                                        # 无可信本场集锦 -> build.py 退回搜索链接
 
 
@@ -416,8 +403,6 @@ def main():
             "updatedBy": "ESPN 自动拉取",
             "sources": ["ESPN"],
             "notes": "数据来自 ESPN 公开结构化端点，开球时间已转北京时间。比赛结果是唯一事实源，积分榜由 build.py 自动推算（胜3平1负0）。同组两队记小组赛，跨组记淘汰赛。",
-            "hlDiag": dict(API_DIAG),
-            "hlReject": list(REJECT_SAMPLE),
         },
         "groups": groups,
         "knockout": knockout,
