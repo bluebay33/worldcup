@@ -253,9 +253,10 @@ _TRUSTED = ["fifa", "tsn", "fox soccer", "fox sports", "cbs sports", "telemundo"
 
 
 def _pub_rank(channel):
+    # 精确匹配官方频道名:必须等于或以"<名> "开头,避免"Box2Box Fifa"这类带"fifa"的搬运号被误判为官方。
     c = _norm(channel)
     for i, name in enumerate(_TRUSTED):
-        if name in c:
+        if c == name or c.startswith(name + " "):
             return i
     return len(_TRUSTED)   # 非可信发布者排最后(仍保留,作兜底)
 
