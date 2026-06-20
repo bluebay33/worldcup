@@ -257,6 +257,37 @@ def _pub_rank(channel):
     return len(_TRUSTED)   # 非可信发布者排最后(仍保留,作兜底)
 
 
+# 频道 -> 可播地区(广播版权决定):TSN 只在加拿大可播、FOX/CBS 只在美国可播。
+# 据此把抓到的集锦分槽(ca/us)存放,前端按读者所在国选对应槽;其它地区退搜索链接。
+# FIFA 等全球频道在有版权方的美/加常被屏蔽,不分槽(读者退搜索链接)。
+_CHANNEL_REGION = {
+    "tsn": "ca", "cbc": "ca",
+    "fox sports": "us", "fox soccer": "us", "cbs sports": "us", "telemundo": "us",
+}
+
+
+def region_of(channel):
+    """官方转播商频道 -> 'ca'/'us';全球/未知频道返回 None。"""
+    c = _norm(channel)
+    for name, reg in _CHANNEL_REGION.items():
+        if c == name or c.startswith(name + " "):
+            return reg
+    return None
+
+
+def detect_region():
+    """用 Cloudflare /cdn-cgi/trace 探测本次运行出口 IP 所在国(小写,如 ca/us);失败返回 None。
+    云端 GitHub Actions=us、用户本地(加拿大)=ca,据此决定本次能补哪个地区的槽。"""
+    try:
+        req = urllib.request.Request("https://worldcup-ata.pages.dev/cdn-cgi/trace",
+                                     headers={"User-Agent": "fetch/1.0"})
+        txt = urllib.request.urlopen(req, timeout=10).read().decode("utf-8", "ignore")
+        mm = re.search(r"loc=(\w+)", txt)
+        return mm.group(1).lower() if mm else None
+    except Exception:
+        return None
+
+
 def _yt_api_items(query):
     """用官方 YouTube Data API 搜索,返回 [(videoId, title, channelTitle)]。无 key 返回 None、失败返回 None。"""
     if not YT_API_KEY:
@@ -300,16 +331,16 @@ def _yt_scrape_items(query):
         r'.*?(?:"ownerText"|"longBylineText"):\{"runs":\[\{"text":"([^"]+)"', h)
 
 
-def fetch_youtube_highlight(home, away):
-    """取本场官方集锦。云端有 API key 走官方 API(数据中心 IP 可用),否则回退网页抓取(住宅 IP)。
-    只认可信发布者(FIFA 官方优先,其次 FOX/TSN 等官方转播商)、标题含主客两队 + highlight、非 shorts。
-    取可信度最高(_pub_rank 最小)的一条。返回 {'url','title','channel'} 或 None。"""
+def fetch_youtube_highlights(home, away):
+    """搜本场集锦,按发布频道的可播地区分槽返回 {'ca': {...}, 'us': {...}}(只含找到的地区,可能为空)。
+    云端有 API key 走官方 API(数据中心 IP 可用),否则网页抓取(住宅 IP)。
+    每个地区取该地区最可信(_pub_rank 最小)的一条;标题须含主客两队 + highlight、非 shorts。"""
     q = f"{home} vs {away} full highlights FIFA world cup 2026"
     items = _yt_api_items(q)
     if items is None:                # 无 key 或 API 失败 -> 回退网页抓取
         items = _yt_scrape_items(q)
     if not items:
-        return None
+        return {}
 
     def clean(t):
         return t.replace("\\u0026", "&").replace("\\u003d", "=").replace("\\/", "/")
@@ -319,17 +350,18 @@ def fetch_youtube_highlight(home, away):
         return {"url": f"https://www.youtube.com/watch?v={vid}",
                 "title": clean(title), "channel": c}
 
-    best = None
-    best_rank = len(_TRUSTED)        # 只取可信发布者(rank < len);越小越权威
+    best = {}                         # region -> (rank, dict);同地区取 rank 最小者
     for vid, title, ch in items:
         t = title.lower()
-        if (_relevant(title, home, away) and "highlight" in t and "shorts" not in t):
-            r = _pub_rank(ch)
-            if r < best_rank:
-                best, best_rank = (vid, title, ch), r
-    if best:
-        return watch(*best)
-    return None                                        # 无可信本场集锦 -> build.py 退回搜索链接
+        if not (_relevant(title, home, away) and "highlight" in t and "shorts" not in t):
+            continue
+        reg = region_of(ch)           # 非地区性官方源(如 FIFA)跳过 -> 读者退搜索链接
+        if not reg:
+            continue
+        r = _pub_rank(ch)
+        if reg not in best or r < best[reg][0]:
+            best[reg] = (r, watch(vid, title, ch))
+    return {reg: v for reg, (rk, v) in best.items()}
 
 
 def main():
@@ -337,26 +369,51 @@ def main():
     events = fetch_events()
     print(f"[info] 拉到 {len(events)} 场比赛、{len(groups_order)} 个组")
 
-    # 复用上次已找到的 YouTube 集锦链接（避免每次重抓、云端被拦时仍有上次结果）
+    # 集锦缓存基底:优先读**线上已部署 data.json**(含云端填的 us 槽 + 本地填的 ca 槽,实现两边合并),
+    # 失败回退本地。按 (home,away,date) 索引每场 {ca,us} 双槽;兼容旧的单 highlight 结构(按频道迁移到对应槽)。
+    def _seed(data):
+        out = {}
+        allm = [mm for g in data.get("groups", []) for mm in g.get("matches", [])] + data.get("knockout", [])
+        for mm in allm:
+            key = (mm.get("home"), mm.get("away"), mm.get("date"))
+            hls = mm.get("highlights")
+            if isinstance(hls, dict):
+                slots = {k: v for k, v in hls.items() if v and v.get("url")}
+                if slots:
+                    out[key] = slots
+            elif mm.get("highlight") and mm["highlight"].get("url"):
+                reg = region_of(mm["highlight"].get("channel") or "")
+                if reg:
+                    out[key] = {reg: mm["highlight"]}
+        return out
+
     prev_hl = {}
-    if os.path.exists(DATA):
-        try:
-            old = json.load(open(DATA, encoding="utf-8"))
-            allm = [mm for g in old.get("groups", []) for mm in g.get("matches", [])] + old.get("knockout", [])
-            for mm in allm:
-                if mm.get("highlight"):
-                    prev_hl[(mm.get("home"), mm.get("away"), mm.get("date"))] = mm["highlight"]
-        except Exception:
-            pass
+    try:
+        req = urllib.request.Request("https://worldcup-ata.pages.dev/data.json",
+                                     headers={"User-Agent": "fetch/1.0", "Cache-Control": "no-cache"})
+        live = json.loads(urllib.request.urlopen(req, timeout=15).read().decode("utf-8"))
+        prev_hl = _seed(live)
+        print(f"[info] 集锦基底取自线上 data.json:{len(prev_hl)} 场已有槽")
+    except Exception as ex:
+        print("[warn] 线上 data.json 拉取失败,回退本地:", repr(ex))
+        if os.path.exists(DATA):
+            try:
+                prev_hl = _seed(json.load(open(DATA, encoding="utf-8")))
+            except Exception:
+                pass
+
+    region = detect_region()
+    run_reg = region if region in ("ca", "us") else None
+    print(f"[info] 本次运行地区 loc={region} -> 集锦补 {run_reg or '不补(非 ca/us 地区)'}")
 
     now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
-    SEARCH_MS = 48 * 3600 * 1000   # 仅对"近48h内完赛且尚无集锦"的比赛去搜(TSN常赛后几小时才发);抓到即永久缓存,不再重搜(省 API 配额)
+    SEARCH_MS = 48 * 3600 * 1000   # 仅对"近48h完赛且本地区槽仍缺"的比赛去搜;抓到永久缓存不重搜(省 API 配额)
 
     # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频+集锦。
     gmatches = {g["name"]: [] for g in groups_order}
     knockout = []
     detail_n = 0
-    hl_hit = hl_new = 0
+    hl_slots = hl_searched = 0
     for e in events:
         m = parse_event(e)
         if not m:
@@ -369,13 +426,14 @@ def main():
                 m["videos"] = vids
             key = (m["home"], m["away"], m["date"])
             mts = m.get("ts") or 0
-            if key in prev_hl:
-                m["highlight"] = prev_hl[key]; hl_hit += 1     # 已有真集锦:永久保留,不再重搜(省配额)
-            elif bool(mts) and (now_ms - mts) <= SEARCH_MS:
-                hl = fetch_youtube_highlight(m["home"], m["away"])   # 近期且仍缺集锦:去搜
-                if hl:
-                    m["highlight"] = hl; hl_new += 1
-            # 太老仍缺集锦 -> 放弃(不搜),避免无意义消耗配额
+            hl = dict(prev_hl.get(key) or {})                  # 现有双槽(来自线上,已是云端+本地合并)
+            # 仅当本次运行地区(run_reg)的槽还缺、且近 48h 内,才去搜(各补各的槽,不互相覆盖、省配额)
+            if run_reg and not hl.get(run_reg) and bool(mts) and (now_ms - mts) <= SEARCH_MS:
+                found = fetch_youtube_highlights(m["home"], m["away"])
+                hl.update(found)                               # 填入找到的所有地区槽(机会性,可能连带填另一槽)
+                hl_searched += 1
+            if hl:
+                m["highlights"] = hl; hl_slots += 1
             detail_n += 1
         gh = team2group.get(m["home"])
         ga = team2group.get(m["away"])
@@ -383,7 +441,7 @@ def main():
             gmatches[gh].append(m)
         else:
             knockout.append(m)
-    print(f"[info] 已为 {detail_n} 场抓进球/视频；集锦链接：复用 {hl_hit}、新抓 {hl_new}")
+    print(f"[info] 已为 {detail_n} 场抓进球/视频；集锦:{hl_slots} 场有槽(本次搜索 {hl_searched} 场)")
 
     for name in gmatches:
         gmatches[name].sort(key=lambda x: (x.get("date", ""), x.get("time", "")))

@@ -75,8 +75,13 @@ def decide():
         if near_lo <= ts <= near_hi:
             return True, f"有比赛在比分窗口内(源={src})"
         if harvest and hl_lo <= ts <= now and m.get("status") == "FT":
-            if not (m.get("highlight") or {}).get("url"):
-                return True, f"近期完赛比赛缺集锦,继续抓(源={src})"
+            # gate 在云端(美国)跑,只能补 us 槽(FOX);故只为缺 us 槽保持活跃。
+            # ca 槽(TSN)要加拿大 IP 才抓得到,交给本地跑,云端别为它空转。
+            hls = m.get("highlights")
+            has_us = bool((hls or {}).get("us", {}).get("url")) if isinstance(hls, dict) \
+                else (m.get("highlight", {}).get("channel", "").lower().startswith(("fox", "cbs")))
+            if not has_us:
+                return True, f"近期完赛比赛缺 us 集锦,继续抓(源={src})"
     tail = "、近期完赛均已有集锦" if harvest else "(无API key,集锦不在云端抓)"
     return False, f"无临近比赛{tail}(源={src})"
 

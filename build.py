@@ -240,19 +240,36 @@ def goals_html(m):
 
 
 def fifa_highlight_link(m):
-    """已结束比赛 -> 集锦链接。优先 fetch 抓到的直链；抓不到则退回 YouTube 搜索链接。"""
+    """已结束比赛 -> 集锦链接。集锦按地区分槽(ca=TSN只在加拿大可播、us=FOX只在美国可播):
+    链接里同时带 ca/us 直链 + 搜索兜底,前端 JS 按读者所在国(/cdn-cgi/trace)选 href。
+    默认 href 用搜索链接(无 JS / 其它地区都安全可用)。兼容旧的单 highlight 结构。"""
     if m.get("status") != "FT" or m.get("hs") is None or m.get("as") is None:
         return ""
-    hl = m.get("highlight") or {}
-    if hl.get("url"):
-        src = (hl.get("channel") or "").strip()
-        tail = f" · {esc(src[:16])}" if src else ""
-        label = "🎬 " + bi("集锦", "Highlights") + tail
-        return f'<a class="vlink yt" href="{esc(hl["url"])}" target="_blank" rel="noopener">{label}</a>'
-    q = f'TSN {m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
-    url = "https://www.youtube.com/results?search_query=" + quote_plus(q)
-    label = "🎬 " + bi("集锦(搜索)", "Highlights (search)")
-    return f'<a class="vlink yt" href="{esc(url)}" target="_blank" rel="noopener">{label}</a>'
+    hls = m.get("highlights")
+    if not isinstance(hls, dict):                      # 旧单结构 -> 按频道归到对应槽
+        old = m.get("highlight") or {}
+        hls = {}
+        if old.get("url"):
+            ch = _norm_ch(old.get("channel") or "")
+            reg = "ca" if ch.startswith("tsn") else ("us" if ch.startswith(("fox", "cbs", "telemundo")) else None)
+            if reg:
+                hls[reg] = old
+    ca = (hls.get("ca") or {}).get("url") if hls else None
+    us = (hls.get("us") or {}).get("url") if hls else None
+    q = f'{m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
+    search = "https://www.youtube.com/results?search_query=" + quote_plus(q)
+    data = (f' data-hl-search="{esc(search)}"'
+            + (f' data-hl-ca="{esc(ca)}"' if ca else "")
+            + (f' data-hl-us="{esc(us)}"' if us else ""))
+    label = "🎬 " + bi("集锦", "Highlights")
+    return (f'<a class="vlink yt" href="{esc(search)}"{data} '
+            f'target="_blank" rel="noopener">{label}</a>')
+
+
+def _norm_ch(s):
+    import unicodedata as _u
+    s = _u.normalize("NFKD", s or "")
+    return "".join(c for c in s if not _u.combining(c)).lower()
 
 
 def videos_html(m):
@@ -728,6 +745,21 @@ def build():
   if('serviceWorker' in navigator){{
     navigator.serviceWorker.register('sw.js').catch(function(){{}});
   }}
+}})();
+</script>
+<script>
+/* 集锦地区分发:按读者所在国(Cloudflare /cdn-cgi/trace)把链接换成 TSN(加拿大)/FOX(美国);
+   其它地区保持默认 href=YouTube 搜索链接。纯前端,无需 Worker。 */
+(function(){{
+  fetch('/cdn-cgi/trace').then(function(r){{return r.text();}}).then(function(t){{
+    var m=t.match(/loc=([A-Za-z]+)/); var loc=m?m[1].toUpperCase():'';
+    var ls=document.querySelectorAll('a[data-hl-search]');
+    for(var i=0;i<ls.length;i++){{
+      var a=ls[i], ca=a.getAttribute('data-hl-ca'), us=a.getAttribute('data-hl-us');
+      if(loc==='CA'&&ca){{ a.href=ca; }}
+      else if(loc==='US'&&us){{ a.href=us; }}
+    }}
+  }}).catch(function(){{}});
 }})();
 </script>
 </body>
