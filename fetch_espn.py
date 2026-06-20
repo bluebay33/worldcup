@@ -226,7 +226,10 @@ _TEAM_ALIAS = {
     "united states": ["usa", "united states"],
     "ivory coast": ["cote", "ivoire", "ivory coast"],
 }
-_STOP = {"and", "the", "of", "dr", "fc", "ir", "republic"}
+# 方向/通用词会导致跨队误配(如 South Africa 的 south 命中 South Korea),作停用词剔除,
+# 让多词国名退到distinctive部分(South Africa->africa、North Macedonia->macedonia、Saudi Arabia->arabia)。
+_STOP = {"and", "the", "of", "dr", "fc", "ir", "republic",
+         "south", "north", "east", "west", "new", "saudi"}
 
 
 def _team_tokens(name):
@@ -305,9 +308,10 @@ def _yt_scrape_items(query):
 
 
 def fetch_youtube_highlight(home, away):
-    """取本场 TSN 官方集锦。云端有 API key 走官方 API(数据中心 IP 可用),否则回退网页抓取(住宅 IP)。
-    只认 TSN(官方转播商)发布、标题含主客两队 + highlight、非 shorts 的视频。返回 {'url','title','channel'} 或 None。"""
-    q = f"TSN {home} vs {away} full highlights FIFA world cup 2026"
+    """取本场官方集锦。云端有 API key 走官方 API(数据中心 IP 可用),否则回退网页抓取(住宅 IP)。
+    只认可信发布者(FIFA 官方优先,其次 FOX/TSN 等官方转播商)、标题含主客两队 + highlight、非 shorts。
+    取可信度最高(_pub_rank 最小)的一条。返回 {'url','title','channel'} 或 None。"""
+    q = f"{home} vs {away} full highlights FIFA world cup 2026"
     items = _yt_api_items(q)
     if items is None:                # 无 key 或 API 失败 -> 回退网页抓取
         items = _yt_scrape_items(q)
@@ -322,19 +326,22 @@ def fetch_youtube_highlight(home, away):
         return {"url": f"https://www.youtube.com/watch?v={vid}",
                 "title": clean(title), "channel": c}
 
+    best = None
+    best_rank = len(_TRUSTED)        # 只取可信发布者(rank < len);越小越权威
     for vid, title, ch in items:
         t = title.lower()
-        if ("tsn" in _norm(ch)
-                and _relevant(title, home, away)
-                and "highlight" in t
-                and "shorts" not in t):
-            return watch(vid, title, ch)
+        if (_relevant(title, home, away) and "highlight" in t and "shorts" not in t):
+            r = _pub_rank(ch)
+            if r < best_rank:
+                best, best_rank = (vid, title, ch), r
+    if best:
+        return watch(*best)
     if items and len(REJECT_SAMPLE) < 2:               # 采样:看 API 到底返回了哪些(频道|标题)
         REJECT_SAMPLE.append({
             "match": f"{home} vs {away}",
-            "got": [f"{clean(ch)[:40]} | {clean(title)[:70]}" for vid, title, ch in items[:6]],
+            "got": [f"{clean(ch)[:40]} | {clean(title)[:70]}" for vid, title, ch in items[:8]],
         })
-    return None                                        # 没有 TSN 本场集锦 -> build.py 退回搜索链接
+    return None                                        # 无可信本场集锦 -> build.py 退回搜索链接
 
 
 def main():
