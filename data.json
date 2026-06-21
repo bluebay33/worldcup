@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-21 09:00 (北京时间)",
-    "lastUpdatedTs": 1782003619826,
+    "lastUpdated": "2026-06-21 22:06 (北京时间)",
+    "lastUpdatedTs": 1782050767151,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -1123,12 +1123,16 @@
           ],
           "videos": [
             {
-              "title": "Deniz Undav's second-half double saves Germany",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_World_Cup_Highlight_Deniz_Undavs_secondhalf_double_saves_Germany__20260621_AUS_ONLY/dm_260620_World_Cup_Highlight_Deniz_Undavs_secondhalf_double_saves_Germany__20260621_AUS_ONLY_360p30_1464k.mp4"
+              "title": "Klinsmann: Germany 'really struggled' despite late win vs. Ivory Coast",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/ss_20260620_182138801_3570528/ss_20260620_182138801_3570528_360p30_1464k.mp4"
             },
             {
               "title": "Klinsmann: Ivory Coast's Yan Diomande a 'very special player'",
               "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_Klinsmann_Ivory_Coasts_Yan_Diomande_a_very_special_player/dm_260620_Klinsmann_Ivory_Coasts_Yan_Diomande_a_very_special_player_360p30_1464k.mp4"
+            },
+            {
+              "title": "Does Undav deserve to start for Germany after his performance vs. Ivory Coast?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_COM_SOC_Analysis_Does_Undav_deserve_to_start_for_Germany_after_his_performance_vs_Ivory_Coast3F__G/dm_260621_COM_SOC_Analysis_Does_Undav_deserve_to_start_for_Germany_after_his_performance_vs_Ivory_Coast3F__G_360p30_1464k.mp4"
             }
           ],
           "highlights": {
@@ -1152,9 +1156,27 @@
           "away": "Curaçao",
           "hs": 0,
           "as": 0,
-          "status": "LIVE",
+          "status": "FT",
           "venue": "GEHA Field at Arrowhead Stadium",
-          "city": "Kansas City, Missouri"
+          "city": "Kansas City, Missouri",
+          "videos": [
+            {
+              "title": "Room: I knew no ball was going to go in today",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_COM_SOC_Analysis_Room3A_I_knew_no_ball_was_going_to_go_in_today_GLOBAL_2026-06-21/dm_260621_COM_SOC_Analysis_Room3A_I_knew_no_ball_was_going_to_go_in_today_GLOBAL_2026-06-21_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=GqZtSOJ_lt4",
+              "title": "Ecuador vs. Curaçao Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=_JQLeADlzXM",
+              "title": "Ecuador vs Curaçao Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-26",
@@ -1403,11 +1425,59 @@
           "ts": 1782014400000,
           "home": "Tunisia",
           "away": "Japan",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 0,
+          "as": 4,
+          "status": "FT",
           "venue": "Estadio BBVA",
-          "city": "Guadalupe"
+          "city": "Guadalupe",
+          "goals": [
+            {
+              "min": "4'",
+              "scorer": "Daichi Kamada",
+              "assist": "Keito Nakamura",
+              "type": "Goal",
+              "team": "Japan"
+            },
+            {
+              "min": "31'",
+              "scorer": "Ayase Ueda",
+              "assist": "Kou Itakura",
+              "type": "Goal",
+              "team": "Japan"
+            },
+            {
+              "min": "69'",
+              "scorer": "Junya Ito",
+              "assist": "Ayase Ueda",
+              "type": "Goal",
+              "team": "Japan"
+            },
+            {
+              "min": "83'",
+              "scorer": "Ayase Ueda",
+              "assist": "Kaishu Sano",
+              "type": "Goal - Header",
+              "team": "Japan"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Japan fans celebrate early goal vs. Tunisia",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_Japan_goal/dm_260621_Japan_goal_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=ATmlGGfCyBA",
+              "title": "Tunisia vs Japan Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=3ESRyAZNh5A",
+              "title": "Tunisia vs. Japan Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-26",
@@ -2440,7 +2510,7 @@
       "date": "2026-06-30",
       "time": "04:30",
       "ts": 1782765000000,
-      "home": "Group E Winner",
+      "home": "Germany",
       "away": "Third Place Group A/B/C/D/F",
       "hs": null,
       "as": null,

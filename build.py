@@ -774,9 +774,9 @@ def build():
 
   {fixtures_html}
 
-  {standings_html}
-
   {scorers_html}
+
+  {standings_html}
 
   {knockout_html}
 
