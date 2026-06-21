@@ -407,7 +407,7 @@ def main():
     print(f"[info] 本次运行地区 loc={region} -> 集锦补 {run_reg or '不补(非 ca/us 地区)'}")
 
     now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
-    SEARCH_MS = 720 * 3600 * 1000  # 临时放大到30天做一次性全量补 FOX(美国IP云端);补齐后改回 48h 省配额
+    SEARCH_MS = 48 * 3600 * 1000   # 仅对"近48h完赛且本地区槽仍缺"的比赛去搜;抓到永久缓存不重搜(省 API 配额)
 
     # 按组装配 matches；跨组进 knockout。已结束比赛额外抓进球者名单+视频+集锦。
     gmatches = {g["name"]: [] for g in groups_order}
