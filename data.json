@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-18 20:28 (北京时间)",
-    "lastUpdatedTs": 1781785734241,
+    "lastUpdated": "2026-06-21 09:00 (北京时间)",
+    "lastUpdatedTs": 1782003619826,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -61,10 +61,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0611/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance/dm_260611_Laurens_South_Africa_need_to_improve_massively_to_advance_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=bHDkDeiEAQM",
-            "title": "Mexico vs. South Africa Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=bHDkDeiEAQM",
+              "title": "Mexico vs. South Africa Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -107,10 +109,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP/dm_260612_COM_SOC_Analysis_Are_South_Korea_the_best_team_in_Group_A_20260612_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=96DetiGHCiY",
-            "title": "Korea Republic vs. Czechia Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=96DetiGHCiY",
+              "title": "Korea Republic vs. Czechia Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -119,11 +123,53 @@
           "ts": 1781798400000,
           "home": "Czechia",
           "away": "South Africa",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 1,
+          "status": "FT",
           "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
+          "city": "Atlanta, Georgia",
+          "goals": [
+            {
+              "min": "6'",
+              "scorer": "Michal Sadílek",
+              "assist": "Alexandr Sojka",
+              "type": "Goal",
+              "team": "Czechia"
+            },
+            {
+              "min": "83'",
+              "scorer": "Teboho Mokoena",
+              "assist": null,
+              "type": "Penalty - Scored",
+              "team": "South Africa"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Should Czechia have taken more risks when in the lead against South Africa?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_COM_SOC_Analysis_Should_Czechia_have_taken_more_risks_when_in_the_lead_against_South_Africa_2026/dm_260618_COM_SOC_Analysis_Should_Czechia_have_taken_more_risks_when_in_the_lead_against_South_Africa_2026_360p30_1464k.mp4"
+            },
+            {
+              "title": "Will South Africa reach the World Cup knockouts?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_COM_SOC_Analysis_Will_South_Africa_reach_the_World_Cup_knockouts3F_GLOBAL_2026-06-18/dm_260618_COM_SOC_Analysis_Will_South_Africa_reach_the_World_Cup_knockouts3F_GLOBAL_2026-06-18_360p30_1464k.mp4"
+            },
+            {
+              "title": "Fans in Johannesburg celebrate South Africa's equalizer vs. Czechia",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_COM_SOC_News_Fans_in_Johannesburg_celebrate_South_Africas_equaliser_vs_Czechia__20260618_GLOBA/dm_260618_COM_SOC_News_Fans_in_Johannesburg_celebrate_South_Africas_equaliser_vs_Czechia__20260618_GLOBA_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=kuH3SUoe_oE",
+              "title": "Czechia vs. South Africa Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=jijCaWH_IxM",
+              "title": "Czechia vs South Africa Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-19",
@@ -131,11 +177,42 @@
           "ts": 1781830800000,
           "home": "Mexico",
           "away": "South Korea",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 0,
+          "status": "FT",
           "venue": "Estadio Akron",
-          "city": "Guadalajara"
+          "city": "Guadalajara",
+          "goals": [
+            {
+              "min": "50'",
+              "scorer": "Luis Romo",
+              "assist": null,
+              "type": "Goal",
+              "team": "Mexico"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Mexico fans go wild in the rain after taking lead vs. South Korea",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_Mex_goal/dm_260618_Mex_goal_360p30_1464k.mp4"
+            },
+            {
+              "title": "How Mexicans celebrated being the first team to progress to the World Cup knockout stage",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_How_Mexicans_celebrated_being_the_first_team_to_progress_to_the_World_Cup_knockout_stage/dm_260619_How_Mexicans_celebrated_being_the_first_team_to_progress_to_the_World_Cup_knockout_stage_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=txN2KDCfKHg",
+              "title": "Mexico vs. Korea Republic Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=F1sMvm6D-0Y",
+              "title": "Mexico vs South Korea Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-25",
@@ -209,10 +286,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0612/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares/dm_260612_Bosnia_fan_zone_celebrates_taking_the_lead_vs_Canada_by_setting_off_flares_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=LLdJMgc9MYg",
-            "title": "Canada vs. Bosnia and Herzegovina Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=LLdJMgc9MYg",
+              "title": "Canada vs. Bosnia and Herzegovina Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -248,10 +327,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C/dm_260613_COM_SOC_Analysis_How_Qatar_earned_their_first_ever_World_Cup_point_20260613_GLOBAL_FIFA_WORLD_C_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=Z-9EIWllZNM",
-            "title": "Qatar vs. Switzerland Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=Z-9EIWllZNM",
+              "title": "Qatar vs. Switzerland Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -260,11 +341,66 @@
           "ts": 1781809200000,
           "home": "Switzerland",
           "away": "Bosnia-Herzegovina",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 4,
+          "as": 1,
+          "status": "FT",
           "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
+          "city": "Inglewood, California",
+          "goals": [
+            {
+              "min": "74'",
+              "scorer": "Johan Manzambi",
+              "assist": null,
+              "type": "Goal",
+              "team": "Switzerland"
+            },
+            {
+              "min": "84'",
+              "scorer": "Rubén Vargas",
+              "assist": "Breel Embolo",
+              "type": "Goal",
+              "team": "Switzerland"
+            },
+            {
+              "min": "90'",
+              "scorer": "Johan Manzambi",
+              "assist": "Rubén Vargas",
+              "type": "Goal",
+              "team": "Switzerland"
+            },
+            {
+              "min": "90'+3'",
+              "scorer": "Ermin Mahmic",
+              "assist": null,
+              "type": "Goal",
+              "team": "Bosnia-Herzegovina"
+            },
+            {
+              "min": "90'+7'",
+              "scorer": "Granit Xhaka",
+              "assist": null,
+              "type": "Penalty - Scored",
+              "team": "Switzerland"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Robson: The subs changed the game for Switzerland",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_COM_SOC_ANALYSIS_Robson_The_subs_changed_the_game_for_Switzerland_2026_6_18/dm_260618_COM_SOC_ANALYSIS_Robson_The_subs_changed_the_game_for_Switzerland_2026_6_18_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=q5B9fXatnUU",
+              "title": "Switzerland vs. Bosnia and Herzegovina Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=v08lQx6pThk",
+              "title": "Switzerland vs Bosnia and Herzegovina Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-19",
@@ -272,11 +408,81 @@
           "ts": 1781820000000,
           "home": "Canada",
           "away": "Qatar",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 6,
+          "as": 0,
+          "status": "FT",
           "venue": "BC Place",
-          "city": "Vancouver"
+          "city": "Vancouver",
+          "goals": [
+            {
+              "min": "16'",
+              "scorer": "Cyle Larin",
+              "assist": null,
+              "type": "Goal",
+              "team": "Canada"
+            },
+            {
+              "min": "29'",
+              "scorer": "Jonathan David",
+              "assist": null,
+              "type": "Goal",
+              "team": "Canada"
+            },
+            {
+              "min": "45'+3'",
+              "scorer": "Jonathan David",
+              "assist": null,
+              "type": "Goal",
+              "team": "Canada"
+            },
+            {
+              "min": "64'",
+              "scorer": "Nathan Saliba",
+              "assist": null,
+              "type": "Goal - Free-kick",
+              "team": "Canada"
+            },
+            {
+              "min": "75'",
+              "scorer": "Mohamed Manai",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "Canada"
+            },
+            {
+              "min": "90'+2'",
+              "scorer": "Jonathan David",
+              "assist": "Nathan Saliba",
+              "type": "Goal",
+              "team": "Canada"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Why Ismael Kone is a 'massive loss' for Canada",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/ss_20260618_203529298_3568884/ss_20260618_203529298_3568884_360p30_1464k.mp4"
+            },
+            {
+              "title": "Canada fans at Niagara Falls celebrate 1st goal vs. Qatar",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_COM_SOC_News_Canada_fans_at_Niagara_Falls_celebrate_1st_goal_vs_Qatar__20260618_GLOBAL/dm_260618_COM_SOC_News_Canada_fans_at_Niagara_Falls_celebrate_1st_goal_vs_Qatar__20260618_GLOBAL_360p30_1464k.mp4"
+            },
+            {
+              "title": "Vancouver celebrates as Canada goes 3-0 up",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0618/dm_260618_Vancouver_celebrates_as_Canada_goes_up/dm_260618_Vancouver_celebrates_as_Canada_goes_up_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=vz9OTeU6gTM",
+              "title": "Canada vs Qatar Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=bgqOB1WjSog",
+              "title": "Canada vs. Qatar Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-25",
@@ -354,10 +560,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F/dm_260613_COM_SOC_News_Fans_on_Copacabana_Beach_celebrate_Brazils_equalizer_vs_Morocco_20260613_GLOBAL_F_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=sW44G8KxAbw",
-            "title": "Brazil vs. Morocco Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=sW44G8KxAbw",
+              "title": "Brazil vs. Morocco Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -386,10 +594,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0613/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G/dm_260613_COM_SOC_Analysis_Burley_Scotland_will_be_hoping_three_points_is_enough_for_knockouts_20260613_G_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=FXn3ZwNIiHQ",
-            "title": "Haiti vs. Scotland Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=FXn3ZwNIiHQ",
+              "title": "Haiti vs. Scotland Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -398,11 +608,38 @@
           "ts": 1781906400000,
           "home": "Scotland",
           "away": "Morocco",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 0,
+          "as": 1,
+          "status": "FT",
           "venue": "Gillette Stadium",
-          "city": "Foxborough, Massachusetts"
+          "city": "Foxborough, Massachusetts",
+          "goals": [
+            {
+              "min": "2'",
+              "scorer": "Ismael Saibari",
+              "assist": "Brahim Díaz",
+              "type": "Goal",
+              "team": "Morocco"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Nicol: Scotland deserved to lose vs. Morocco",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_COM_SOC_Analysis_Nicol_Scotland_deserved_to_lose_vs_Morocco__20260619_GLOBAL_FIFA_WORLD_CUP/dm_260619_COM_SOC_Analysis_Nicol_Scotland_deserved_to_lose_vs_Morocco__20260619_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=wff2tvitS-s",
+              "title": "Scotland vs Morocco Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=Fyy3eu5miq4",
+              "title": "Scotland vs. Morocco Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-20",
@@ -410,11 +647,60 @@
           "ts": 1781915400000,
           "home": "Brazil",
           "away": "Haiti",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 3,
+          "as": 0,
+          "status": "FT",
           "venue": "Lincoln Financial Field",
-          "city": "Philadelphia, Pennsylvania"
+          "city": "Philadelphia, Pennsylvania",
+          "goals": [
+            {
+              "min": "23'",
+              "scorer": "Matheus Cunha",
+              "assist": null,
+              "type": "Goal",
+              "team": "Brazil"
+            },
+            {
+              "min": "36'",
+              "scorer": "Matheus Cunha",
+              "assist": "Vinícius Júnior",
+              "type": "Goal",
+              "team": "Brazil"
+            },
+            {
+              "min": "45'+3'",
+              "scorer": "Vinícius Júnior",
+              "assist": "Lucas Paquetá",
+              "type": "Goal",
+              "team": "Brazil"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Onuoha: Raphinha's injury could be a huge blow for Brazil",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_COM_SOC_Analysis_Onuoha_Raphinhas_injury_could_be_a_huge_blow_for_Brazil__20260619_GLOBAL_FIF/dm_260619_COM_SOC_Analysis_Onuoha_Raphinhas_injury_could_be_a_huge_blow_for_Brazil__20260619_GLOBAL_FIF_360p30_1464k.mp4"
+            },
+            {
+              "title": "Ancelotti: Neymar will be available vs. Scotland",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_COM_SOC_Analysis_Ancelotti3A_Neymar_will_be_available_vs_Scotland_GLOBAL_2026-06-20/dm_260620_COM_SOC_Analysis_Ancelotti3A_Neymar_will_be_available_vs_Scotland_GLOBAL_2026-06-20_360p30_1464k.mp4"
+            },
+            {
+              "title": "Brazilian players react to their 3-0 victory over Haiti",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_COM_SOC_Analysis_Brazilian_players_react_to_their_3-0_victory_over_Haiti_GLOBAL_2026-06-20/dm_260620_COM_SOC_Analysis_Brazilian_players_react_to_their_3-0_victory_over_Haiti_GLOBAL_2026-06-20_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=BphiVajPsFc",
+              "title": "Brazil vs Haiti Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=Z2KoX5crIjQ",
+              "title": "Brazil vs. Haiti Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-25",
@@ -513,10 +799,12 @@
               "url": "https://media.video-cdn.espn.com/motion/wsc/2026/0613/6c4d8ac3-5330-4c68-827d-b992191ba7f0/6c4d8ac3-5330-4c68-827d-b992191ba7f0_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=Jbn751Fip44",
-            "title": "USA vs. Paraguay Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=Jbn751Fip44",
+              "title": "USA vs. Paraguay Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -546,20 +834,12 @@
               "team": "Australia"
             }
           ],
-          "videos": [
-            {
-              "title": "Popovic: Turkey win a 'special night for the Socceroos'",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos/dm_260614_Popovic_Turkey_win_a_special_night_for_the_Socceroos_360p30_1464k.mp4"
-            },
-            {
-              "title": "Montella says Australia loss gives Türkiye 'more motivation'",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation/dm_260614_Montella_says_Australia_loss_gives_Turkiye_more_motivation_360p30_1464k.mp4"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=w2aYzT0iTsQ",
+              "title": "Australia vs. Türkiye Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
             }
-          ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=w2aYzT0iTsQ",
-            "title": "Australia vs. Türkiye Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
           }
         },
         {
@@ -568,11 +848,53 @@
           "ts": 1781895600000,
           "home": "United States",
           "away": "Australia",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 2,
+          "as": 0,
+          "status": "FT",
           "venue": "Lumen Field",
-          "city": "Seattle, Washington"
+          "city": "Seattle, Washington",
+          "goals": [
+            {
+              "min": "11'",
+              "scorer": "Cameron Burgess",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "United States"
+            },
+            {
+              "min": "43'",
+              "scorer": "Alex Freeman",
+              "assist": null,
+              "type": "Goal - Header",
+              "team": "United States"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Has Pochettino silenced the doubters?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_COM_SOC_Analysis_Has_Pochettino_silenced_the_doubters_20260619_GLOBAL_FIFA_WORLD_CUP/dm_260619_COM_SOC_Analysis_Has_Pochettino_silenced_the_doubters_20260619_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
+            },
+            {
+              "title": "Klinsmann: Doesn't get much better for USMNT after 2-0 win",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_COM_SOC_Analysis_Klinsman3A_Doesnt_get_much_better_for_USMNT_after_2-0_win_20262F062F19_GLOBAL_FIFA/dm_260619_COM_SOC_Analysis_Klinsman3A_Doesnt_get_much_better_for_USMNT_after_2-0_win_20262F062F19_GLOBAL_FIFA_360p30_1464k.mp4"
+            },
+            {
+              "title": "Can USMNT go all the way in the World Cup?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_COM_SOC_Analysis_Can_USMNT_go_all_the_way_in_the_World_Cup3F__GLOBAL_2026-06-20/dm_260620_COM_SOC_Analysis_Can_USMNT_go_all_the_way_in_the_World_Cup3F__GLOBAL_2026-06-20_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=1gMiT5r-K7Q",
+              "title": "United States vs Australia Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=JtVWijjUAuM",
+              "title": "USA vs. Australia Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-20",
@@ -580,11 +902,38 @@
           "ts": 1781924400000,
           "home": "Türkiye",
           "away": "Paraguay",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 0,
+          "as": 1,
+          "status": "FT",
           "venue": "Levi's Stadium",
-          "city": "Santa Clara, California"
+          "city": "Santa Clara, California",
+          "goals": [
+            {
+              "min": "2'",
+              "scorer": "Matías Galarza",
+              "assist": "Julio Enciso",
+              "type": "Goal",
+              "team": "Paraguay"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Montella: I won't criticise the players despite Türkiye's World Cup exit",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_COM_SOC_Analysis_Montella3A_I_wonE28099t_criticise_the_players_despite_TurkeyE28099s_World_Cup_exit_GLOBAL_20/dm_260620_COM_SOC_Analysis_Montella3A_I_wonE28099t_criticise_the_players_despite_TurkeyE28099s_World_Cup_exit_GLOBAL_20_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=HrbIda-C9SE",
+              "title": "Türkiye vs Paraguay Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=g6yUhVI-2ZE",
+              "title": "Türkiye vs. Paraguay Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-26",
@@ -696,10 +1045,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W/dm_260614_COM_SOC_News_Lone_Curacao_supporter_in_Berlin_celebrates_goal_vs_Germany_20260614_GLOBAL_FIFA_W_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=AFiS2yJeZqo",
-            "title": "Germany vs. Curacao Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=AFiS2yJeZqo",
+              "title": "Germany vs. Curacao Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -728,10 +1079,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL/dm_260614_COM_SOC_News_Onuoha_praises_Diomandes_impact_in_Ivory_Coasts_win_over_Ecuador_20260614_GLOBAL_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=mKoy6MVdcAk",
-            "title": "Ivory Coast vs. Ecuador Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=mKoy6MVdcAk",
+              "title": "Ivory Coast vs. Ecuador Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -740,11 +1093,56 @@
           "ts": 1781985600000,
           "home": "Germany",
           "away": "Ivory Coast",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 2,
+          "as": 1,
+          "status": "FT",
           "venue": "BMO Field",
-          "city": "Toronto"
+          "city": "Toronto",
+          "goals": [
+            {
+              "min": "30'",
+              "scorer": "Franck Kessié",
+              "assist": null,
+              "type": "Goal",
+              "team": "Ivory Coast"
+            },
+            {
+              "min": "68'",
+              "scorer": "Deniz Undav",
+              "assist": "Nadiem Amiri",
+              "type": "Goal - Volley",
+              "team": "Germany"
+            },
+            {
+              "min": "90'+4'",
+              "scorer": "Deniz Undav",
+              "assist": "Felix Nmecha",
+              "type": "Goal",
+              "team": "Germany"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Deniz Undav's second-half double saves Germany",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_World_Cup_Highlight_Deniz_Undavs_secondhalf_double_saves_Germany__20260621_AUS_ONLY/dm_260620_World_Cup_Highlight_Deniz_Undavs_secondhalf_double_saves_Germany__20260621_AUS_ONLY_360p30_1464k.mp4"
+            },
+            {
+              "title": "Klinsmann: Ivory Coast's Yan Diomande a 'very special player'",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_Klinsmann_Ivory_Coasts_Yan_Diomande_a_very_special_player/dm_260620_Klinsmann_Ivory_Coasts_Yan_Diomande_a_very_special_player_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=cTDAvUxadek",
+              "title": "Germany vs. Côte d’Ivoire Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=EL9nHScp4bk",
+              "title": "Germany vs Ivory Coast Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-21",
@@ -752,9 +1150,9 @@
           "ts": 1782000000000,
           "home": "Ecuador",
           "away": "Curaçao",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 0,
+          "as": 0,
+          "status": "LIVE",
           "venue": "GEHA Field at Arrowhead Stadium",
           "city": "Kansas City, Missouri"
         },
@@ -840,10 +1238,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0614/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI/dm_260614_COM_SOC_Analysis_Will_Japan_go_further_than_the_Netherlands_at_the_World_Cup_20260614_GLOBAL_FI_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=Lq43D52MfkY",
-            "title": "Netherlands vs. Japan Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=Lq43D52MfkY",
+              "title": "Netherlands vs. Japan Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -907,10 +1307,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Analysis_Why_is_Sabri_Lamouchi_set_for_Tunisia_departure3F_GLOBAL_2026-06-15/dm_260615_COM_SOC_Analysis_Why_is_Sabri_Lamouchi_set_for_Tunisia_departure3F_GLOBAL_2026-06-15_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=TC9tqtH0CkA",
-            "title": "Sweden vs. Tunisia Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=TC9tqtH0CkA",
+              "title": "Sweden vs. Tunisia Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -919,11 +1321,81 @@
           "ts": 1781974800000,
           "home": "Netherlands",
           "away": "Sweden",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 5,
+          "as": 1,
+          "status": "FT",
           "venue": "NRG Stadium",
-          "city": "Houston, Texas"
+          "city": "Houston, Texas",
+          "goals": [
+            {
+              "min": "5'",
+              "scorer": "Brian Brobbey",
+              "assist": "Cody Gakpo",
+              "type": "Goal",
+              "team": "Netherlands"
+            },
+            {
+              "min": "17'",
+              "scorer": "Brian Brobbey",
+              "assist": "Denzel Dumfries",
+              "type": "Goal",
+              "team": "Netherlands"
+            },
+            {
+              "min": "47'",
+              "scorer": "Cody Gakpo",
+              "assist": "Denzel Dumfries",
+              "type": "Goal",
+              "team": "Netherlands"
+            },
+            {
+              "min": "54'",
+              "scorer": "Cody Gakpo",
+              "assist": "Crysencio Summerville",
+              "type": "Goal",
+              "team": "Netherlands"
+            },
+            {
+              "min": "59'",
+              "scorer": "Anthony Elanga",
+              "assist": "Alexander Isak",
+              "type": "Goal",
+              "team": "Sweden"
+            },
+            {
+              "min": "89'",
+              "scorer": "Crysencio Summerville",
+              "assist": "Memphis Depay",
+              "type": "Goal",
+              "team": "Netherlands"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Why does Cody Gakpo look better for Netherlands than Liverpool?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_Why_does_Cody_Gakpo_look_better_for_Netherlands_than_Liverpool/dm_260620_Why_does_Cody_Gakpo_look_better_for_Netherlands_than_Liverpool_360p30_1464k.mp4"
+            },
+            {
+              "title": "Hislop praises 'complete' Netherlands team after 'thumping' Sweden",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_Hislop_praises_complete_Netherlands_team_after_thumping_Sweden/dm_260620_Hislop_praises_complete_Netherlands_team_after_thumping_Sweden_360p30_1464k.mp4"
+            },
+            {
+              "title": "Ogden: Summerville is great option for Manchester United's transfer plans",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_Ogden_Summerville_is_great_option_for_Manchester_Uniteds_transfer_plans/dm_260620_Ogden_Summerville_is_great_option_for_Manchester_Uniteds_transfer_plans_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=pH39DPyBzzQ",
+              "title": "Netherlands vs. Sweden Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=IRllRLrG7Sg",
+              "title": "Netherlands vs Sweden Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-21",
@@ -1005,10 +1477,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=9Q-DVeicbjU",
-            "title": "Belgium vs. Egypt Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=9Q-DVeicbjU",
+              "title": "Belgium vs. Egypt Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1062,10 +1536,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=BgjKwt8WqGM",
-            "title": "IR Iran vs. New Zealand Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=BgjKwt8WqGM",
+              "title": "IR Iran vs. New Zealand Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1148,10 +1624,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=YUD8Fq3gLWE",
-            "title": "Spain vs. Cabo Verde Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=YUD8Fq3gLWE",
+              "title": "Spain vs. Cabo Verde Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1187,10 +1665,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0615/ss_20260615_203722805_3565788/ss_20260615_203722805_3565788_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=M8gPbLdizYU",
-            "title": "Saudi Arabia vs. Uruguay Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=M8gPbLdizYU",
+              "title": "Saudi Arabia vs. Uruguay Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1301,16 +1781,14 @@
             {
               "title": "Leboeuf backs Mbappé to break Klose's World Cup goal record",
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Leboeuf_backs_Mbappe_to_break_Kloses_World_Cup_goal_record/dm_260616_Leboeuf_backs_Mbappe_to_break_Kloses_World_Cup_goal_record_360p30_1464k.mp4"
-            },
-            {
-              "title": "Mbappé proud to 'make a mark' on France's history with record goal",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal/dm_260616_Mbappe_proud_to_make_a_mark_on_Frances_history_with_record_goal_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=4F_gxWkr7oo",
-            "title": "France vs. Senegal Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=4F_gxWkr7oo",
+              "title": "France vs. Senegal Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1371,10 +1849,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_haaland_ia/dm_260617_haaland_ia_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=zv-CIqGQZgQ",
-            "title": "Iraq vs. Norway Full Highlights | FIFA World Cup 2026 | GAME IN 30",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=zv-CIqGQZgQ",
+              "title": "Iraq vs. Norway Full Highlights | FIFA World Cup 2026 | GAME IN 30",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1472,22 +1952,24 @@
           ],
           "videos": [
             {
-              "title": "Lionel Messi nets screamer in Argentina's World Cup opener",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY/dm_260616_World_Cup_Highlight_Lionel_Messi_nets_screamer_in_Argentinas_World_Cup_opener_20260617_AUS_ONLY_360p30_1464k.mp4"
-            },
-            {
               "title": "Moreno: There is no argument against Messi being the GOAT",
               "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA/dm_260616_COM_SOC_Analysis_Moreno_There_is_no_argument_against_Messi_being_the_GOAT_20260616_GLOBAL_FIFA_360p30_1464k.mp4"
             },
             {
               "title": "'100% a red card' Should Lionel Messi have been on the pitch for his hat trick?",
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_100_a_red_card_Should_Lionel_Messi_have_been_on_the_pitch_for_his_hat_trick3F/dm_260617_100_a_red_card_Should_Lionel_Messi_have_been_on_the_pitch_for_his_hat_trick3F_360p30_1464k.mp4"
+            },
+            {
+              "title": "Was Lionel Messi lucky to avoid a red card during Argentina's opener vs. Algeria?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Analysis_Was_Lionel_Messi_lucky_to_avoid_a_red_card_during_Argentinas_opener_vs_Algeria/dm_260617_COM_SOC_Analysis_Was_Lionel_Messi_lucky_to_avoid_a_red_card_during_Argentinas_opener_vs_Algeria_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=07SF8RgXMfE",
-            "title": "Argentina vs. Algeria Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=07SF8RgXMfE",
+              "title": "Argentina vs. Algeria Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1537,10 +2019,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Presser_Rangnick_credits_WC_debutants_Jordan_for_exceeding_expectations_vs_Austria_2026/dm_260617_COM_SOC_Presser_Rangnick_credits_WC_debutants_Jordan_for_exceeding_expectations_vs_Austria_2026_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=hySDxRo7a3A",
-            "title": "Austria vs. Jordan Full Highlights | FIFA World Cup 2026 | GAME IN 30",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=hySDxRo7a3A",
+              "title": "Austria vs. Jordan Full Highlights | FIFA World Cup 2026 | GAME IN 30",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1643,10 +2127,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Analysis_Dove_backs_Congo_DR_to_reach_the_World_Cup_knockouts_20260617_GLOBAL_FIFA_WORLD/dm_260617_COM_SOC_Analysis_Dove_backs_Congo_DR_to_reach_the_World_Cup_knockouts_20260617_GLOBAL_FIFA_WORLD_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=kb_ACRYjcTE",
-            "title": "Portugal vs. DR Congo Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=kb_ACRYjcTE",
+              "title": "Portugal vs. DR Congo Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1665,7 +2151,7 @@
               "min": "40'",
               "scorer": "Daniel Muñoz",
               "assist": "Luis Díaz",
-              "type": "Goal - Volley",
+              "type": "Goal",
               "team": "Colombia"
             },
             {
@@ -1696,10 +2182,12 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0618/ss_20260618_005823322_3568169/ss_20260618_005823322_3568169_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=cH1vbMrtbvM",
-            "title": "Uzbekistan vs. Colombia Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=cH1vbMrtbvM",
+              "title": "Uzbekistan vs. Colombia Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1798,7 +2286,7 @@
               "min": "45'+5'",
               "scorer": "Petar Musa",
               "assist": "Ivan Perisic",
-              "type": "Goal - Volley",
+              "type": "Goal",
               "team": "Croatia"
             },
             {
@@ -1818,22 +2306,24 @@
           ],
           "videos": [
             {
-              "title": "Harry Kane makes England history with first-half double",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_World_Cup_Highlight_Harry_Kane_makes_England_history_with_firsthalf_double_20260618_AUS_ONLY/dm_260617_World_Cup_Highlight_Harry_Kane_makes_England_history_with_firsthalf_double_20260618_AUS_ONLY_360p30_1464k.mp4"
-            },
-            {
-              "title": "Baturina laces a long-range screamer against England",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_World_Cup_Highlight_Baturina_laces_a_longrange_screamer_against_England_20260618_AUS_ONLY/dm_260617_World_Cup_Highlight_Baturina_laces_a_longrange_screamer_against_England_20260618_AUS_ONLY_360p30_1464k.mp4"
-            },
-            {
               "title": "Gibbs: England had 'too much star power' for Croatia",
               "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_Gibbs_England_had_too_much_star_power_for_Croatia/dm_260617_Gibbs_England_had_too_much_star_power_for_Croatia_360p30_1464k.mp4"
+            },
+            {
+              "title": "Where does England's performance rank against the favourites?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_ANALYSIS_Where_does_Englands_performance_rank_against_the_favourites_2026_6_18/dm_260617_COM_SOC_ANALYSIS_Where_does_Englands_performance_rank_against_the_favourites_2026_6_18_360p30_1464k.mp4"
+            },
+            {
+              "title": "Where would England be without Harry Kane?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_Where_would_England_be_without_Harry_Kane/dm_260617_Where_would_England_be_without_Harry_Kane_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=KPulZU-RoLg",
-            "title": "England vs. Croatia Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=KPulZU-RoLg",
+              "title": "England vs. Croatia Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1858,14 +2348,16 @@
           ],
           "videos": [
             {
-              "title": "Yirenkyi's last-gasp winner lifts Ghana to victory over Panama",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_World_Cup_Highlight_Yirenkyis_last-gasp_winner_lifts_Ghana_to_victory_over_Panama_20260618_AUS/dm_260617_World_Cup_Highlight_Yirenkyis_last-gasp_winner_lifts_Ghana_to_victory_over_Panama_20260618_AUS_360p30_1464k.mp4"
+              "title": "Was Ghana lucky to beat Panama?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0617/dm_260617_COM_SOC_Analysis_Was_Ghana_lucky_to_beat_Panama_20260617_GLOBAL_FIFA_WORLD_CUP/dm_260617_COM_SOC_Analysis_Was_Ghana_lucky_to_beat_Panama_20260617_GLOBAL_FIFA_WORLD_CUP_360p30_1464k.mp4"
             }
           ],
-          "highlight": {
-            "url": "https://www.youtube.com/watch?v=DzuFQGOkQwA",
-            "title": "Ghana vs. Panama Full Highlights | FIFA World Cup 2026",
-            "channel": "TSN"
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=DzuFQGOkQwA",
+              "title": "Ghana vs. Panama Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
           }
         },
         {
@@ -1996,7 +2488,7 @@
       "date": "2026-07-01",
       "time": "09:00",
       "ts": 1782867600000,
-      "home": "Group A Winner",
+      "home": "Mexico",
       "away": "Third Place Group C/E/F/H/I",
       "hs": null,
       "as": null,
@@ -2032,7 +2524,7 @@
       "date": "2026-07-02",
       "time": "08:00",
       "ts": 1782950400000,
-      "home": "Group D Winner",
+      "home": "United States",
       "away": "Third Place Group B/E/F/I/J",
       "hs": null,
       "as": null,

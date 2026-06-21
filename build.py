@@ -216,6 +216,39 @@ def match_row(m, show_group=False):
     </div>"""
 
 
+def match_list_row(m):
+    """HISTORY 用的紧凑列表行：常显一行(时间/组 + 主 比分 客)，点击用 JS 展开进球/集锦/场地。
+    不用原生 <details>/<summary>——部分 Windows Chrome/Edge 不渲染 summary 内容、回退成默认"详情"
+    标签。改用普通 <div> + JS 切换，渲染稳定。"""
+    grp = f'<span class="tag">{grp_label(m["group"])}</span>' if m.get("group") else ""
+    _fb = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
+    ts = m.get("ts")
+    dt = f'<span class="ltime" data-ts="{ts}">{_fb}</span>' if ts else f'<span>{_fb}</span>'
+    line = ('<div class="ml-line" role="button" tabindex="0">'
+            f'<span class="ml-when">{dt}{grp}</span>'
+            f'<span class="ml-h">{team_flag_bi(m["home"], flag_first=False)}</span>'
+            f'<span class="ml-sc">{score_cell(m)}</span>'
+            f'<span class="ml-a">{team_flag_bi(m["away"], flag_first=True)}</span>'
+            '<span class="ml-tog" aria-hidden="true">▸</span>'
+            '</div>')
+    _city = m.get("city", "")
+    _vname = m.get("venue", "")
+    _czh = city_cn(_city)
+    _loc_zh = f"{_czh} · {_vname}" if (_czh and _vname) else (_czh or _vname)
+    _loc_en = f"{_city} · {_vname}" if (_city and _vname) else (_city or _vname)
+    venue = f'<div class="ml-venue">📍 {bi(_loc_zh, _loc_en)}</div>' if _loc_zh else ""
+    detail = f"{venue}{goals_html(m)}{videos_html(m)}"
+    if not detail:
+        detail = f'<div class="ml-venue">{bi("暂无更多详情", "No further detail")}</div>'
+    # 排序用 data：时间(ts)、主/客队名(英文，稳定 A-Z)、胜方进球(两队较大比分；平局即该比分)
+    _hs, _as = m.get("hs"), m.get("as")
+    _wg = max(_hs, _as) if (_hs is not None and _as is not None) else -1
+    # 注意：排序时间属性叫 data-sts，不能叫 data-ts —— 全局 renderTimes() 会对所有 [data-ts]
+    # 元素执行 textContent=日期，把整行内容(队名/比分/展开块)抹成一个日期字符串。
+    attrs = f' data-sts="{ts or 0}" data-h="{esc(m["home"])}" data-a="{esc(m["away"])}" data-wg="{_wg}"'
+    return f'<div class="ml-row"{attrs}>{line}<div class="ml-body" hidden>{detail}</div></div>'
+
+
 def _goal_mark(t):
     t = t or ""
     if "Penalty" in t:
@@ -412,11 +445,32 @@ def build():
     rec_en = ("Live + " + base_en) if live_sorted else base_en
     recent_html = ""
     if recent:
-        _t = "🏁 " + bi("最近战果 · " + rec_zh, "Recent · " + rec_en)
-        _cnt = f'<span class="cnt">{bi(f"{len(recent)} 场", str(len(recent)))}</span>'
+        _t = "🏁 " + bi("赛果", "Results")
         _note = f'<span class="note">{bi("（本地时间）", "(local time)")}</span>'
-        _title = f"{_t} {_cnt}{_note}"
-        _body = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in recent) + '</div>'
+        _title = f"{_t} {_note}"
+        _recent_grid = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in recent) + '</div>'
+        if played_desc:
+            # 两个 tab：默认「最近」(进行中+最近6场/24h，卡片铺开)；
+            # HISTORY 列全部已赛(最新在前)，用紧凑列表，点击单行再展开细节，免去到小组赛逐个翻找
+            _sort_bar = ('<div class="mlsort">'
+                         f'<span class="mlsort-l">{bi("排序", "Sort")}</span>'
+                         f'<button type="button" class="sortb on" data-k="ts" data-dir="desc">{bi("时间", "Time")}</button>'
+                         f'<button type="button" class="sortb" data-k="country" data-dir="asc">{bi("国家", "Country")}</button>'
+                         f'<button type="button" class="sortb" data-k="wg" data-dir="desc">{bi("胜方进球", "Winner goals")}</button>'
+                         '</div>')
+            _hist_list = (_sort_bar + '<div class="ml-list">'
+                          + "".join(match_list_row(m) for m in played_desc) + '</div>')
+            _tabs = ('<div class="rtabs">'
+                     f'<button type="button" class="rtab on" data-rp="recent">{bi(rec_zh, rec_en)} '
+                     f'<span class="num">{len(recent)}</span></button>'
+                     f'<button type="button" class="rtab" data-rp="hist">{bi("历史全部", "HISTORY")} '
+                     f'<span class="num">{len(played_desc)}</span></button>'
+                     '</div>')
+            _body = (_tabs
+                     + f'<div class="rpanel" data-rp="recent">{_recent_grid}</div>'
+                     + f'<div class="rpanel" data-rp="hist" hidden>{_hist_list}</div>')
+        else:
+            _body = _recent_grid
         recent_html = collap(_title, _body, open_=True, cls="results hero")
 
     # 球员进球榜：汇总各场进球者（乌龙球不计个人）。
@@ -617,6 +671,48 @@ def build():
   .results.hero .cnt {{ background:var(--gold); color:#211900; font-size:13px; font-weight:700;
     padding:1px 9px; border-radius:10px; }}
   .results.hero .fix-grid .match {{ background:#10171f; border-color:#463a2f; }}
+  /* 最近战果框内的 tab：最近 / HISTORY */
+  .rtabs {{ display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }}
+  .rtab {{ background:transparent; color:var(--muted); border:1px solid var(--line);
+    border-radius:8px; padding:6px 14px; font-size:14px; font-weight:600; cursor:pointer;
+    font-family:inherit; line-height:1.2; display:inline-flex; align-items:center; gap:7px; }}
+  .rtab:hover {{ color:var(--txt); border-color:var(--gold); }}
+  .rtab.on {{ color:#211900; background:var(--gold); border-color:var(--gold); }}
+  .rtab .num {{ font-weight:700; opacity:.85; }}
+  .rtab.on .num {{ opacity:1; }}
+  .rpanel[hidden] {{ display:none; }}
+  @media (max-width:900px) {{ .rtab {{ font-size:15px; padding:7px 15px; }} }}
+  /* HISTORY 紧凑列表：一行一场，点击展开 */
+  .ml-list {{ display:flex; flex-direction:column; gap:4px; }}
+  .ml-row {{ background:#10171f; border:1px solid #2a3441; border-radius:8px; }}
+  .ml-row[open] {{ border-color:var(--gold); }}
+  .ml-line {{ display:flex; align-items:center; gap:10px; padding:8px 12px; font-size:14px;
+    cursor:pointer; user-select:none; }}
+  .ml-tog {{ flex:0 0 auto; color:var(--muted); font-size:11px; margin-left:2px; transition:transform .15s; }}
+  .ml-row.open .ml-tog {{ transform:rotate(90deg); color:var(--gold); }}
+  .ml-when {{ display:flex; align-items:center; gap:6px; flex:0 0 auto;
+    min-width:92px; color:var(--muted); font-size:12px; }}
+  .ml-h {{ flex:1 1 0; text-align:right; min-width:0; }}
+  .ml-a {{ flex:1 1 0; text-align:left; min-width:0; }}
+  .ml-sc {{ flex:0 0 auto; min-width:52px; text-align:center; color:var(--gold); }}
+  .ml-line:hover {{ background:#141d27; }}
+  .ml-line:hover .ml-h, .ml-line:hover .ml-a {{ color:var(--accent); }}
+  .ml-body {{ padding:8px 12px 10px; border-top:1px solid #222c38; }}
+  .ml-venue {{ color:var(--muted); font-size:12px; padding:2px 0 4px; }}
+  /* HISTORY 排序工具栏 */
+  .mlsort {{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:10px; }}
+  .mlsort-l {{ color:var(--muted); font-size:12px; }}
+  .sortb {{ background:transparent; color:var(--muted); border:1px solid var(--line);
+    border-radius:7px; padding:4px 11px; font-size:13px; cursor:pointer; font-family:inherit;
+    line-height:1.2; }}
+  .sortb:hover {{ color:var(--txt); border-color:var(--gold); }}
+  .sortb.on {{ color:#211900; background:var(--gold); border-color:var(--gold); font-weight:600; }}
+  .sortb .ar {{ margin-left:4px; font-size:11px; }}
+  @media (max-width:900px) {{
+    .ml-line {{ font-size:15px; gap:8px; }}
+    .ml-when {{ min-width:64px; }}
+    .sortb {{ font-size:14px; padding:5px 12px; }}
+  }}
   .empty {{ color:var(--muted); font-size:13px; padding:16px; text-align:center;
     background:var(--card); border:1px dashed var(--line); border-radius:8px; }}
   footer {{ margin-top:40px; padding-top:16px; border-top:1px solid var(--line);
@@ -745,6 +841,88 @@ def build():
   if('serviceWorker' in navigator){{
     navigator.serviceWorker.register('sw.js').catch(function(){{}});
   }}
+}})();
+</script>
+<script>
+/* 最近战果框内的 tab 切换:最近 <-> HISTORY(全部已赛) */
+(function(){{
+  var tabs=document.querySelectorAll('.rtab');
+  for(var i=0;i<tabs.length;i++){{
+    tabs[i].addEventListener('click', function(){{
+      var box=this.closest('.sec-body'); if(!box) return;
+      var key=this.getAttribute('data-rp');
+      var bs=box.querySelectorAll('.rtab');
+      for(var j=0;j<bs.length;j++) bs[j].classList.toggle('on', bs[j].getAttribute('data-rp')===key);
+      var ps=box.querySelectorAll('.rpanel');
+      for(var k=0;k<ps.length;k++) ps[k].hidden = (ps[k].getAttribute('data-rp')!==key);
+    }});
+  }}
+}})();
+</script>
+<script>
+/* HISTORY 列表行点击展开/收起(不依赖 <details>) */
+(function(){{
+  function toggle(line){{
+    var row=line.parentNode; if(!row||row.className.indexOf('ml-row')<0) return;
+    var body=row.querySelector('.ml-body'); if(!body) return;
+    var open=!row.classList.contains('open');
+    row.classList.toggle('open', open);
+    body.hidden=!open;
+  }}
+  var lines=document.querySelectorAll('.ml-line');
+  for(var i=0;i<lines.length;i++){{
+    lines[i].addEventListener('click', function(){{ toggle(this); }});
+    lines[i].addEventListener('keydown', function(e){{
+      if(e.key==='Enter'||e.key===' '){{ e.preventDefault(); toggle(this); }}
+    }});
+  }}
+}})();
+</script>
+<script>
+/* HISTORY 排序:时间 / 国家(主队为主、客队为次, A-Z) / 胜方进球。再点同一项切换升降序。 */
+(function(){{
+  function cmp(a,b){{ return a<b?-1:a>b?1:0; }}
+  function sortList(list, key, dir){{
+    var rows=Array.prototype.slice.call(list.children);
+    rows.sort(function(a,b){{
+      var r;
+      if(key==='ts') r=Number(a.dataset.sts||0)-Number(b.dataset.sts||0);
+      else if(key==='wg') r=Number(a.dataset.wg||-1)-Number(b.dataset.wg||-1);
+      else {{ // country：主队名，相同再比客队名(不分大小写)
+        r=cmp((a.dataset.h||'').toLowerCase(),(b.dataset.h||'').toLowerCase());
+        if(r===0) r=cmp((a.dataset.a||'').toLowerCase(),(b.dataset.a||'').toLowerCase());
+      }}
+      return dir==='desc'?-r:r;
+    }});
+    for(var i=0;i<rows.length;i++) list.appendChild(rows[i]);
+  }}
+  var bars=document.querySelectorAll('.mlsort');
+  for(var i=0;i<bars.length;i++){{(function(bar){{
+    var list=bar.parentNode.querySelector('.ml-list'); if(!list) return;
+    var btns=bar.querySelectorAll('.sortb');
+    function paint(){{
+      for(var j=0;j<btns.length;j++){{
+        var on=btns[j].classList.contains('on');
+        var old=btns[j].querySelector('.ar'); if(old) old.remove();
+        if(on){{ var s=document.createElement('span'); s.className='ar';
+          s.textContent=btns[j].getAttribute('data-dir')==='desc'?'↓':'↑'; btns[j].appendChild(s); }}
+      }}
+    }}
+    for(var j=0;j<btns.length;j++){{
+      btns[j].addEventListener('click', function(){{
+        var wasOn=this.classList.contains('on');
+        if(wasOn){{ // 已激活 -> 切换升降序
+          this.setAttribute('data-dir', this.getAttribute('data-dir')==='desc'?'asc':'desc');
+        }} else {{
+          for(var k=0;k<btns.length;k++) btns[k].classList.remove('on');
+          this.classList.add('on');
+        }}
+        paint();
+        sortList(list, this.getAttribute('data-k'), this.getAttribute('data-dir'));
+      }});
+    }}
+    paint(); // 初始显示默认排序(时间↓)的箭头
+  }})(bars[i]);}}
 }})();
 </script>
 <script>
