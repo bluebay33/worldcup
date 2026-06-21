@@ -848,25 +848,22 @@ def build():
 }})();
 </script>
 <script>
-/* 分享按钮:手机用原生分享(Web Share API)弹微信等;桌面退化为复制链接。
-   分享的是对外门户链接,微信据其 og 标签自动出预览卡片。 */
+/* 分享按钮:复制对外门户链接(纯链接)。微信只有把纯链接粘进聊天框才会自动出预览卡片;
+   原生分享面板会带文字、被微信当纯文字消息处理、不出卡片——故统一用"复制+提示去微信粘贴"。 */
 (function(){{
   var URL_='https://sports-aeg.pages.dev/worldcup/';
   var btn=document.getElementById('sharebtn'); if(!btn) return;
   var lab=btn.querySelector('.i18n');
   function en(){{ return document.documentElement.getAttribute('data-lang')==='en'; }}
+  function flash(msg){{ if(!lab) return; lab.textContent=msg;
+    setTimeout(function(){{ lab.textContent=lab.getAttribute(en()?'data-en':'data-zh'); }},2400); }}
   btn.addEventListener('click', function(){{
     var isEn=en();
-    var data={{ title: isEn?'2026 World Cup · Match Report':'2026世界杯战报',
-                text: isEn?'Standings, scorers, official highlights & fixtures — updated hourly':'积分榜·射手榜·每场官方集锦·赛程,每小时自动更新',
-                url: URL_ }};
-    if(navigator.share){{ navigator.share(data).catch(function(){{}}); return; }}
-    function flash(msg){{ if(!lab) return; lab.textContent=msg;
-      setTimeout(function(){{ lab.textContent=lab.getAttribute(en()?'data-en':'data-zh'); }},1500); }}
+    var ok=isEn?'Copied — paste in WeChat':'已复制·去微信粘贴发送';
     if(navigator.clipboard&&navigator.clipboard.writeText){{
-      navigator.clipboard.writeText(URL_).then(function(){{ flash(isEn?'Copied':'已复制'); }})
-        .catch(function(){{ window.prompt(isEn?'Copy link':'复制链接', URL_); }});
-    }} else {{ window.prompt(isEn?'Copy link':'复制链接', URL_); }}
+      navigator.clipboard.writeText(URL_).then(function(){{ flash(ok); }})
+        .catch(function(){{ window.prompt(isEn?'Copy this link':'复制此链接', URL_); }});
+    }} else {{ window.prompt(isEn?'Copy this link':'复制此链接', URL_); }}
   }});
 }})();
 </script>
