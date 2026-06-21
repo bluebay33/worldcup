@@ -558,9 +558,9 @@ def build():
 <meta name="apple-mobile-web-app-title" content="世界杯">
 <meta name="application-name" content="世界杯">
 <meta property="og:title" content="2026世界杯战报">
-<meta property="og:description" content="积分榜 · 进球榜 · TSN集锦,每6小时自动更新">
+<meta property="og:description" content="积分榜·射手榜·每场官方集锦·赛程,数据源自ESPN,每小时自动更新">
 <meta property="og:type" content="website">
-<meta name="description" content="2026世界杯实时战报:积分榜、进球榜、TSN集锦">
+<meta name="description" content="2026世界杯实时战报:积分榜·射手榜·每场官方集锦·赛程,数据源自ESPN,每小时自动更新,中英双语">
 <style>
   :root {{
     --bg:#0f1419; --card:#1a212b; --line:#2a3441; --txt:#e6edf3;
