@@ -747,11 +747,12 @@ def build():
   }}
   /* 语言切换按钮 */
   header.top {{ position:relative; }}
-  .langtog {{ position:absolute; top:0; right:0; background:var(--card); color:var(--muted);
+  .topbtns {{ position:absolute; top:0; right:0; display:flex; gap:8px; }}
+  .topbtn {{ background:var(--card); color:var(--muted);
     border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-size:13px;
     cursor:pointer; font-family:inherit; line-height:1.2; }}
-  .langtog:hover {{ color:var(--txt); border-color:var(--accent); }}
-  @media (max-width:900px) {{ .langtog {{ font-size:14px; padding:6px 13px; }} }}
+  .topbtn:hover {{ color:var(--txt); border-color:var(--accent); }}
+  @media (max-width:900px) {{ .topbtn {{ font-size:14px; padding:6px 13px; }} }}
   /* 英文模式下的折叠标记文案 */
   html[data-lang=en] .sec > .sec-h::after {{ content:"▸ Expand"; }}
   html[data-lang=en] .sec[open] > .sec-h::after {{ content:"▾ Collapse"; }}
@@ -762,7 +763,10 @@ def build():
 <body>
 <div class="wrap">
   <header class="top">
-    <button id="langtog" class="langtog" type="button" aria-label="language">EN</button>
+    <div class="topbtns">
+      <button id="sharebtn" class="topbtn" type="button"><span class="i18n" data-zh="分享" data-en="Share">分享</span></button>
+      <button id="langtog" class="topbtn" type="button" aria-label="language">EN</button>
+    </div>
     <h1>⚽ {bi(esc(meta.get('tournament','世界杯')) + " 战报", "2026 World Cup · Match Report")}</h1>
     <div class="sub">
       <span>{bi("主办：", "Hosts: ")}<b>{bi(meta.get('host',''), "USA / Canada / Mexico")}</b></span>
@@ -841,6 +845,29 @@ def build():
   if('serviceWorker' in navigator){{
     navigator.serviceWorker.register('sw.js').catch(function(){{}});
   }}
+}})();
+</script>
+<script>
+/* 分享按钮:手机用原生分享(Web Share API)弹微信等;桌面退化为复制链接。
+   分享的是对外门户链接,微信据其 og 标签自动出预览卡片。 */
+(function(){{
+  var URL_='https://sports-aeg.pages.dev/worldcup/';
+  var btn=document.getElementById('sharebtn'); if(!btn) return;
+  var lab=btn.querySelector('.i18n');
+  function en(){{ return document.documentElement.getAttribute('data-lang')==='en'; }}
+  btn.addEventListener('click', function(){{
+    var isEn=en();
+    var data={{ title: isEn?'2026 World Cup · Match Report':'2026世界杯战报',
+                text: isEn?'Standings, scorers, official highlights & fixtures — updated hourly':'积分榜·射手榜·每场官方集锦·赛程,每小时自动更新',
+                url: URL_ }};
+    if(navigator.share){{ navigator.share(data).catch(function(){{}}); return; }}
+    function flash(msg){{ if(!lab) return; lab.textContent=msg;
+      setTimeout(function(){{ lab.textContent=lab.getAttribute(en()?'data-en':'data-zh'); }},1500); }}
+    if(navigator.clipboard&&navigator.clipboard.writeText){{
+      navigator.clipboard.writeText(URL_).then(function(){{ flash(isEn?'Copied':'已复制'); }})
+        .catch(function(){{ window.prompt(isEn?'Copy link':'复制链接', URL_); }});
+    }} else {{ window.prompt(isEn?'Copy link':'复制链接', URL_); }}
+  }});
 }})();
 </script>
 <script>
