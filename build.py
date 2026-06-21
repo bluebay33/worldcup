@@ -291,9 +291,14 @@ def fifa_highlight_link(m):
     us = (hls.get("us") or {}).get("url") if hls else None
     q = f'{m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
     search = "https://www.youtube.com/results?search_query=" + quote_plus(q)
+    # 中国读者(loc=CN):YouTube/TSN/FOX 都用不了,改跳百度搜中文队名集锦(咪咕/央视等官方源会被顶上来)。
+    # 每场都能拼,不抓取。百度搜索网址格式稳定。
+    cn_q = f'{cn(m["home"])} {cn(m["away"])} 世界杯 集锦'
+    cn_search = "https://www.baidu.com/s?wd=" + quote_plus(cn_q)
     data = (f' data-hl-search="{esc(search)}"'
             + (f' data-hl-ca="{esc(ca)}"' if ca else "")
-            + (f' data-hl-us="{esc(us)}"' if us else ""))
+            + (f' data-hl-us="{esc(us)}"' if us else "")
+            + f' data-hl-cn="{esc(cn_search)}"')
     label = "🎬 " + bi("集锦", "Highlights")
     return (f'<a class="vlink yt" href="{esc(search)}"{data} '
             f'target="_blank" rel="noopener">{label}</a>')
@@ -954,16 +959,18 @@ def build():
 }})();
 </script>
 <script>
-/* 集锦地区分发:按读者所在国(Cloudflare /cdn-cgi/trace)把链接换成 TSN(加拿大)/FOX(美国);
-   其它地区保持默认 href=YouTube 搜索链接。纯前端,无需 Worker。 */
+/* 集锦地区分发:按读者所在国(Cloudflare /cdn-cgi/trace)把链接换成 TSN(加拿大)/FOX(美国)/
+   百度搜索(中国大陆,YouTube 用不了)。其它地区保持默认 href=YouTube 搜索链接。纯前端,无需 Worker。 */
 (function(){{
   fetch('/cdn-cgi/trace').then(function(r){{return r.text();}}).then(function(t){{
     var m=t.match(/loc=([A-Za-z]+)/); var loc=m?m[1].toUpperCase():'';
     var ls=document.querySelectorAll('a[data-hl-search]');
     for(var i=0;i<ls.length;i++){{
-      var a=ls[i], ca=a.getAttribute('data-hl-ca'), us=a.getAttribute('data-hl-us');
+      var a=ls[i], ca=a.getAttribute('data-hl-ca'), us=a.getAttribute('data-hl-us'),
+          cn=a.getAttribute('data-hl-cn');
       if(loc==='CA'&&ca){{ a.href=ca; }}
       else if(loc==='US'&&us){{ a.href=us; }}
+      else if(loc==='CN'&&cn){{ a.href=cn; }}
     }}
   }}).catch(function(){{}});
 }})();
