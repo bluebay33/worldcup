@@ -560,6 +560,10 @@ def build():
 <meta property="og:title" content="2026世界杯战报">
 <meta property="og:description" content="积分榜·射手榜·每场官方集锦·赛程,数据源自ESPN,每小时自动更新">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://worldcup-ata.pages.dev/">
+<meta property="og:image" content="https://worldcup-ata.pages.dev/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
 <meta name="description" content="2026世界杯实时战报:积分榜·射手榜·每场官方集锦·赛程,数据源自ESPN,每小时自动更新,中英双语">
 <style>
   :root {{
@@ -851,7 +855,7 @@ def build():
 /* 分享按钮:复制对外门户链接(纯链接)。微信只有把纯链接粘进聊天框才会自动出预览卡片;
    原生分享面板会带文字、被微信当纯文字消息处理、不出卡片——故统一用"复制+提示去微信粘贴"。 */
 (function(){{
-  var URL_='https://sports-aeg.pages.dev/worldcup/';
+  var URL_='https://worldcup-ata.pages.dev/';
   var btn=document.getElementById('sharebtn'); if(!btn) return;
   var lab=btn.querySelector('.i18n');
   function en(){{ return document.documentElement.getAttribute('data-lang')==='en'; }}
