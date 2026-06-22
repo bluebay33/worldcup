@@ -44,7 +44,7 @@ jobs:
         if: steps.gate.outputs.active == 'true'
         run: |
           mkdir -p _site
-          cp index.html report.html data.json manifest.webmanifest sw.js icon-192.png icon-512.png apple-touch-icon.png _site/
+          cp index.html report.html data.json privacy.html manifest.webmanifest sw.js icon-192.png icon-512.png apple-touch-icon.png _site/
 
       - name: 部署到 Cloudflare Pages
         if: steps.gate.outputs.active == 'true'

@@ -14,9 +14,10 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","User") + ";" +
 #     导致随后 New-Item 报「已存在」。改为「确保目录在 + 清空内容」，幂等无竞态。
 if (-not (Test-Path $site)) { New-Item -ItemType Directory -Path $site | Out-Null }
 Get-ChildItem -Path $site -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-Copy-Item (Join-Path $root 'index.html')  (Join-Path $site 'index.html')
-Copy-Item (Join-Path $root 'report.html') (Join-Path $site 'report.html')
-Copy-Item (Join-Path $root 'data.json')   (Join-Path $site 'data.json')
+Copy-Item (Join-Path $root 'index.html')   (Join-Path $site 'index.html')
+Copy-Item (Join-Path $root 'report.html')  (Join-Path $site 'report.html')
+Copy-Item (Join-Path $root 'data.json')    (Join-Path $site 'data.json')
+Copy-Item (Join-Path $root 'privacy.html') (Join-Path $site 'privacy.html')
 # PWA:manifest + 图标
 foreach ($f in 'manifest.webmanifest','sw.js','icon-192.png','icon-512.png','apple-touch-icon.png') {
     Copy-Item (Join-Path $root $f) (Join-Path $site $f)
