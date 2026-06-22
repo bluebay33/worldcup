@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-22 00:00 (北京时间)",
-    "lastUpdatedTs": 1782057614702,
+    "lastUpdated": "2026-06-22 14:00 (北京时间)",
+    "lastUpdatedTs": 1782108014022,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -879,8 +879,8 @@
               "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_COM_SOC_Analysis_Klinsman3A_Doesnt_get_much_better_for_USMNT_after_2-0_win_20262F062F19_GLOBAL_FIFA/dm_260619_COM_SOC_Analysis_Klinsman3A_Doesnt_get_much_better_for_USMNT_after_2-0_win_20262F062F19_GLOBAL_FIFA_360p30_1464k.mp4"
             },
             {
-              "title": "Can USMNT go all the way in the World Cup?",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0620/dm_260620_COM_SOC_Analysis_Can_USMNT_go_all_the_way_in_the_World_Cup3F__GLOBAL_2026-06-20/dm_260620_COM_SOC_Analysis_Can_USMNT_go_all_the_way_in_the_World_Cup3F__GLOBAL_2026-06-20_360p30_1464k.mp4"
+              "title": "Nicol: It's huge that USMNT get Pulisic fit for knockouts",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0619/dm_260619_COM_SOC_Analysis_Nicol_Its_huge_that_USMNT_get_Pulisic_fit_for_knockouts__20260619_GLOBAL_FIF/dm_260619_COM_SOC_Analysis_Nicol_Its_huge_that_USMNT_get_Pulisic_fit_for_knockouts__20260619_GLOBAL_FIF_360p30_1464k.mp4"
             }
           ],
           "highlights": {
@@ -1114,7 +1114,7 @@
               "min": "68'",
               "scorer": "Deniz Undav",
               "assist": "Nadiem Amiri",
-              "type": "Goal - Volley",
+              "type": "Goal",
               "team": "Germany"
             },
             {
@@ -1624,11 +1624,29 @@
           "ts": 1782068400000,
           "home": "Belgium",
           "away": "Iran",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 0,
+          "as": 0,
+          "status": "FT",
           "venue": "SoFi Stadium",
-          "city": "Inglewood, California"
+          "city": "Inglewood, California",
+          "videos": [
+            {
+              "title": "Robson: Lukaku looked 'totally out of sorts' against Iran",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_Robson_Lukaku_looked_totally_out_of_sorts_against_Iran/dm_260621_Robson_Lukaku_looked_totally_out_of_sorts_against_Iran_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "us": {
+              "url": "https://www.youtube.com/watch?v=YbiEe9pOV-s",
+              "title": "Belgium vs Iran Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            },
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=jZtC6FnJum4",
+              "title": "Belgium vs. IR Iran Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-22",
@@ -1636,11 +1654,54 @@
           "ts": 1782090000000,
           "home": "New Zealand",
           "away": "Egypt",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 3,
+          "status": "FT",
           "venue": "BC Place",
-          "city": "Vancouver"
+          "city": "Vancouver",
+          "goals": [
+            {
+              "min": "15'",
+              "scorer": "Finn Surman",
+              "assist": "Tim Payne",
+              "type": "Goal - Header",
+              "team": "New Zealand"
+            },
+            {
+              "min": "58'",
+              "scorer": "Mostafa Zico",
+              "assist": "Mohamed Hany",
+              "type": "Goal - Header",
+              "team": "Egypt"
+            },
+            {
+              "min": "67'",
+              "scorer": "Mohamed Salah",
+              "assist": "Mostafa Zico",
+              "type": "Goal",
+              "team": "Egypt"
+            },
+            {
+              "min": "82'",
+              "scorer": "Trézéguet",
+              "assist": "Mohamed Salah",
+              "type": "Goal - Header",
+              "team": "Egypt"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Salah sinks Kiwi hearts in Egypt's 3-1 win",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_World_Cup_Highlight_Salah_sinks_Kiwi_hearts_in_Egypts_31_win__20260622_AUS_ONLY/dm_260622_World_Cup_Highlight_Salah_sinks_Kiwi_hearts_in_Egypts_31_win__20260622_AUS_ONLY_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=sTBkTZv9hBY",
+              "title": "New Zealand vs. Egypt Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-27",
@@ -1753,11 +1814,67 @@
           "ts": 1782057600000,
           "home": "Spain",
           "away": "Saudi Arabia",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 4,
+          "as": 0,
+          "status": "FT",
           "venue": "Mercedes-Benz Stadium",
-          "city": "Atlanta, Georgia"
+          "city": "Atlanta, Georgia",
+          "goals": [
+            {
+              "min": "10'",
+              "scorer": "Lamine Yamal",
+              "assist": "Mikel Oyarzabal",
+              "type": "Goal",
+              "team": "Spain"
+            },
+            {
+              "min": "21'",
+              "scorer": "Mikel Oyarzabal",
+              "assist": "Aymeric Laporte",
+              "type": "Goal",
+              "team": "Spain"
+            },
+            {
+              "min": "24'",
+              "scorer": "Mikel Oyarzabal",
+              "assist": "Dani Olmo",
+              "type": "Goal - Volley",
+              "team": "Spain"
+            },
+            {
+              "min": "49'",
+              "scorer": "Hassan Al-Tambakti",
+              "assist": null,
+              "type": "Own Goal",
+              "team": "Spain"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Lamine Yamal scores maiden World Cup goal for Spain",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_World_Cup_Highlight_Lamine_Yamal_scores_maiden_World_Cup_goal_for_Spain__20260622_AUS_ONLY/dm_260621_World_Cup_Highlight_Lamine_Yamal_scores_maiden_World_Cup_goal_for_Spain__20260622_AUS_ONLY_360p30_1464k.mp4"
+            },
+            {
+              "title": "Moreno: Spain could have scored eight against Saudi Arabia",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_Moreno_Spain_could_have_scored_eight_against_Saudi_Arabia/dm_260621_Moreno_Spain_could_have_scored_eight_against_Saudi_Arabia_360p30_1464k.mp4"
+            },
+            {
+              "title": "De La Fuente slams 'absolutely ridiculous' Spain doubters",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_De_La_Fuente_slams_absolutely_ridiculous_Spain_doubters/dm_260621_De_La_Fuente_slams_absolutely_ridiculous_Spain_doubters_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=e5nMfOFdklw",
+              "title": "Spain vs. Saudi Arabia Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=w453UjgtQw4",
+              "title": "Spain vs Saudi Arabia Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-22",
@@ -1765,11 +1882,54 @@
           "ts": 1782079200000,
           "home": "Uruguay",
           "away": "Cape Verde",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 2,
+          "as": 2,
+          "status": "FT",
           "venue": "Hard Rock Stadium",
-          "city": "Miami Gardens, Florida"
+          "city": "Miami Gardens, Florida",
+          "goals": [
+            {
+              "min": "21'",
+              "scorer": "Kevin Pina",
+              "assist": null,
+              "type": "Goal - Free-kick",
+              "team": "Cape Verde"
+            },
+            {
+              "min": "44'",
+              "scorer": "Maxi Araújo",
+              "assist": null,
+              "type": "Goal - Header",
+              "team": "Uruguay"
+            },
+            {
+              "min": "45'+6'",
+              "scorer": "Agustín Canobbio",
+              "assist": "Maxi Araújo",
+              "type": "Goal",
+              "team": "Uruguay"
+            },
+            {
+              "min": "61'",
+              "scorer": "Hélio Varela",
+              "assist": null,
+              "type": "Goal - Volley",
+              "team": "Cape Verde"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Cape Verde score first World Cup goals to share points with Uruguay",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/Int_260621_Soccer_HIGHLIGHT_Cape_Verde_score_first_World_Cup_goals_to_share_points_with_Uruguay_2026622_AUS/Int_260621_Soccer_HIGHLIGHT_Cape_Verde_score_first_World_Cup_goals_to_share_points_with_Uruguay_2026622_AUS_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=e4OAH2q4738",
+              "title": "Uruguay vs. Cabo Verde Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            }
+          }
         },
         {
           "date": "2026-06-27",
