@@ -762,6 +762,13 @@ def build():
     cursor:pointer; font-family:inherit; line-height:1.2; }}
   .topbtn:hover {{ color:var(--txt); border-color:var(--accent); }}
   @media (max-width:900px) {{ .topbtn {{ font-size:14px; padding:6px 13px; }} }}
+  #refreshbtn {{ font-size:16px; line-height:1; }}
+  /* 有新数据时弹出的刷新小条(底部居中,不打断阅读) */
+  .rfpill {{ position:fixed; left:50%; transform:translateX(-50%);
+    bottom:calc(16px + env(safe-area-inset-bottom)); z-index:50;
+    background:var(--gold); color:#211900; border:none; border-radius:20px;
+    padding:10px 18px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer;
+    box-shadow:0 4px 16px rgba(0,0,0,0.45); }}
   /* 英文模式下的折叠标记文案 */
   html[data-lang=en] .sec > .sec-h::after {{ content:"▸ Expand"; }}
   html[data-lang=en] .sec[open] > .sec-h::after {{ content:"▾ Collapse"; }}
@@ -773,6 +780,7 @@ def build():
 <div class="wrap">
   <header class="top">
     <div class="topbtns">
+      <button id="refreshbtn" class="topbtn" type="button" aria-label="refresh" title="刷新 / Refresh">↻</button>
       <button id="sharebtn" class="topbtn" type="button"><span class="i18n" data-zh="分享" data-en="Share">分享</span></button>
       <button id="langtog" class="topbtn" type="button" aria-label="language">EN</button>
     </div>
@@ -956,6 +964,37 @@ def build():
     }}
     paint(); // 初始显示默认排序(时间↓)的箭头
   }})(bars[i]);}}
+}})();
+</script>
+<script>
+/* 自动/手动刷新:数据每小时由后台重建并部署。检测线上 data.json 的 lastUpdatedTs 是否更新,
+   有新数据才刷(没变就不刷,不丢滚动位置)。切回前台/后台直接刷;正在看时弹"点击刷新"小条不打断。
+   手动:右上角 ↻ 按钮 / 电脑 F5,直接重载。 */
+(function(){{
+  var SELF = {meta.get('lastUpdatedTs', 0) or 0};
+  function check(cb){{
+    fetch('data.json?_=' + (new Date()).getTime(), {{cache: 'no-store'}})
+      .then(function(r){{ return r.json(); }})
+      .then(function(d){{ var t = d && d.meta && d.meta.lastUpdatedTs; cb(!!(t && t > SELF)); }})
+      .catch(function(){{ cb(false); }});
+  }}
+  function pill(){{
+    if(document.getElementById('rfpill')) return;
+    var en = document.documentElement.getAttribute('data-lang') === 'en';
+    var b = document.createElement('button');
+    b.id = 'rfpill'; b.className = 'rfpill';
+    b.textContent = en ? '↻ New data — tap to refresh' : '↻ 有新数据 · 点击刷新';
+    b.onclick = function(){{ location.reload(); }};
+    document.body.appendChild(b);
+  }}
+  document.addEventListener('visibilitychange', function(){{
+    if(!document.hidden) check(function(n){{ if(n) location.reload(); }});
+  }});
+  setInterval(function(){{
+    check(function(n){{ if(n){{ if(document.hidden) location.reload(); else pill(); }} }});
+  }}, 1800000);  // 30 分钟
+  var rb = document.getElementById('refreshbtn');
+  if(rb) rb.onclick = function(){{ location.reload(); }};
 }})();
 </script>
 <script>
