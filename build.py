@@ -563,13 +563,13 @@ def build():
 <meta name="apple-mobile-web-app-title" content="世界杯">
 <meta name="application-name" content="世界杯">
 <meta property="og:title" content="2026世界杯战报">
-<meta property="og:description" content="积分榜·射手榜·每场官方集锦·赛程,数据源自ESPN,每小时自动更新">
+<meta property="og:description" content="积分榜·射手榜·每场官方集锦·赛程,每小时自动更新">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://worldcup-ata.pages.dev/">
 <meta property="og:image" content="https://worldcup-ata.pages.dev/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
-<meta name="description" content="2026世界杯实时战报:积分榜·射手榜·每场官方集锦·赛程,数据源自ESPN,每小时自动更新,中英双语">
+<meta name="description" content="2026世界杯实时战报:积分榜·射手榜·每场官方集锦·赛程,每小时自动更新,中英双语">
 <style>
   :root {{
     --bg:#0f1419; --card:#1a212b; --line:#2a3441; --txt:#e6edf3;
@@ -793,7 +793,7 @@ def build():
 
   {knockout_html}
 
-  <footer>{bi("页面生成于", "Generated")} <span data-ts="{built_ms}">{built_at}</span> · {bi("时间按你的浏览器时区显示 · 数据来自 ESPN，积分榜自动推算", "Times shown in your browser timezone · Data from ESPN, standings auto-computed")}</footer>
+  <footer>{bi("页面生成于", "Generated")} <span data-ts="{built_ms}">{built_at}</span> · {bi("时间按你的浏览器时区显示 · 积分榜自动推算", "Times shown in your browser timezone · standings auto-computed")}</footer>
 </div>
 <script>
 (function(){{

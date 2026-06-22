@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-22 14:00 (北京时间)",
-    "lastUpdatedTs": 1782108014022,
+    "lastUpdated": "2026-06-22 23:00 (北京时间)",
+    "lastUpdatedTs": 1782140412359,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -1693,6 +1693,10 @@
             {
               "title": "Salah sinks Kiwi hearts in Egypt's 3-1 win",
               "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_World_Cup_Highlight_Salah_sinks_Kiwi_hearts_in_Egypts_31_win__20260622_AUS_ONLY/dm_260622_World_Cup_Highlight_Salah_sinks_Kiwi_hearts_in_Egypts_31_win__20260622_AUS_ONLY_360p30_1464k.mp4"
+            },
+            {
+              "title": "Salah: We made Egypt happy and proud with first win",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_Salah_We_made_Egypt_happy_and_proud_with_first_win/dm_260622_Salah_We_made_Egypt_happy_and_proud_with_first_win_360p30_1464k.mp4"
             }
           ],
           "highlights": {
@@ -1700,6 +1704,11 @@
               "url": "https://www.youtube.com/watch?v=sTBkTZv9hBY",
               "title": "New Zealand vs. Egypt Full Highlights | FIFA World Cup 2026",
               "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=Ihp4QH9YkBc",
+              "title": "New Zealand vs Egypt Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
             }
           }
         },
@@ -1919,8 +1928,16 @@
           ],
           "videos": [
             {
-              "title": "Cape Verde score first World Cup goals to share points with Uruguay",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0621/Int_260621_Soccer_HIGHLIGHT_Cape_Verde_score_first_World_Cup_goals_to_share_points_with_Uruguay_2026622_AUS/Int_260621_Soccer_HIGHLIGHT_Cape_Verde_score_first_World_Cup_goals_to_share_points_with_Uruguay_2026622_AUS_360p30_1464k.mp4"
+              "title": "Cape Verde captain's father describes 'interesting' LinkedIn call-up",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_Cape_Verde_captains_father_describes_interesting_LinkedIn_callup/dm_260622_Cape_Verde_captains_father_describes_interesting_LinkedIn_callup_360p30_1464k.mp4"
+            },
+            {
+              "title": "How Cape Verde impressed again in draw with Uruguay",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0621/dm_260621_cape_verde/dm_260621_cape_verde_360p30_1464k.mp4"
+            },
+            {
+              "title": "Cape Verde boss criticises Uruguay over 'fair play' double standard",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_Cape_Verde_boss_criticises_Uruguay_over_fair_play_double_standard/dm_260622_Cape_Verde_boss_criticises_Uruguay_over_fair_play_double_standard_360p30_1464k.mp4"
             }
           ],
           "highlights": {
@@ -1928,6 +1945,11 @@
               "url": "https://www.youtube.com/watch?v=e4OAH2q4738",
               "title": "Uruguay vs. Cabo Verde Full Highlights | FIFA World Cup 2026",
               "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=ZXvFKZM1nL4",
+              "title": "Uruguay vs Cape Verde Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
             }
           }
         },
