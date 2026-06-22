@@ -754,15 +754,21 @@ def build():
     table.scoretable th, table.scoretable td {{ padding:9px 4px; }}
     .more {{ font-size:13px; }}
   }}
-  /* 语言切换按钮 */
-  header.top {{ position:relative; }}
-  .topbtns {{ position:absolute; top:0; right:0; display:flex; gap:8px; }}
-  .topbtn {{ background:var(--card); color:var(--muted);
-    border:1px solid var(--line); border-radius:8px; padding:5px 12px; font-size:13px;
-    cursor:pointer; font-family:inherit; line-height:1.2; }}
+  /* 标题行 + 右上角菜单 */
+  .top-row {{ display:flex; align-items:flex-start; gap:10px; }}
+  .top-row h1 {{ flex:1 1 auto; min-width:0; margin:0 0 6px; }}
+  .menu-wrap {{ position:relative; flex:0 0 auto; }}
+  .topbtn {{ background:var(--card); color:var(--muted); display:inline-flex; align-items:center;
+    border:1px solid var(--line); border-radius:8px; padding:6px 10px; font-size:13px;
+    cursor:pointer; font-family:inherit; line-height:1; }}
   .topbtn:hover {{ color:var(--txt); border-color:var(--accent); }}
-  @media (max-width:900px) {{ .topbtn {{ font-size:14px; padding:6px 13px; }} }}
-  #refreshbtn {{ font-size:16px; line-height:1; }}
+  .menu {{ position:absolute; top:calc(100% + 6px); right:0; z-index:60; min-width:140px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px; padding:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.5); display:flex; flex-direction:column; gap:2px; }}
+  .menu[hidden] {{ display:none; }}
+  .menu-item {{ background:transparent; color:var(--txt); border:none; text-align:left;
+    padding:9px 12px; font-size:14px; border-radius:7px; cursor:pointer; font-family:inherit; }}
+  .menu-item:hover {{ background:#222c38; color:var(--accent); }}
   /* 有新数据时弹出的刷新小条(底部居中,不打断阅读) */
   .rfpill {{ position:fixed; left:50%; transform:translateX(-50%);
     bottom:calc(16px + env(safe-area-inset-bottom)); z-index:50;
@@ -779,12 +785,19 @@ def build():
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="topbtns">
-      <button id="refreshbtn" class="topbtn" type="button" aria-label="refresh" title="刷新 / Refresh">↻</button>
-      <button id="sharebtn" class="topbtn" type="button"><span class="i18n" data-zh="分享" data-en="Share">分享</span></button>
-      <button id="langtog" class="topbtn" type="button" aria-label="language">EN</button>
+    <div class="top-row">
+      <h1>⚽ {bi(esc(meta.get('tournament','世界杯')) + " 战报", "2026 World Cup · Match Report")}</h1>
+      <div class="menu-wrap">
+        <button id="menubtn" class="topbtn" type="button" aria-label="menu" aria-haspopup="true" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="14" cy="6" r="2" fill="currentColor"/><circle cx="6" cy="14" r="2" fill="currentColor"/><circle cx="14" cy="14" r="2" fill="currentColor"/></svg>
+        </button>
+        <div id="menu" class="menu" hidden role="menu">
+          <button class="menu-item" type="button" data-act="refresh" role="menuitem"><span class="i18n" data-zh="刷新" data-en="Refresh">刷新</span></button>
+          <button class="menu-item" type="button" data-act="share" role="menuitem"><span class="i18n" data-zh="分享" data-en="Share">分享</span></button>
+          <button class="menu-item" type="button" data-act="lang" id="langitem" role="menuitem">EN</button>
+        </div>
+      </div>
     </div>
-    <h1>⚽ {bi(esc(meta.get('tournament','世界杯')) + " 战报", "2026 World Cup · Match Report")}</h1>
     <div class="sub">
       <span>{bi("主办：", "Hosts: ")}<b>{bi(meta.get('host',''), "USA / Canada / Mexico")}</b></span>
       <span>{bi("数据更新：", "Updated: ")}<b data-ts="{meta.get('lastUpdatedTs','')}">{esc(meta.get('lastUpdated',''))}</b>{bi("（本地时间）", " (local time)")}</span>
@@ -844,7 +857,7 @@ def build():
       if(v!=null) ns[k].textContent=v;
     }}
     document.title = en ? '2026 World Cup · Report' : '2026世界杯 · 战报';
-    var b=document.getElementById('langtog');
+    var b=document.getElementById('langitem');
     if(b) b.textContent = en ? '中文' : 'EN';
     renderTimes(en);  // 日期用词随语言切换(今天<->Today)
   }}
@@ -852,36 +865,44 @@ def build():
   var saved=null; try{{saved=localStorage.getItem('wc_lang');}}catch(e){{}}
   var en0 = saved ? (saved==='en') : !/^zh/i.test(navl);
   applyLang(en0);
-  var tog=document.getElementById('langtog');
-  if(tog) tog.addEventListener('click',function(){{
-    var nowEn=document.documentElement.getAttribute('data-lang')!=='en';
-    try{{localStorage.setItem('wc_lang', nowEn?'en':'zh');}}catch(e){{}}
-    applyLang(nowEn);
-  }});
+  // 右上角菜单:刷新 / 分享 / 中英切换
+  function setLang(en){{ try{{localStorage.setItem('wc_lang', en?'en':'zh');}}catch(e){{}} applyLang(en); }}
+  var SHARE_URL='https://worldcup-ata.pages.dev/';
+  function doShare(item){{
+    var isEn=document.documentElement.getAttribute('data-lang')==='en';
+    var lab=item.querySelector('.i18n');
+    function flash(msg){{ if(!lab) return; lab.textContent=msg;
+      setTimeout(function(){{ var en=document.documentElement.getAttribute('data-lang')==='en';
+        lab.textContent=lab.getAttribute(en?'data-en':'data-zh'); }},2400); }}
+    var ok=isEn?'Copied — paste in WeChat':'已复制·去微信粘贴';
+    if(navigator.clipboard&&navigator.clipboard.writeText){{
+      navigator.clipboard.writeText(SHARE_URL).then(function(){{ flash(ok); }})
+        .catch(function(){{ window.prompt(isEn?'Copy this link':'复制此链接', SHARE_URL); }});
+    }} else {{ window.prompt(isEn?'Copy this link':'复制此链接', SHARE_URL); }}
+  }}
+  var menubtn=document.getElementById('menubtn'), menu=document.getElementById('menu');
+  function closeMenu(){{ if(menu){{ menu.hidden=true; menubtn.setAttribute('aria-expanded','false'); }} }}
+  if(menubtn&&menu){{
+    menubtn.addEventListener('click', function(e){{
+      e.stopPropagation();
+      var willOpen=menu.hidden; menu.hidden=!willOpen;
+      menubtn.setAttribute('aria-expanded', willOpen?'true':'false');
+    }});
+    menu.addEventListener('click', function(e){{
+      var it=e.target.closest('.menu-item'); if(!it) return;
+      var act=it.getAttribute('data-act');
+      if(act==='refresh'){{ location.reload(); return; }}
+      if(act==='share'){{ doShare(it); setTimeout(closeMenu,1600); return; }}
+      if(act==='lang'){{ setLang(document.documentElement.getAttribute('data-lang')!=='en'); closeMenu(); }}
+    }});
+    document.addEventListener('click', function(e){{
+      if(!menu.hidden && !menubtn.contains(e.target) && !menu.contains(e.target)) closeMenu();
+    }});
+  }}
   // 注册极简 service worker,让本站可被「安装」为独立 APP(强制手机版渲染,无视桌面版开关)
   if('serviceWorker' in navigator){{
     navigator.serviceWorker.register('sw.js').catch(function(){{}});
   }}
-}})();
-</script>
-<script>
-/* 分享按钮:复制对外门户链接(纯链接)。微信只有把纯链接粘进聊天框才会自动出预览卡片;
-   原生分享面板会带文字、被微信当纯文字消息处理、不出卡片——故统一用"复制+提示去微信粘贴"。 */
-(function(){{
-  var URL_='https://worldcup-ata.pages.dev/';
-  var btn=document.getElementById('sharebtn'); if(!btn) return;
-  var lab=btn.querySelector('.i18n');
-  function en(){{ return document.documentElement.getAttribute('data-lang')==='en'; }}
-  function flash(msg){{ if(!lab) return; lab.textContent=msg;
-    setTimeout(function(){{ lab.textContent=lab.getAttribute(en()?'data-en':'data-zh'); }},2400); }}
-  btn.addEventListener('click', function(){{
-    var isEn=en();
-    var ok=isEn?'Copied — paste in WeChat':'已复制·去微信粘贴发送';
-    if(navigator.clipboard&&navigator.clipboard.writeText){{
-      navigator.clipboard.writeText(URL_).then(function(){{ flash(ok); }})
-        .catch(function(){{ window.prompt(isEn?'Copy this link':'复制此链接', URL_); }});
-    }} else {{ window.prompt(isEn?'Copy this link':'复制此链接', URL_); }}
-  }});
 }})();
 </script>
 <script>
@@ -993,8 +1014,7 @@ def build():
   setInterval(function(){{
     check(function(n){{ if(n){{ if(document.hidden) location.reload(); else pill(); }} }});
   }}, 1800000);  // 30 分钟
-  var rb = document.getElementById('refreshbtn');
-  if(rb) rb.onclick = function(){{ location.reload(); }};
+  // 手动刷新已并入右上角菜单(菜单的"刷新"项 location.reload());电脑 F5 照常。
 }})();
 </script>
 <script>
