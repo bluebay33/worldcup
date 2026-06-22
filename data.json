@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-23 01:00 (北京时间)",
-    "lastUpdatedTs": 1782147612466,
+    "lastUpdated": "2026-06-23 02:00 (北京时间)",
+    "lastUpdatedTs": 1782151213073,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -2289,9 +2289,9 @@
           "ts": 1782147600000,
           "home": "Argentina",
           "away": "Austria",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 0,
+          "status": "LIVE",
           "venue": "AT&T Stadium",
           "city": "Arlington, Texas"
         },

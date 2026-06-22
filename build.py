@@ -157,8 +157,8 @@ def compute_table(group):
     rows = {t: {"team": t, "p": 0, "w": 0, "d": 0, "l": 0,
                 "gf": 0, "ga": 0, "pts": 0} for t in group["teams"]}
     for m in group.get("matches", []):
-        if m.get("hs") is None or m.get("as") is None:
-            continue  # 未赛，不计入
+        if m.get("status") != "FT" or m.get("hs") is None or m.get("as") is None:
+            continue  # 只计完场;进行中(LIVE)的当前比分不计入,等完场再算
         h, a = m["home"], m["away"]
         hs, as_ = m["hs"], m["as"]
         for t in (h, a):
@@ -483,6 +483,8 @@ def build():
 
     def _collect_goals(matches):
         for mm in matches:
+            if mm.get("status") != "FT":
+                continue  # 只统计完场的进球;进行中的比赛等完场再计入射手榜
             for goal in mm.get("goals", []):
                 t = goal.get("type", "") or ""
                 if "Own" in t:
