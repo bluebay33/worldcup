@@ -2,8 +2,8 @@
   "meta": {
     "tournament": "2026世界杯",
     "host": "美国 / 加拿大 / 墨西哥",
-    "lastUpdated": "2026-06-23 02:00 (北京时间)",
-    "lastUpdatedTs": 1782151213073,
+    "lastUpdated": "2026-06-23 07:43 (北京时间)",
+    "lastUpdatedTs": 1782171830112,
     "updatedBy": "ESPN 自动拉取",
     "sources": [
       "ESPN"
@@ -1283,56 +1283,6 @@
           "status": "FT",
           "venue": "Estadio BBVA",
           "city": "Guadalupe",
-          "goals": [
-            {
-              "min": "7'",
-              "scorer": "Yasin Ayari",
-              "assist": null,
-              "type": "Goal",
-              "team": "Sweden"
-            },
-            {
-              "min": "30'",
-              "scorer": "Alexander Isak",
-              "assist": "Viktor Gyökeres",
-              "type": "Goal",
-              "team": "Sweden"
-            },
-            {
-              "min": "43'",
-              "scorer": "Omar Rekik",
-              "assist": "Hannibal Mejbri",
-              "type": "Goal - Header",
-              "team": "Tunisia"
-            },
-            {
-              "min": "59'",
-              "scorer": "Viktor Gyökeres",
-              "assist": "Alexander Isak",
-              "type": "Goal",
-              "team": "Sweden"
-            },
-            {
-              "min": "84'",
-              "scorer": "Mattias Svanberg",
-              "assist": "Alexander Isak",
-              "type": "Goal",
-              "team": "Sweden"
-            },
-            {
-              "min": "90'+6'",
-              "scorer": "Yasin Ayari",
-              "assist": "Lucas Bergvall",
-              "type": "Goal",
-              "team": "Sweden"
-            }
-          ],
-          "videos": [
-            {
-              "title": "Why is Sabri Lamouchi set for Tunisia departure?",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_Analysis_Why_is_Sabri_Lamouchi_set_for_Tunisia_departure3F_GLOBAL_2026-06-15/dm_260615_COM_SOC_Analysis_Why_is_Sabri_Lamouchi_set_for_Tunisia_departure3F_GLOBAL_2026-06-15_360p30_1464k.mp4"
-            }
-          ],
           "highlights": {
             "ca": {
               "url": "https://www.youtube.com/watch?v=TC9tqtH0CkA",
@@ -1529,28 +1479,6 @@
           "status": "FT",
           "venue": "Lumen Field",
           "city": "Seattle, Washington",
-          "goals": [
-            {
-              "min": "20'",
-              "scorer": "Emam Ashour",
-              "assist": "Mohamed Salah",
-              "type": "Goal",
-              "team": "Egypt"
-            },
-            {
-              "min": "66'",
-              "scorer": "Mohamed Hany",
-              "assist": null,
-              "type": "Own Goal",
-              "team": "Belgium"
-            }
-          ],
-          "videos": [
-            {
-              "title": "Are Belgium too reliant on De Bruyne and Lukaku?",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15/dm_260615_COM_SOC_ANALYSIS_Are_Belgium_too_reliant_on_De_Bruyne_and_Lukaku_2026_6_15_360p30_1464k.mp4"
-            }
-          ],
           "highlights": {
             "ca": {
               "url": "https://www.youtube.com/watch?v=9Q-DVeicbjU",
@@ -1570,46 +1498,6 @@
           "status": "FT",
           "venue": "SoFi Stadium",
           "city": "Inglewood, California",
-          "goals": [
-            {
-              "min": "7'",
-              "scorer": "Elijah Just",
-              "assist": "Chris Wood",
-              "type": "Goal",
-              "team": "New Zealand"
-            },
-            {
-              "min": "32'",
-              "scorer": "Ramin Rezaeian",
-              "assist": null,
-              "type": "Goal",
-              "team": "Iran"
-            },
-            {
-              "min": "54'",
-              "scorer": "Elijah Just",
-              "assist": "Chris Wood",
-              "type": "Goal",
-              "team": "New Zealand"
-            },
-            {
-              "min": "64'",
-              "scorer": "Mohammad Mohebbi",
-              "assist": "Ramin Rezaeian",
-              "type": "Goal - Header",
-              "team": "Iran"
-            }
-          ],
-          "videos": [
-            {
-              "title": "Inside Iran's tense World Cup opener",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_schaap_on_iran/dm_260616_schaap_on_iran_360p30_1464k.mp4"
-            },
-            {
-              "title": "Moreno: Iran, New Zealand 'not good enough' to advance in WC",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0616/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI/dm_260616_COM_SOC_Analysis_Moreno_Iran_New_Zealand_not_good_enough_to_advance_in_WC_20260615_GLOBAL_FI_360p30_1464k.mp4"
-            }
-          ],
           "highlights": {
             "ca": {
               "url": "https://www.youtube.com/watch?v=BgjKwt8WqGM",
@@ -1758,16 +1646,6 @@
           "status": "FT",
           "venue": "Mercedes-Benz Stadium",
           "city": "Atlanta, Georgia",
-          "videos": [
-            {
-              "title": "Burley slams 'extremely pedestrian' Spain after Cape Verde draw",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw/dm_260615_Burley_slams_extremely_pedestrian_Spain_after_Cape_Verde_draw_360p30_1464k.mp4"
-            },
-            {
-              "title": "Burley: Cape Verde couldn't have given a better account of themselves",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0615/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves/dm_260615_Burley_Cape_Verde_couldnt_have_given_a_better_account_of_themselves_360p30_1464k.mp4"
-            }
-          ],
           "highlights": {
             "ca": {
               "url": "https://www.youtube.com/watch?v=YUD8Fq3gLWE",
@@ -1787,28 +1665,6 @@
           "status": "FT",
           "venue": "Hard Rock Stadium",
           "city": "Miami Gardens, Florida",
-          "goals": [
-            {
-              "min": "41'",
-              "scorer": "Abdulelah Al-Amri",
-              "assist": null,
-              "type": "Goal",
-              "team": "Saudi Arabia"
-            },
-            {
-              "min": "80'",
-              "scorer": "Maxi Araújo",
-              "assist": null,
-              "type": "Goal",
-              "team": "Uruguay"
-            }
-          ],
-          "videos": [
-            {
-              "title": "Ale Moreno: Uruguay missed a golden opportunity to take control of Group H",
-              "url": "https://media.video-cdn.espn.com/motion/2026/0615/ss_20260615_203722805_3565788/ss_20260615_203722805_3565788_360p30_1464k.mp4"
-            }
-          ],
           "highlights": {
             "ca": {
               "url": "https://www.youtube.com/watch?v=M8gPbLdizYU",
@@ -2119,9 +1975,9 @@
           "ts": 1782162000000,
           "home": "France",
           "away": "Iraq",
-          "hs": null,
-          "as": null,
-          "status": "sched",
+          "hs": 1,
+          "as": 0,
+          "status": "LIVE",
           "venue": "Lincoln Financial Field",
           "city": "Philadelphia, Pennsylvania"
         },
@@ -2289,11 +2145,53 @@
           "ts": 1782147600000,
           "home": "Argentina",
           "away": "Austria",
-          "hs": 1,
+          "hs": 2,
           "as": 0,
-          "status": "LIVE",
+          "status": "FT",
           "venue": "AT&T Stadium",
-          "city": "Arlington, Texas"
+          "city": "Arlington, Texas",
+          "goals": [
+            {
+              "min": "38'",
+              "scorer": "Lionel Messi",
+              "assist": "Facundo Medina",
+              "type": "Goal",
+              "team": "Argentina"
+            },
+            {
+              "min": "90'+5'",
+              "scorer": "Lionel Messi",
+              "assist": null,
+              "type": "Goal",
+              "team": "Argentina"
+            }
+          ],
+          "videos": [
+            {
+              "title": "Messi 'so happy' after breaking World Cup goal record in 2-0 win",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_COM_SOC_Interview_Messi_so_happy_after_breaking_World_Cup_goal_record_in_2_0_win_20260622_GLOB/dm_260622_COM_SOC_Interview_Messi_so_happy_after_breaking_World_Cup_goal_record_in_2_0_win_20260622_GLOB_360p30_1464k.mp4"
+            },
+            {
+              "title": "Onuoha: Messi is a true icon of the game",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_COM_SOC_Analysis_Onuoha3A_Messi_is_a_true_icon_of_the_game__GLOBAL_2026-06-22/dm_260622_COM_SOC_Analysis_Onuoha3A_Messi_is_a_true_icon_of_the_game__GLOBAL_2026-06-22_360p30_1464k.mp4"
+            },
+            {
+              "title": "Will Argentina rest Messi against Jordan?",
+              "url": "https://media.video-cdn.espn.com/motion/2026/0622/dm_260622_COM_SOC_Analysis_Will_Argentina_rest_Messi_against_Jordan3F__GLOBAL_2026-06-22/dm_260622_COM_SOC_Analysis_Will_Argentina_rest_Messi_against_Jordan3F__GLOBAL_2026-06-22_360p30_1464k.mp4"
+            }
+          ],
+          "highlights": {
+            "ca": {
+              "url": "https://www.youtube.com/watch?v=t-DjpFwvWVM",
+              "title": "Argentina vs. Austria Full Highlights | FIFA World Cup 2026",
+              "channel": "TSN"
+            },
+            "us": {
+              "url": "https://www.youtube.com/watch?v=JakdhltyECE",
+              "title": "Argentina vs Austria Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+              "channel": "FOX Sports"
+            }
+          }
         },
         {
           "date": "2026-06-23",

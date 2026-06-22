@@ -43,8 +43,9 @@ jobs:
       - name: 整理发布目录（只放静态文件）
         if: steps.gate.outputs.active == 'true'
         run: |
-          mkdir -p _site
+          mkdir -p _site/.well-known
           cp index.html report.html data.json privacy.html manifest.webmanifest sw.js icon-192.png icon-512.png apple-touch-icon.png _site/
+          cp .well-known/assetlinks.json _site/.well-known/
 
       - name: 部署到 Cloudflare Pages
         if: steps.gate.outputs.active == 'true'

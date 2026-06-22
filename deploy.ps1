@@ -22,5 +22,8 @@ Copy-Item (Join-Path $root 'privacy.html') (Join-Path $site 'privacy.html')
 foreach ($f in 'manifest.webmanifest','sw.js','icon-192.png','icon-512.png','apple-touch-icon.png') {
     Copy-Item (Join-Path $root $f) (Join-Path $site $f)
 }
+# TWA 验证:.well-known/assetlinks.json(让安卓 App 不显示浏览器地址栏)
+New-Item -ItemType Directory -Force -Path (Join-Path $site '.well-known') | Out-Null
+Copy-Item (Join-Path $root '.well-known\assetlinks.json') (Join-Path $site '.well-known\assetlinks.json')
 
 wrangler pages deploy $site --project-name=worldcup --branch=main --commit-dirty=true

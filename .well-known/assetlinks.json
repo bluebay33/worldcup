@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.worldcupata.twk",
+    "sha256_cert_fingerprints": [
+      "C2:9B:ED:F0:95:E4:55:0D:6A:88:66:3C:C0:C4:16:25:00:9A:93:9D:86:E5:38:52:98:DC:EA:FA:71:64:ED:F5"
+    ]
+  }
+}]
