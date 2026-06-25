@@ -68,6 +68,9 @@ ROWS = [
     ("巴拿马", "克罗地亚", "https://sports.cctv.com/2026/06/24/VIDEFdZ5EUIB6ZDJCXFWTsvE260624.shtml"),
     # C 组补(06-25)
     ("摩洛哥", "海地", "https://sports.cctv.com/2026/06/25/VIDE9J1E6Yz7Hdyzgu648uq7260625.shtml"),
+    # 央视无标准"集锦"标题页、用整场回顾视频替代的(标题为"力克/小胜"等,仍是 [世界杯] 该场视频)
+    ("澳大利亚", "土耳其", "https://sports.cctv.com/2026/06/14/VIDEPqw4902JL00BxqBqhNhQ260614.shtml"),
+    ("苏格兰", "海地", "https://sports.cctv.com/2026/06/14/VIDEijmmmWtnwLJ8xbEov8WW260614.shtml"),
 ]
 
 d = {}
