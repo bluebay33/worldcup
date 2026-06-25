@@ -426,8 +426,11 @@ def build():
 
     def _push(m, grp):
         st = m.get("status")
-        if st == "LIVE":
-            mm = dict(m); mm["group"] = grp; live_pool.append(mm)
+        dt = _mdt(m)
+        # 已到/过开球时间但数据仍停留在 sched（fetch 未及时刷成 LIVE）→ 视同进行中并置顶。
+        # 否则这场会卡在「近期赛程(只收未来 sched)」与「最近战果(只收 LIVE/FT)」的夹缝中消失。
+        if st == "LIVE" or (st == "sched" and dt is not None and dt <= now):
+            mm = dict(m); mm["group"] = grp; mm["status"] = "LIVE"; live_pool.append(mm)
         elif st == "FT" and m.get("hs") is not None:
             mm = dict(m); mm["group"] = grp; played_pool.append(mm)
 
