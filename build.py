@@ -291,9 +291,13 @@ def fifa_highlight_link(m):
     us = (hls.get("us") or {}).get("url") if hls else None
     q = f'{m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
     search = "https://www.youtube.com/results?search_query=" + quote_plus(q)
-    # 中国读者(loc=CN):YouTube/TSN/FOX 都用不了,改跳百度搜中文队名集锦(咪咕/央视等官方源会被顶上来)。
-    # 每场都能拼,不抓取。百度搜索网址格式稳定。
-    cn_q = f'{cn(m["home"])} {cn(m["away"])} 世界杯 集锦'
+    # 中国读者(loc=CN):YouTube/TSN/FOX 都用不了,改跳百度搜【央视集锦页标题模板】。
+    # 央视网体育(sports.cctv.com)每场集锦标题格式固定:「[世界杯]B组第2轮:加拿大6-0卡塔尔 集锦」,
+    # 用「[世界杯]X组 队1 队2 集锦」搜,百度对央视大站索引好、标题强匹配 → 央视那篇基本第一条
+    # (实测该模板谷歌首条即 sports.cctv.com 的集锦页)。每场可拼、不抓取;淘汰赛无组号则只用队名。
+    grp = m.get("group", "")
+    grp_tag = f"{grp}组" if (grp and grp != "淘汰赛" and len(grp) <= 2) else ""
+    cn_q = f'[世界杯]{grp_tag} {cn(m["home"])} {cn(m["away"])} 集锦'
     cn_search = "https://www.baidu.com/s?wd=" + quote_plus(cn_q)
     data = (f' data-hl-search="{esc(search)}"'
             + (f' data-hl-ca="{esc(ca)}"' if ca else "")
