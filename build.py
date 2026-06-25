@@ -206,7 +206,7 @@ def match_row(m, show_group=False):
     _fb = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
     ts = m.get("ts")
     dt = f'<span class="ltime" data-ts="{ts}">{_fb}</span>' if ts else _fb
-    return f"""<div class="match">
+    return f"""<div class="match" data-h="{esc(m['home'])}" data-a="{esc(m['away'])}">
       <div class="m-date">{grp}{dt}</div>
       <div class="m-home">{team_flag_bi(m["home"], flag_first=False)}</div>
       <div class="m-score">{score_cell(m)}</div>
@@ -546,6 +546,63 @@ def build():
     _built = datetime.now(timezone.utc)
     built_at = _built.astimezone(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
     built_ms = int(_built.timestamp() * 1000)
+
+    # 实时比分：比赛进行中时每 45 秒直连 ESPN scoreboard（CORS: *，前端可直连），按队名
+    # （displayName，与 data.json 同源）匹配页面比赛，局部更新比分/状态/时钟。不刷整页、不动
+    # 积分榜（LIVE 不计分，只算完场）；也根治"已开球但仍 sched 显示 vs"——拉到实时比分即填上。
+    live_js = r'''
+(function(){
+  var EP='https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=';
+  function ymd(d){return d.getUTCFullYear()+('0'+(d.getUTCMonth()+1)).slice(-2)+('0'+d.getUTCDate()).slice(-2);}
+  function range(){var n=Date.now();return ymd(new Date(n-86400000))+'-'+ymd(new Date(n+86400000));}
+  function key(h,a){return (h||'').toLowerCase()+'|'+(a||'').toLowerCase();}
+  function en(){return document.documentElement.getAttribute('data-lang')==='en';}
+  var idx={};
+  var ms=document.querySelectorAll('.match');
+  for(var i=0;i<ms.length;i++){
+    var h=ms[i].getAttribute('data-h'),a=ms[i].getAttribute('data-a');
+    if(h&&a){var k=key(h,a);(idx[k]=idx[k]||[]).push(ms[i]);}
+  }
+  if(!Object.keys(idx).length) return;
+  function setBadge(meta,state,clock){
+    var b=meta.querySelector('.badge'); if(!b) return;
+    var cls,z,e;
+    if(state==='in'){cls='live';z='进行中';e='LIVE';}
+    else if(state==='post'){cls='ft';z='完场';e='FT';}
+    else{cls='sched';z='未开赛';e='Sched';}
+    b.className='badge '+cls;
+    var clk=(state==='in'&&clock)?(' '+String(clock).replace(/[^0-9'+:A-Za-z ]/g,'')):'';
+    b.innerHTML='<span class="i18n" data-zh="'+z+'" data-en="'+e+'">'+(en()?e:z)+'</span>'+clk;
+  }
+  function apply(els,hs,as,state,clock){
+    for(var i=0;i<els.length;i++){
+      var el=els[i];
+      var sc=el.querySelector('.m-score');
+      if(sc&&state!=='pre'&&hs!=null&&as!=null) sc.innerHTML='<span class="score">'+hs+' : '+as+'</span>';
+      var meta=el.querySelector('.m-meta');
+      if(meta) setBadge(meta,state,clock);
+    }
+  }
+  var timer=null;
+  function poll(){
+    fetch(EP+range(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      var evs=(d&&d.events)||[],live=false;
+      for(var i=0;i<evs.length;i++){
+        var c=(evs[i].competitions||[])[0];if(!c)continue;
+        var cs=c.competitors||[];if(cs.length!==2)continue;
+        var hc=cs[0].homeAway==='home'?cs[0]:cs[1];
+        var ac=cs[0].homeAway==='home'?cs[1]:cs[0];
+        var st=((c.status||{}).type)||{},state=st.state||'';
+        var els=idx[key((hc.team||{}).displayName,(ac.team||{}).displayName)];
+        if(els){apply(els,hc.score,ac.score,state,(c.status||{}).displayClock);if(state==='in')live=true;}
+      }
+      if(timer)clearInterval(timer);
+      timer=setInterval(poll,live?45000:300000);
+    }).catch(function(){if(timer)clearInterval(timer);timer=setInterval(poll,300000);});
+  }
+  poll();
+})();
+'''
 
     page = f"""<!DOCTYPE html>
 <html lang="zh">
@@ -1039,6 +1096,7 @@ def build():
   }}).catch(function(){{}});
 }})();
 </script>
+<script>{live_js}</script>
 </body>
 </html>"""
 
