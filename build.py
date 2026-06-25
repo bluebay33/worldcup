@@ -553,6 +553,7 @@ def build():
     live_js = r'''
 (function(){
   var EP='https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=';
+  var SM='https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=';
   function ymd(d){return d.getUTCFullYear()+('0'+(d.getUTCMonth()+1)).slice(-2)+('0'+d.getUTCDate()).slice(-2);}
   function range(){var n=Date.now();return ymd(new Date(n-86400000))+'-'+ymd(new Date(n+86400000));}
   function key(h,a){return (h||'').toLowerCase()+'|'+(a||'').toLowerCase();}
@@ -574,7 +575,40 @@ def build():
     var clk=(state==='in'&&clock)?(' '+String(clock).replace(/[^0-9'+:A-Za-z ]/g,'')):'';
     b.innerHTML='<span class="i18n" data-zh="'+z+'" data-en="'+e+'">'+(en()?e:z)+'</span>'+clk;
   }
-  function apply(els,hs,as,state,clock){
+  function mark(t){
+    t=t||'';
+    if(t.indexOf('Penalty')>=0) return en()?' (P)':'(点球)';
+    if(t.indexOf('Own')>=0) return en()?' (OG)':'(乌龙)';
+    if(t.indexOf('Header')>=0) return en()?' (H)':'(头球)';
+    return '';
+  }
+  function gesc(s){var n=document.createElement('div');n.textContent=(s==null?'':String(s));return n.innerHTML;}
+  function renderGoals(els,goals){
+    if(!goals.length) return;
+    var h='<div class="m-goals">⚽ ';
+    for(var i=0;i<goals.length;i++){
+      var g=goals[i];
+      h+='<span class="gitem">'+gesc(g.min)+' '+gesc(g.scorer)+mark(g.type)+'<span class="gteam">'+gesc(g.team)+'</span></span>';
+    }
+    h+='</div>';
+    for(var j=0;j<els.length;j++){
+      var old=els[j].querySelector('.m-goals');
+      if(old) old.outerHTML=h; else els[j].insertAdjacentHTML('beforeend',h);
+    }
+  }
+  function fetchGoals(eid,els){
+    fetch(SM+eid,{cache:'no-store'}).then(function(r){return r.json();}).then(function(s){
+      var ke=s.keyEvents||[],goals=[];
+      for(var i=0;i<ke.length;i++){
+        var k=ke[i]; if(!k.scoringPlay) continue;
+        var ps=k.participants||[];
+        var sc=(ps[0]&&ps[0].athlete)?ps[0].athlete.displayName:'?';
+        goals.push({min:(k.clock||{}).displayValue||'',scorer:sc,type:(k.type||{}).text||'',team:(k.team||{}).displayName||''});
+      }
+      renderGoals(els,goals);
+    }).catch(function(){});
+  }
+  function apply(els,hs,as,state,clock,eid){
     for(var i=0;i<els.length;i++){
       var el=els[i];
       var sc=el.querySelector('.m-score');
@@ -582,6 +616,7 @@ def build():
       var meta=el.querySelector('.m-meta');
       if(meta) setBadge(meta,state,clock);
     }
+    if(state==='in'&&eid) fetchGoals(eid,els);
   }
   var timer=null;
   function poll(){
@@ -594,7 +629,7 @@ def build():
         var ac=cs[0].homeAway==='home'?cs[1]:cs[0];
         var st=((c.status||{}).type)||{},state=st.state||'';
         var els=idx[key((hc.team||{}).displayName,(ac.team||{}).displayName)];
-        if(els){apply(els,hc.score,ac.score,state,(c.status||{}).displayClock);if(state==='in')live=true;}
+        if(els){apply(els,hc.score,ac.score,state,(c.status||{}).displayClock,evs[i].id);if(state==='in')live=true;}
       }
       if(timer)clearInterval(timer);
       timer=setInterval(poll,live?45000:300000);
