@@ -21,6 +21,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "data.json")
 OUT = os.path.join(HERE, "report.html")
 
+# 央视集锦直链映射(key = 中文队名 sorted 后 "|" 拼;由 WebSearch / Google Custom Search 维护)。
+# 命中则 CN 用户直达 sports.cctv.com 集锦页;缺失(没抓到/刚踢完没发集锦)则回退百度搜索。
+try:
+    with open(os.path.join(HERE, "cctv_links.json"), encoding="utf-8") as _f:
+        CCTV_LINKS = json.load(_f)
+except Exception:
+    CCTV_LINKS = {}
+
 
 def esc(s):
     return html.escape(str(s))
@@ -291,18 +299,20 @@ def fifa_highlight_link(m):
     us = (hls.get("us") or {}).get("url") if hls else None
     q = f'{m["home"]} vs {m["away"]} full highlights FIFA world cup 2026'
     search = "https://www.youtube.com/results?search_query=" + quote_plus(q)
-    # 中国读者(loc=CN):YouTube/TSN/FOX 都用不了,改跳百度搜【央视集锦页标题模板】。
-    # 央视网体育(sports.cctv.com)每场集锦标题格式固定:「[世界杯]B组第2轮:加拿大6-0卡塔尔 集锦」,
-    # 用「[世界杯]X组 队1 队2 集锦」搜,百度对央视大站索引好、标题强匹配 → 央视那篇基本第一条
-    # (实测该模板谷歌首条即 sports.cctv.com 的集锦页)。每场可拼、不抓取;淘汰赛无组号则只用队名。
-    grp = m.get("group", "")
-    grp_tag = f"{grp}组" if (grp and grp != "淘汰赛" and len(grp) <= 2) else ""
-    cn_q = f'[世界杯]{grp_tag} {cn(m["home"])} {cn(m["away"])} 集锦'
-    cn_search = "https://www.baidu.com/s?wd=" + quote_plus(cn_q)
+    # 中国读者(loc=CN):YouTube/TSN/FOX 都用不了。
+    # 优先用央视集锦直链(cctv_links.json,中文队名 sorted 做 key)→ CN 直达 sports.cctv.com 集锦页;
+    # 未命中(没抓到/刚踢完没发集锦)则回退百度搜央视标题模板「[世界杯]X组 队1 队2 集锦」
+    # (央视集锦页标题格式固定,百度对央视大站索引好、标题强匹配,基本第一条)。
+    cn_link = CCTV_LINKS.get("|".join(sorted([cn(m["home"]), cn(m["away"])])))
+    if not cn_link:
+        grp = m.get("group", "")
+        grp_tag = f"{grp}组" if (grp and grp != "淘汰赛" and len(grp) <= 2) else ""
+        cn_q = f'[世界杯]{grp_tag} {cn(m["home"])} {cn(m["away"])} 集锦'
+        cn_link = "https://www.baidu.com/s?wd=" + quote_plus(cn_q)
     data = (f' data-hl-search="{esc(search)}"'
             + (f' data-hl-ca="{esc(ca)}"' if ca else "")
             + (f' data-hl-us="{esc(us)}"' if us else "")
-            + f' data-hl-cn="{esc(cn_search)}"')
+            + f' data-hl-cn="{esc(cn_link)}"')
     label = "🎬 " + bi("集锦", "Highlights")
     return (f'<a class="vlink yt" href="{esc(search)}"{data} '
             f'target="_blank" rel="noopener">{label}</a>')
