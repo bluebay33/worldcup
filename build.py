@@ -1005,23 +1005,32 @@ def build():
       : p==='denied' ? (en?'🔔 Alerts blocked':'🔔 提醒被拒·去设置开')
       : (en?'🔔 Enable alerts':'🔔 开启提醒');
   }}
+  var VAPID_PUBLIC='BI85gnNmqaBPjzRpCqRl3_Q26imy4fT59ThO6izSt02L8gyyFQ3XKiyvjMtBG2BR6tXXFrix4-adtlIf4J9WZHA';
+  var PUSH_API='https://worldcup-push.bluebay33.workers.dev';
+  function urlB64ToU8(b){{
+    var pad='='.repeat((4-b.length%4)%4);
+    var s=(b+pad).replace(/-/g,'+').replace(/_/g,'/');
+    var raw=atob(s), u=new Uint8Array(raw.length);
+    for(var i=0;i<raw.length;i++) u[i]=raw.charCodeAt(i);
+    return u;
+  }}
   function enableNotify(){{
     var en=document.documentElement.getAttribute('data-lang')==='en';
-    if(!notifSupported()) return;
-    if(Notification.permission==='denied'){{
-      alert(en?'Notifications are blocked. Turn them on in browser/app settings.':'通知被拒过了,要去浏览器/app 通知设置里手动允许。');
-      return;
-    }}
+    if(!notifSupported()){{ alert(en?'This device does not support push.':'此设备不支持通知'); return; }}
+    if(Notification.permission==='denied'){{ alert(en?'Blocked — enable in settings.':'通知被拒,要去手机设置里手动允许'); return; }}
     Notification.requestPermission().then(function(perm){{
       setNotifLabel();
-      if(perm==='granted'){{
-        navigator.serviceWorker.ready.then(function(reg){{
-          reg.showNotification(en?'✅ Alerts enabled':'✅ 提醒已开启', {{
-            body: en?'Match results will pop up like this.':'比赛结束时,赛果会这样通知你',
-            icon:'icon-192.png', badge:'icon-192.png', tag:'wc-test'
-          }});
+      if(perm!=='granted') return;
+      navigator.serviceWorker.ready.then(function(reg){{
+        return reg.pushManager.getSubscription().then(function(ex){{
+          return ex || reg.pushManager.subscribe({{ userVisibleOnly:true, applicationServerKey: urlB64ToU8(VAPID_PUBLIC) }});
+        }}).then(function(sub){{
+          return fetch(PUSH_API+'/subscribe', {{ method:'POST', headers:{{'Content-Type':'application/json'}}, body: JSON.stringify(sub) }});
+        }}).then(function(r){{
+          if(r.ok){{ reg.showNotification(en?'✅ Alerts on':'✅ 提醒已开启', {{ body: en?'Match results will be pushed here.':'比赛结束时,赛果会推到这里', icon:'icon-192.png', tag:'wc-test' }}); }}
+          else {{ alert((en?'Subscribe failed: ':'订阅失败: ')+r.status); }}
         }});
-      }}
+      }}).catch(function(err){{ alert((en?'Error: ':'出错: ')+(err&&err.message||err)); }});
     }});
   }}
   if(menubtn&&menu){{

@@ -58,6 +58,22 @@ async function poll(env) {
   return { checked: events.length, justFinished };
 }
 
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+function jsonResp(obj, status) {
+  return new Response(JSON.stringify(obj), {
+    status: status || 200,
+    headers: { "content-type": "application/json; charset=utf-8", ...CORS },
+  });
+}
+async function sha256hex(s) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 export default {
   // Cron Trigger 每分钟触发
   async scheduled(event, env, ctx) {
@@ -66,18 +82,27 @@ export default {
   // HTTP 端点:调试/验证用
   async fetch(req, env) {
     const url = new URL(req.url);
-    if (url.pathname === "/recent") {        // 看最近检测到的"刚结束"
+    if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
+    // 前端订阅:存进 KV(key = sub:<endpoint 的 sha256>,同设备重复订阅天然去重)
+    if (url.pathname === "/subscribe" && req.method === "POST") {
+      let sub;
+      try { sub = await req.json(); } catch (e) { return jsonResp({ error: "bad json" }, 400); }
+      if (!sub || !sub.endpoint) return jsonResp({ error: "no endpoint" }, 400);
+      await env.WC_KV.put("sub:" + (await sha256hex(sub.endpoint)), JSON.stringify(sub));
+      return jsonResp({ ok: true }, 201);
+    }
+    if (url.pathname === "/subs") {            // 当前订阅数(验证用)
+      const list = await env.WC_KV.list({ prefix: "sub:" });
+      return jsonResp({ count: list.keys.length });
+    }
+    if (url.pathname === "/recent") {          // 最近检测到的"刚结束"
       const r = await env.WC_KV.get("recent_finishes");
-      return new Response(r || "{}", { headers: { "content-type": "application/json; charset=utf-8" } });
+      return new Response(r || "{}", { headers: { "content-type": "application/json; charset=utf-8", ...CORS } });
     }
-    if (url.pathname === "/run") {           // 手动触发一次轮询(不等 cron)
-      try {
-        const r = await poll(env);
-        return new Response(JSON.stringify(r, null, 2), { headers: { "content-type": "application/json; charset=utf-8" } });
-      } catch (e) {
-        return new Response("error: " + e.message, { status: 500 });
-      }
+    if (url.pathname === "/run") {             // 手动触发一次轮询
+      try { return jsonResp(await poll(env)); }
+      catch (e) { return jsonResp({ error: e.message }, 500); }
     }
-    return new Response("worldcup-push: ESPN match-end watcher (cron 1min)\n");
+    return new Response("worldcup-push: ESPN match-end watcher (cron 1min)\n", { headers: CORS });
   }
 };
