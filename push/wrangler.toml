@@ -1,0 +1,12 @@
+name = "worldcup-push"
+main = "worker.js"
+compatibility_date = "2026-06-25"
+
+# 每分钟轮询 ESPN 检测比赛刚结束(分钟级)
+[triggers]
+crons = ["* * * * *"]
+
+# 存比赛状态快照 + 最近结束记录;id 由 `wrangler kv namespace create WC_KV` 生成后填入
+[[kv_namespaces]]
+binding = "WC_KV"
+id = "0f1da8b99ded434cb9f931aac7ea09a8"
