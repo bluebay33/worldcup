@@ -32,3 +32,26 @@ self.addEventListener('fetch', function (e) {
     })
   );
 });
+// 收到 Web Push → 弹系统通知。payload 约定 JSON: {title, body, url, tag}
+self.addEventListener('push', function (e) {
+  var d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (err) { d = { body: e.data ? e.data.text() : '' }; }
+  e.waitUntil(self.registration.showNotification(d.title || '2026 世界杯', {
+    body: d.body || '',
+    icon: 'icon-192.png',
+    badge: 'icon-192.png',
+    tag: d.tag || 'wc-push',
+    data: { url: d.url || '/' }
+  }));
+});
+// 点击通知 → 聚焦已开窗口,否则打开 app
+self.addEventListener('notificationclick', function (e) {
+  e.notification.close();
+  var url = (e.notification.data && e.notification.data.url) || '/';
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (cs) {
+      for (var i = 0; i < cs.length; i++) { if ('focus' in cs[i]) return cs[i].focus(); }
+      if (self.clients.openWindow) return self.clients.openWindow(url);
+    })
+  );
+});

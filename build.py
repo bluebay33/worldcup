@@ -905,6 +905,7 @@ def build():
         <div id="menu" class="menu" hidden role="menu">
           <button class="menu-item" type="button" data-act="refresh" role="menuitem"><span class="i18n" data-zh="刷新" data-en="Refresh">刷新</span></button>
           <button class="menu-item" type="button" data-act="share" role="menuitem"><span class="i18n" data-zh="分享" data-en="Share">分享</span></button>
+          <button class="menu-item" type="button" data-act="notify" id="notifyitem" role="menuitem">🔔 开启提醒</button>
           <button class="menu-item" type="button" data-act="lang" id="langitem" role="menuitem">EN</button>
         </div>
       </div>
@@ -993,17 +994,49 @@ def build():
   }}
   var menubtn=document.getElementById('menubtn'), menu=document.getElementById('menu');
   function closeMenu(){{ if(menu){{ menu.hidden=true; menubtn.setAttribute('aria-expanded','false'); }} }}
+  // ——比赛结束提醒(本步:请求权限+弹本地测试通知验证;真·推送的订阅+发送是下一步)——
+  function notifSupported(){{ return ('serviceWorker' in navigator)&&('Notification' in window)&&('PushManager' in window); }}
+  function setNotifLabel(){{
+    var it=document.getElementById('notifyitem'); if(!it) return;
+    var en=document.documentElement.getAttribute('data-lang')==='en';
+    if(!notifSupported()){{ it.textContent=en?'🔔 Alerts (unsupported)':'🔔 提醒·此设备不支持'; return; }}
+    var p=Notification.permission;
+    it.textContent = p==='granted' ? (en?'🔔 Alerts on ✓':'🔔 提醒已开启 ✓')
+      : p==='denied' ? (en?'🔔 Alerts blocked':'🔔 提醒被拒·去设置开')
+      : (en?'🔔 Enable alerts':'🔔 开启提醒');
+  }}
+  function enableNotify(){{
+    var en=document.documentElement.getAttribute('data-lang')==='en';
+    if(!notifSupported()) return;
+    if(Notification.permission==='denied'){{
+      alert(en?'Notifications are blocked. Turn them on in browser/app settings.':'通知被拒过了,要去浏览器/app 通知设置里手动允许。');
+      return;
+    }}
+    Notification.requestPermission().then(function(perm){{
+      setNotifLabel();
+      if(perm==='granted'){{
+        navigator.serviceWorker.ready.then(function(reg){{
+          reg.showNotification(en?'✅ Alerts enabled':'✅ 提醒已开启', {{
+            body: en?'Match results will pop up like this.':'比赛结束时,赛果会这样通知你',
+            icon:'icon-192.png', badge:'icon-192.png', tag:'wc-test'
+          }});
+        }});
+      }}
+    }});
+  }}
   if(menubtn&&menu){{
     menubtn.addEventListener('click', function(e){{
       e.stopPropagation();
       var willOpen=menu.hidden; menu.hidden=!willOpen;
       menubtn.setAttribute('aria-expanded', willOpen?'true':'false');
+      if(willOpen) setNotifLabel();
     }});
     menu.addEventListener('click', function(e){{
       var it=e.target.closest('.menu-item'); if(!it) return;
       var act=it.getAttribute('data-act');
       if(act==='refresh'){{ location.reload(); return; }}
       if(act==='share'){{ doShare(it); setTimeout(closeMenu,1600); return; }}
+      if(act==='notify'){{ enableNotify(); closeMenu(); return; }}
       if(act==='lang'){{ setLang(document.documentElement.getAttribute('data-lang')!=='en'); closeMenu(); }}
     }});
     document.addEventListener('click', function(e){{
