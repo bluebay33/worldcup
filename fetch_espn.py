@@ -141,23 +141,30 @@ def fetch_events():
     return list(seen.values())
 
 
+_KO_SLUGS = {"round-of-32", "round-of-16", "quarterfinals",
+             "semifinals", "3rd-place-match", "final"}
+
+
 def parse_event(e):
     comp = (e.get("competitions") or [{}])[0]
     cs = comp.get("competitors", [])
     home = away = None
+    hsh = ash = None  # 点球比分(shootoutScore),仅点球决胜的场才有
     for c in cs:
         side = c.get("homeAway")
         name = c.get("team", {}).get("displayName")
         score = c.get("score")
+        shoot = c.get("shootoutScore")
         if side == "home":
-            home = (name, score)
+            home = (name, score); hsh = shoot
         elif side == "away":
-            away = (name, score)
+            away = (name, score); ash = shoot
     if not home or not away:
         # 兜底：按列表顺序
         if len(cs) == 2:
             home = (cs[0].get("team", {}).get("displayName"), cs[0].get("score"))
             away = (cs[1].get("team", {}).get("displayName"), cs[1].get("score"))
+            hsh = cs[0].get("shootoutScore"); ash = cs[1].get("shootoutScore")
         else:
             return None
     status = map_status(e)
@@ -174,12 +181,32 @@ def parse_event(e):
             return None
     hs = to_int(home[1]) if status != "sched" else None
     as_ = to_int(away[1]) if status != "sched" else None
-    return {
+
+    out = {
         "date": date, "time": t, "ts": ts,
         "home": home[0], "away": away[0],
         "hs": hs, "as": as_,
         "status": status, "venue": venue, "city": city,
     }
+
+    # 淘汰赛轮次:scoreboard event 自带 season.slug(round-of-32 等),连未赛场也有,无需额外请求。
+    slug = (e.get("season") or {}).get("slug")
+    if slug in _KO_SLUGS:
+        out["round"] = slug
+
+    # 加时/点球:据 status.type.name 判定决胜方式。hs/as 是常规时间+加时的比分(ESPN 的 score);
+    # 点球场再带 pens 比分。STATUS_FINAL_PEN=点球,STATUS_FINAL_AET=加时绝杀,其余 FT=常规时间。
+    if status == "FT":
+        st_name = (e.get("status", {}).get("type", {}) or {}).get("name", "")
+        if "PEN" in st_name:
+            out["decided"] = "pens"
+            ph = to_int(hsh); pa = to_int(ash)
+            if ph is not None and pa is not None:
+                out["pens"] = {"h": ph, "a": pa}
+        elif "AET" in st_name:
+            out["decided"] = "aet"
+
+    return out
 
 
 def fetch_match_detail(event_id):

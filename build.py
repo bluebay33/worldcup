@@ -50,6 +50,26 @@ def grp_label(g):
     return bi("淘汰赛", "KO") if g == "淘汰赛" else esc(g)
 
 
+# 淘汰赛轮次 slug(来自 ESPN season.slug)-> 双语标签。比泛标签"淘汰赛"更明确。
+_KO_ROUND_BI = {
+    "round-of-32": ("32强赛", "Round of 32"),
+    "round-of-16": ("16强赛", "Round of 16"),
+    "quarterfinals": ("1/4决赛", "Quarterfinal"),
+    "semifinals": ("半决赛", "Semifinal"),
+    "3rd-place-match": ("季军赛", "Third Place"),
+    "final": ("决赛", "Final"),
+}
+
+
+def round_tag(m):
+    """淘汰赛场的轮次标签(双语);非淘汰赛或无 round 字段返回空串。"""
+    r = m.get("round")
+    if r in _KO_ROUND_BI:
+        zh, en = _KO_ROUND_BI[r]
+        return bi(zh, en)
+    return ""
+
+
 def collap(title, body, *, open_=True, cls=""):
     """把一个板块包成可折叠的 <details>。title 已是 HTML，body 已是 HTML。"""
     op = " open" if open_ else ""
@@ -192,11 +212,29 @@ def compute_table(group):
 def score_cell(m):
     if m.get("hs") is None or m.get("as") is None:
         return '<span class="vs">vs</span>'
-    return f'<span class="score">{m["hs"]} : {m["as"]}</span>'
+    base = f'<span class="score">{m["hs"]} : {m["as"]}</span>'
+    # 淘汰赛决胜方式:点球场补「点球 4:3」,加时绝杀补「加时」。hs/as 已是常规+加时的比分。
+    dec = m.get("decided")
+    if dec == "pens":
+        p = m.get("pens") or {}
+        ph, pa = p.get("h"), p.get("a")
+        if ph is not None and pa is not None:
+            base += f'<span class="sdecide">{bi("点球", "pens")} {ph}:{pa}</span>'
+        else:
+            base += f'<span class="sdecide">{bi("点球决胜", "on pens")}</span>'
+    elif dec == "aet":
+        base += f'<span class="sdecide">{bi("加时", "AET")}</span>'
+    return base
 
 
 def match_row(m, show_group=False):
-    grp = f'<span class="tag">{grp_label(m["group"])}</span> ' if show_group and m.get("group") else ""
+    _rt = round_tag(m)
+    if _rt:  # 淘汰赛场:用具体轮次标签(32强赛/决赛…)替代泛"淘汰赛"
+        grp = f'<span class="tag ko">{_rt}</span> '
+    elif show_group and m.get("group"):
+        grp = f'<span class="tag">{grp_label(m["group"])}</span> '
+    else:
+        grp = ""
     status = m.get("status", "")
     badge = ""
     if status == "FT":
@@ -228,7 +266,13 @@ def match_list_row(m):
     """HISTORY 用的紧凑列表行：常显一行(时间/组 + 主 比分 客)，点击用 JS 展开进球/集锦/场地。
     不用原生 <details>/<summary>——部分 Windows Chrome/Edge 不渲染 summary 内容、回退成默认"详情"
     标签。改用普通 <div> + JS 切换，渲染稳定。"""
-    grp = f'<span class="tag">{grp_label(m["group"])}</span>' if m.get("group") else ""
+    _rt = round_tag(m)
+    if _rt:
+        grp = f'<span class="tag ko">{_rt}</span>'
+    elif m.get("group"):
+        grp = f'<span class="tag">{grp_label(m["group"])}</span>'
+    else:
+        grp = ""
     _fb = esc(m.get("date", "")) + (" " + esc(m["time"]) if m.get("time") else "")
     ts = m.get("ts")
     dt = f'<span class="ltime" data-ts="{ts}">{_fb}</span>' if ts else f'<span>{_fb}</span>'
@@ -622,11 +666,19 @@ def build():
       renderGoals(els,goals);
     }).catch(function(){});
   }
-  function apply(els,hs,as,state,clock,eid){
+  function apply(els,hs,as,state,clock,eid,sh,sa,stName){
     for(var i=0;i<els.length;i++){
       var el=els[i];
       var sc=el.querySelector('.m-score');
-      if(sc&&state!=='pre'&&hs!=null&&as!=null) sc.innerHTML='<span class="score">'+hs+' : '+as+'</span>';
+      if(sc&&state!=='pre'&&hs!=null&&as!=null){
+        // 淘汰赛完场:点球场补「点球 4:3」、加时绝杀补「加时」,与服务端 score_cell 同口径
+        var ex='';
+        if(state==='post'&&stName){
+          if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null) ex='<span class="sdecide">'+(en()?'pens ':'点球 ')+sh+':'+sa+'</span>';
+          else if(stName.indexOf('AET')>=0) ex='<span class="sdecide">'+(en()?'AET':'加时')+'</span>';
+        }
+        sc.innerHTML='<span class="score">'+hs+' : '+as+'</span>'+ex;
+      }
       var meta=el.querySelector('.m-meta');
       if(meta) setBadge(meta,state,clock);
     }
@@ -645,7 +697,7 @@ def build():
         var ac=cs[0].homeAway==='home'?cs[1]:cs[0];
         var st=((c.status||{}).type)||{},state=st.state||'';
         var els=idx[key((hc.team||{}).displayName,(ac.team||{}).displayName)];
-        if(els){apply(els,hc.score,ac.score,state,(c.status||{}).displayClock,evs[i].id);if(state==='in')live=true;}
+        if(els){apply(els,hc.score,ac.score,state,(c.status||{}).displayClock,evs[i].id,hc.shootoutScore,ac.shootoutScore,st.name||'');if(state==='in')live=true;}
       }
       if(timer)clearInterval(timer);
       timer=setInterval(poll,live?45000:300000);
@@ -744,6 +796,7 @@ def build():
   .m-score {{ text-align:center; min-width:54px; }}
   .score {{ font-weight:700; }}
   .vs {{ color:var(--muted); font-size:11px; }}
+  .sdecide {{ display:block; color:var(--gold); font-size:10px; line-height:1.2; margin-top:1px; white-space:nowrap; }}
   .m-meta {{ grid-column:2 / -1; display:flex; gap:8px; align-items:center; }}
   .badge {{ font-size:10px; padding:1px 6px; border-radius:10px; }}
   .badge.ft {{ background:#21262d; color:var(--muted); }}
@@ -751,6 +804,7 @@ def build():
   .badge.sched {{ background:rgba(212,160,23,0.15); color:var(--gold); }}
   .venue {{ color:var(--muted); font-size:11px; }}
   .tag {{ background:#21262d; color:var(--muted); padding:0 5px; border-radius:4px; font-size:10px; }}
+  .tag.ko {{ background:rgba(212,160,23,0.16); color:var(--gold); font-weight:600; }}
   .flag {{ margin:0 4px; font-size:1.15em; line-height:1; vertical-align:-1px; }}
   .m-goals {{ grid-column:1 / -1; font-size:12px; color:var(--txt); display:flex; flex-wrap:wrap;
     gap:6px 12px; padding:4px 2px 0; }}
