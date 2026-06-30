@@ -630,7 +630,9 @@ def build():
       var meta=el.querySelector('.m-meta');
       if(meta) setBadge(meta,state,clock);
     }
-    if(state==='in'&&eid) fetchGoals(eid,els);
+    // 进行中:每轮刷新进球。完场:若卡片还没进球就补拉一次——完赛瞬间服务端重建常拿不到
+    // 进球数据,FT 卡片是空的,会把之前 live 渲染的进球人/进球时间覆盖掉,这里客户端兜底填回。
+    if(eid&&(state==='in'||(state==='post'&&els[0]&&!els[0].querySelector('.m-goals')))) fetchGoals(eid,els);
   }
   var timer=null;
   function poll(){
