@@ -468,54 +468,199 @@ def eliminated_teams(data):
     return elim
 
 
-# 对阵图轮次排列顺序(决赛在季军赛前,更符合观感)
-_BRACKET_ORDER = ["round-of-32", "round-of-16", "quarterfinals",
-                  "semifinals", "final", "3rd-place-match"]
+# ---- 淘汰赛对阵图(SVG 对称树,皇家蓝+金,缩放适配一屏)----
+_PH_RE = re.compile(r"(Round of 32|Round of 16|Quarterfinal|Semifinal) (\d+) (Winner|Loser)")
+_PREV = {"round-of-16": "round-of-32", "quarterfinals": "round-of-16",
+         "semifinals": "quarterfinals", "final": "semifinals"}
+_DEPTH = {"final": 0, "semifinals": 1, "quarterfinals": 2, "round-of-16": 3, "round-of-32": 4}
+# SVG 版面常量
+_COLW, _BOXW, _BOXH, _PITCH, _TOP, _CX = 150, 128, 40, 52, 46, 610
 
 
-def _bk_team_row(name, score, is_win, is_lose, played):
-    cls = "bk-team"
-    if played and is_win:
-        cls += " win"
-    elif played and is_lose:
-        cls += " lose"
-    sc = "" if score is None else f'<span class="bk-sc">{score}</span>'
-    return f'<div class="{cls}">{team_flag_bi(name, flag_first=True)}{sc}</div>'
+def _feeder_idx(label, prev_slug, prev_list):
+    """某场一方队名 -> 它在上一轮(prev_list,按日期排序)里的下标;占位名按编号、真实队按参赛反查。"""
+    m = _PH_RE.fullmatch((label or "").strip())
+    if m:
+        rmap = {"Round of 32": "round-of-32", "Round of 16": "round-of-16",
+                "Quarterfinal": "quarterfinals", "Semifinal": "semifinals"}
+        if rmap.get(m.group(1)) == prev_slug and m.group(3) == "Winner":
+            i = int(m.group(2)) - 1
+            return i if 0 <= i < len(prev_list) else None
+        return None
+    for i, pm in enumerate(prev_list):
+        if label in (pm.get("home"), pm.get("away")):
+            return i
+    return None
 
 
-def bracket_card(m):
+def _bk_node(slug, idx, R):
+    m = R[slug][idx]
+    n = {"m": m, "slug": slug, "ch": []}
+    ps = _PREV.get(slug)
+    if ps and R.get(ps):
+        a = _feeder_idx(m.get("home"), ps, R[ps])
+        b = _feeder_idx(m.get("away"), ps, R[ps])
+        if a is not None and b is not None:
+            n["ch"] = [_bk_node(ps, a, R), _bk_node(ps, b, R)]
+    return n
+
+
+def _bk_box_svg(n, is_final=False):
+    m = n["m"]
+    x, cy = n["x"], n["cy"]
+    y = cy - _BOXH / 2
     played = m.get("status") == "FT" and m.get("hs") is not None
+    live = m.get("status") == "LIVE"
     w, l = ko_winner(m)
-    note = ""
+    stroke = "#e7c14b" if is_final else "#2a4a86"
+    fill = "#173463" if is_final else "#13294d"
+    out = [f'<g class="bk-node{" live" if live else ""}" data-h="{esc(m["home"])}" data-a="{esc(m["away"])}">',
+           f'<rect class="bk-box" x="{x:.0f}" y="{y:.0f}" width="{_BOXW}" height="{_BOXH}" rx="6" fill="{fill}" stroke="{stroke}"/>']
+
+    def row(name, score, wl, ry):
+        ph = _PH_RE.fullmatch((name or "").strip())
+        nm_zh = "—" if ph else cn(name)
+        nm_en = "—" if ph else (name or "—")
+        fl = "" if ph else flag(name)
+        op = ' opacity="0.4"' if (played and wl == "l") else ""
+        nfill = "#ffffff" if (played and wl == "w") else "#c8d4ec"
+        fw = ' font-weight="700"' if (played and wl == "w") else ""
+        scfill = "#f4c430" if (played and wl == "w") else "#c8d4ec"
+        seg = [f'<g class="bk-row"{op}>']
+        if fl:
+            seg.append(f'<text class="bk-fl" x="{x+7:.0f}" y="{ry+4:.0f}" font-size="13">{fl}</text>')
+        seg.append(f'<text class="i18n bk-nm" data-zh="{esc(nm_zh)}" data-en="{esc(nm_en)}" '
+                   f'x="{x+24:.0f}" y="{ry+4:.0f}" font-size="12.5" fill="{nfill}"{fw}>{esc(nm_zh)}</text>')
+        sc = "" if score is None else str(score)
+        seg.append(f'<text class="bk-sc" x="{x+_BOXW-7:.0f}" y="{ry+4:.0f}" font-size="12.5" '
+                   f'font-weight="700" fill="{scfill}" text-anchor="end">{esc(sc)}</text>')
+        seg.append("</g>")
+        return "".join(seg)
+
+    out.append(row(m.get("home"), m.get("hs"), "w" if m.get("home") == w else ("l" if m.get("home") == l else ""), y + 13))
+    out.append(row(m.get("away"), m.get("as"), "w" if m.get("away") == w else ("l" if m.get("away") == l else ""), y + 29))
     dec = m.get("decided")
+    nz = ne = ""
     if dec == "pens":
         p = m.get("pens") or {}
         if p.get("h") is not None and p.get("a") is not None:
-            note = f'<div class="bk-note">{bi("点球", "pens")} {p["h"]}:{p["a"]}</div>'
+            nz, ne = f'点球{p["h"]}:{p["a"]}', f'pens {p["h"]}:{p["a"]}'
     elif dec == "aet":
-        note = f'<div class="bk-note">{bi("加时", "AET")}</div>'
-    livecls = " live" if m.get("status") == "LIVE" else ""
-    return (f'<div class="bk-match{livecls}" data-h="{esc(m["home"])}" data-a="{esc(m["away"])}">'
-            + _bk_team_row(m["home"], m.get("hs"), m["home"] == w, m["home"] == l, played)
-            + _bk_team_row(m["away"], m.get("as"), m["away"] == w, m["away"] == l, played)
-            + note + '</div>')
+        nz, ne = "加时", "AET"
+    out.append(f'<text class="i18n bk-note-t" data-zh="{nz}" data-en="{ne}" x="{x+_BOXW-7:.0f}" '
+               f'y="{y+_BOXH+9:.0f}" font-size="8.5" fill="#e0b53c" text-anchor="end">{nz}</text>')
+    out.append("</g>")
+    return "".join(out)
 
 
-def bracket_html(knockout):
-    if not knockout:
+def _bk_conn_svg(n):
+    out = []
+    for c in n["ch"]:
+        if c["x"] < n["x"]:                       # 子在左、父在右
+            cxr, px = c["x"] + _BOXW, n["x"]
+            mid = (cxr + px) / 2
+            out.append(f'<path d="M{cxr:.0f} {c["cy"]:.0f} H{mid:.0f} V{n["cy"]:.0f} H{px:.0f}"/>')
+        else:                                     # 子在右、父在左
+            cxl, px = c["x"], n["x"] + _BOXW
+            mid = (cxl + px) / 2
+            out.append(f'<path d="M{cxl:.0f} {c["cy"]:.0f} H{mid:.0f} V{n["cy"]:.0f} H{px:.0f}"/>')
+        out.append(_bk_conn_svg(c))
+    return "".join(out)
+
+
+def bracket_svg(knockout):
+    R = {}
+    for s in ["round-of-32", "round-of-16", "quarterfinals", "semifinals", "final", "3rd-place-match"]:
+        R[s] = sorted([m for m in knockout if m.get("round") == s], key=lambda x: (x.get("ts") or 0))
+    if len(R["round-of-32"]) < 16 or not R["final"]:
         return f'<div class="empty">{bi("淘汰赛对阵未产生", "Bracket not set yet")}</div>'
-    blocks = []
-    for r in _BRACKET_ORDER:
-        ms = sorted([m for m in knockout if m.get("round") == r],
-                    key=lambda x: (x.get("ts") or 0))
-        if not ms:
-            continue
-        zh, en = _KO_ROUND_BI[r]
-        cards = "".join(bracket_card(m) for m in ms)
-        blocks.append(f'<div class="bk-round"><div class="bk-rh">{bi(zh, en)}'
-                      f'<span class="bk-n">{len(ms)}</span></div>'
-                      f'<div class="bk-grid">{cards}</div></div>')
-    return f'<div class="bracket">{"".join(blocks)}</div>'
+
+    root = _bk_node("final", 0, R)
+    if len(root["ch"]) != 2:                       # 结构没建全,兜底
+        return f'<div class="empty">{bi("对阵图数据待补全", "Bracket data incomplete")}</div>'
+
+    # 布局:左右子树各收集叶子(32强)按序赋 y,父节点 y=子节点中点;x 按深度+左右
+    def collect(n, bucket):
+        if n["ch"]:
+            for c in n["ch"]:
+                collect(c, bucket)
+        else:
+            bucket.append(n)
+    lefts, rights = [], []
+    collect(root["ch"][0], lefts)
+    collect(root["ch"][1], rights)
+    for i, n in enumerate(lefts):
+        n["cy"] = _TOP + _BOXH / 2 + i * _PITCH
+    for i, n in enumerate(rights):
+        n["cy"] = _TOP + _BOXH / 2 + i * _PITCH
+
+    def setcy(n):
+        if n["ch"]:
+            for c in n["ch"]:
+                setcy(c)
+            n["cy"] = sum(c["cy"] for c in n["ch"]) / len(n["ch"])
+    setcy(root["ch"][0])
+    setcy(root["ch"][1])
+    root["cy"] = (root["ch"][0]["cy"] + root["ch"][1]["cy"]) / 2
+
+    def setx(n, side):
+        d = _DEPTH[n["slug"]]
+        n["x"] = _CX - d * _COLW if side == "L" else (_CX + d * _COLW if side == "R" else _CX)
+        for c in n["ch"]:
+            setx(c, side)
+    root["x"] = _CX
+    setx(root["ch"][0], "L")
+    setx(root["ch"][1], "R")
+
+    n_leaves = max(len(lefts), len(rights), 8)
+    W = _CX + 4 * _COLW + _BOXW + 12
+    H = _TOP + n_leaves * _PITCH + 66            # 底部给季军赛留位
+
+    # 连线(先画,压在盒子下面)
+    conns = _bk_conn_svg(root["ch"][0]) + _bk_conn_svg(root["ch"][1])
+    # 决赛连两个半决赛
+    for c in root["ch"]:
+        if c["x"] < root["x"]:
+            conns += f'<path d="M{c["x"]+_BOXW:.0f} {c["cy"]:.0f} H{(c["x"]+_BOXW+root["x"])/2:.0f} V{root["cy"]:.0f} H{root["x"]:.0f}"/>'
+        else:
+            conns += f'<path d="M{c["x"]:.0f} {c["cy"]:.0f} H{(c["x"]+root["x"]+_BOXW)/2:.0f} V{root["cy"]:.0f} H{root["x"]+_BOXW:.0f}"/>'
+
+    # 所有盒子
+    def allnodes(n, acc):
+        acc.append(n)
+        for c in n["ch"]:
+            allnodes(c, acc)
+    nodes = []
+    allnodes(root, nodes)
+    boxes = "".join(_bk_box_svg(n, is_final=(n is root)) for n in nodes)
+
+    # 轮次标签(顶部)
+    labels = [("round-of-32", "32强赛", "Round of 32", 4), ("round-of-16", "16强赛", "Round of 16", 3),
+              ("quarterfinals", "1/4决赛", "QF", 2), ("semifinals", "半决赛", "SF", 1)]
+    lbls = []
+    for slug, zh, en, d in labels:
+        for cxp in (_CX - d * _COLW + _BOXW / 2, _CX + d * _COLW + _BOXW / 2):
+            lbls.append(f'<text class="i18n bk-lbl" data-zh="{zh}" data-en="{en}" x="{cxp:.0f}" y="26" '
+                        f'text-anchor="middle">{zh}</text>')
+    lbls.append(f'<text class="i18n bk-lbl" data-zh="决赛" data-en="Final" x="{_CX+_BOXW/2:.0f}" y="26" text-anchor="middle">决赛</text>')
+    # 奖杯 + 决赛上方
+    trophy = f'<text x="{_CX+_BOXW/2:.0f}" y="{root["cy"]-_BOXH/2-9:.0f}" font-size="22" text-anchor="middle">🏆</text>'
+
+    # 季军赛(底部居中,独立)
+    third = ""
+    if R["3rd-place-match"]:
+        t = dict()
+        tn = {"m": R["3rd-place-match"][0], "slug": "final", "ch": [], "x": _CX, "cy": H - 34}
+        third = (f'<text class="i18n bk-lbl" data-zh="季军赛" data-en="3rd Place" x="{_CX+_BOXW/2:.0f}" '
+                 f'y="{H-58:.0f}" text-anchor="middle">季军赛</text>' + _bk_box_svg(tn))
+
+    hint = f'<div class="bk-hint">{bi("双指放大看细节 · 胜者金色高亮、出局队淡化", "Pinch to zoom · winners gold, losers dimmed")}</div>'
+    svg = (f'<div class="bk-wrap"><svg class="bk-svg" viewBox="0 0 {W:.0f} {H:.0f}" '
+           f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="淘汰赛对阵图">'
+           f'<rect x="0" y="0" width="{W:.0f}" height="{H:.0f}" rx="10" fill="#0b1e3f"/>'
+           f'<g class="bk-lines" stroke="#e0b53c" stroke-width="1.4" fill="none" opacity="0.7">{conns}</g>'
+           f'{"".join(lbls)}{trophy}{boxes}{third}</svg></div>{hint}')
+    return svg
 
 
 def build():
@@ -689,7 +834,7 @@ def build():
 
     knockout = data.get("knockout", [])
     knockout_html = collap(bi("淘汰赛对阵图", "Knockout Bracket"),
-                           bracket_html(knockout), open_=False, cls="knockout")
+                           bracket_svg(knockout), open_=False, cls="knockout")
 
     sources = " · ".join(esc(s) for s in meta.get("sources", []))
     _built = datetime.now(timezone.utc)
@@ -713,9 +858,9 @@ def build():
     var h=ms[i].getAttribute('data-h'),a=ms[i].getAttribute('data-a');
     if(h&&a){var k=key(h,a);(idx[k]=idx[k]||[]).push(ms[i]);}
   }
-  // 对阵图卡片索引(与 .match 同键,实时更新比分/胜负/点球 + 输球置灰积分榜)
+  // 对阵图 SVG 节点索引(与 .match 同键,实时更新比分/胜负/点球 + 输球置灰积分榜)
   var bidx={};
-  var bms=document.querySelectorAll('.bk-match');
+  var bms=document.querySelectorAll('.bk-node');
   for(var bi2=0;bi2<bms.length;bi2++){
     var bh=bms[bi2].getAttribute('data-h'),ba=bms[bi2].getAttribute('data-a');
     if(bh&&ba){var bk=key(bh,ba);(bidx[bk]=bidx[bk]||[]).push(bms[bi2]);}
@@ -725,35 +870,33 @@ def build():
     var all=document.querySelectorAll('tr[data-team]');
     for(var q=0;q<all.length;q++){ if(all[q].getAttribute('data-team')===name) all[q].classList.add('out'); }
   }
-  function applyBK(cards,hs,as,state,sh,sa,stName){
-    for(var i=0;i<cards.length;i++){
-      var card=cards[i],rows=card.querySelectorAll('.bk-team');
+  function applyBK(gs,hs,as,state,sh,sa,stName){
+    var winner=null;
+    if(state==='post'){
+      if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null) winner=(sh>sa)?'h':'a';
+      else if(hs!=null&&as!=null){ if(hs>as)winner='h'; else if(as>hs)winner='a'; }
+    }
+    function setRow(row,score,role){ // role:'w'胜 'l'负 ''中性
+      var sc=row.querySelector('.bk-sc'); if(sc) sc.textContent=(score==null?'':score);
+      var nm=row.querySelector('.bk-nm');
+      row.removeAttribute('opacity');
+      if(nm){ nm.setAttribute('fill',role==='w'?'#ffffff':'#c8d4ec'); if(role==='w') nm.setAttribute('font-weight','700'); else nm.removeAttribute('font-weight'); }
+      if(sc) sc.setAttribute('fill',role==='w'?'#f4c430':'#c8d4ec');
+      if(role==='l') row.setAttribute('opacity','0.4');
+    }
+    for(var i=0;i<gs.length;i++){
+      var g=gs[i],rows=g.querySelectorAll('.bk-row');
       if(rows.length<2) continue;
-      var hr=rows[0],ar=rows[1];
-      function setSc(row,v){
-        var s=row.querySelector('.bk-sc');
-        if(v==null){ if(s)s.parentNode.removeChild(s); return; }
-        if(!s){ s=document.createElement('span'); s.className='bk-sc'; row.appendChild(s); }
-        s.textContent=v;
-      }
-      if(state!=='pre'){ setSc(hr,hs); setSc(ar,as); }
-      hr.classList.remove('win','lose'); ar.classList.remove('win','lose');
-      var winner=null;
+      setRow(rows[0],state==='pre'?null:hs,winner==='h'?'w':(winner==='a'?'l':''));
+      setRow(rows[1],state==='pre'?null:as,winner==='a'?'w':(winner==='h'?'l':''));
+      var note=g.querySelector('.bk-note-t'),nz='',ne='';
       if(state==='post'){
-        if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null) winner=(sh>sa)?'h':'a';
-        else if(hs!=null&&as!=null){ if(hs>as)winner='h'; else if(as>hs)winner='a'; }
+        if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null){ nz='点球'+sh+':'+sa; ne='pens '+sh+':'+sa; }
+        else if(stName.indexOf('AET')>=0){ nz='加时'; ne='AET'; }
       }
-      if(winner==='h'){ hr.classList.add('win'); ar.classList.add('lose'); }
-      else if(winner==='a'){ ar.classList.add('win'); hr.classList.add('lose'); }
-      var note=card.querySelector('.bk-note'),txt='';
-      if(state==='post'){
-        if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null) txt=(en()?'pens ':'点球 ')+sh+':'+sa;
-        else if(stName.indexOf('AET')>=0) txt=(en()?'AET':'加时');
-      }
-      if(txt){ if(!note){ note=document.createElement('div'); note.className='bk-note'; card.appendChild(note); } note.textContent=txt; }
-      else if(note){ note.parentNode.removeChild(note); }
-      if(state==='in') card.classList.add('live'); else card.classList.remove('live');
-      if(winner){ dimTeam(winner==='h'?card.getAttribute('data-a'):card.getAttribute('data-h')); }
+      if(note){ note.setAttribute('data-zh',nz); note.setAttribute('data-en',ne); note.textContent=en()?ne:nz; }
+      if(state==='in') g.classList.add('live'); else g.classList.remove('live');
+      if(winner){ dimTeam(winner==='h'?g.getAttribute('data-a'):g.getAttribute('data-h')); }
     }
   }
   function setBadge(meta,state,clock){
@@ -916,22 +1059,13 @@ def build():
   tr.out td {{ opacity:0.42; }}
   tr.out .flag {{ filter:grayscale(1); }}
   tr.out .tname {{ text-decoration:line-through; text-decoration-color:rgba(139,152,165,0.5); }}
-  /* 淘汰赛对阵图:竖向分轮次,每轮一段,轮内自适应网格 */
-  .bracket {{ display:flex; flex-direction:column; gap:16px; }}
-  .bk-rh {{ font-size:12px; font-weight:700; color:var(--gold); margin:0 0 7px;
-    padding-bottom:4px; border-bottom:1px solid #21262d; display:flex; align-items:center; gap:6px; }}
-  .bk-rh .bk-n {{ background:#21262d; color:var(--muted); font-size:10px; font-weight:400;
-    padding:0 6px; border-radius:8px; }}
-  .bk-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:8px; }}
-  .bk-match {{ background:#0f151c; border:1px solid #21262d; border-radius:7px; padding:5px 8px; }}
-  .bk-match.live {{ border-color:var(--live); box-shadow:0 0 0 1px rgba(248,81,73,0.3); }}
-  .bk-team {{ display:flex; align-items:center; gap:5px; font-size:12.5px; color:var(--muted); padding:1.5px 0; }}
-  .bk-team .bk-sc {{ margin-left:auto; font-variant-numeric:tabular-nums; font-weight:600; }}
-  .bk-team.win {{ color:var(--txt); font-weight:700; }}
-  .bk-team.win .bk-sc {{ color:var(--accent); }}
-  .bk-team.lose {{ opacity:0.5; }}
-  .bk-team.lose .flag {{ filter:grayscale(1); }}
-  .bk-note {{ font-size:10px; color:var(--gold); text-align:right; margin-top:2px; }}
+  /* 淘汰赛对阵图:SVG 对称树,皇家蓝+金,宽度自适应(缩放看全貌,双指放大看细节) */
+  .bk-wrap {{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    background:#0b1e3f; border-radius:10px; }}
+  .bk-svg {{ display:block; width:100%; height:auto; }}
+  .bk-lbl {{ font-size:13px; font-weight:700; fill:var(--gold); }}
+  .bk-node.live .bk-box {{ stroke:var(--live); stroke-width:2; }}
+  .bk-hint {{ color:var(--muted); font-size:11px; text-align:center; margin-top:8px; }}
   .g-details {{ margin-top:10px; }}
   .g-details > summary {{ cursor:pointer; list-style:none; user-select:none; font-size:12.5px;
     color:var(--muted); padding:6px 10px; border-radius:6px; background:#161d27;
