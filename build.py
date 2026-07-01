@@ -673,7 +673,8 @@ def group_flags_overview(groups, elim):
         for i, r in enumerate(compute_table(g)):
             t = r["team"]
             out = " out" if t in elim else ""
-            qual = " qual" if (i < 2 and not out) else ""
+            # 只要没出局(含晋级的小组第三)就粗体高亮,与其他活着的队一致
+            qual = "" if out else " qual"
             rows.append(f'<div class="gf-t{out}{qual}" data-team="{esc(t)}">'
                         f'<span class="gf-fl">{flag(t)}</span>'
                         f'<span class="i18n gf-nm" data-zh="{esc(cn(t))}" data-en="{esc(t)}">{esc(cn(t))}</span></div>')
@@ -1083,7 +1084,7 @@ def build():
   .bk-wrap {{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
     background:#0b1e3f; border-radius:10px; }}
   .bk-svg {{ display:block; width:100%; height:auto; }}
-  .bk-lbl {{ font-size:13px; font-weight:700; fill:var(--gold); }}
+  .bk-lbl {{ font-size:19px; font-weight:700; fill:var(--gold); }}
   .bk-node.live .bk-box {{ stroke:var(--live); stroke-width:2; }}
   .bk-hint {{ color:var(--muted); font-size:11px; text-align:center; margin-top:8px; }}
   /* 树下方:小组分组国旗总览(出局队国旗置灰) */
