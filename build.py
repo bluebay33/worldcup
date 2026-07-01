@@ -383,15 +383,17 @@ def videos_html(m):
     return f'<div class="m-videos">{"".join(links)}</div>'
 
 
-def group_block(group):
+def group_block(group, elim=frozenset()):
     table = compute_table(group)
     name = group["name"]
     trs = []
     for i, r in enumerate(table):
         cls = "qualify" if i < 2 else ""  # 前两名晋级高亮
+        if r["team"] in elim:              # 已出局:整行置灰(国旗+队名)
+            cls = (cls + " out").strip()
         gd = r["gf"] - r["ga"]
         gd_s = f"+{gd}" if gd > 0 else str(gd)
-        trs.append(f"""<tr class="{cls}">
+        trs.append(f"""<tr class="{cls}" data-team="{esc(r['team'])}">
           <td class="rank">{i+1}</td>
           <td class="tname">{team_flag_bi(r['team'])}</td>
           <td>{r['p']}</td><td>{r['w']}</td><td>{r['d']}</td><td>{r['l']}</td>
@@ -425,12 +427,104 @@ def group_block(group):
     </section>"""
 
 
+def ko_winner(m):
+    """完赛淘汰赛场的 (胜者队名, 负者队名);未完赛或无法判定返回 (None, None)。
+    点球场比分是平的,靠 pens 判;常规/加时靠 hs/as 判。"""
+    if m.get("status") != "FT" or m.get("hs") is None or m.get("as") is None:
+        return (None, None)
+    h, a = m["home"], m["away"]
+    if m.get("decided") == "pens":
+        p = m.get("pens") or {}
+        ph, pa = p.get("h"), p.get("a")
+        if ph is None or pa is None:
+            return (None, None)
+        return (h, a) if ph > pa else (a, h)
+    hs, as_ = m["hs"], m["as"]
+    if hs > as_:
+        return (h, a)
+    if as_ > hs:
+        return (a, h)
+    return (None, None)
+
+
+def eliminated_teams(data):
+    """已出局的队集合:没进 32 强的小组队 + 淘汰赛输掉的队。用于国旗置灰。"""
+    all_group = set()
+    for g in data.get("groups", []):
+        for t in g.get("teams", []):
+            all_group.add(t)
+    ko = data.get("knockout", [])
+    r32_real = set()
+    for m in ko:
+        if m.get("round") == "round-of-32":
+            for t in (m["home"], m["away"]):
+                if t in all_group:          # 真实队(占位名不在小组名单里)
+                    r32_real.add(t)
+    elim = set(t for t in all_group if t not in r32_real)  # 没进淘汰赛=出局
+    for m in ko:
+        _, loser = ko_winner(m)
+        if loser:
+            elim.add(loser)                 # 淘汰赛输掉=出局
+    return elim
+
+
+# 对阵图轮次排列顺序(决赛在季军赛前,更符合观感)
+_BRACKET_ORDER = ["round-of-32", "round-of-16", "quarterfinals",
+                  "semifinals", "final", "3rd-place-match"]
+
+
+def _bk_team_row(name, score, is_win, is_lose, played):
+    cls = "bk-team"
+    if played and is_win:
+        cls += " win"
+    elif played and is_lose:
+        cls += " lose"
+    sc = "" if score is None else f'<span class="bk-sc">{score}</span>'
+    return f'<div class="{cls}">{team_flag_bi(name, flag_first=True)}{sc}</div>'
+
+
+def bracket_card(m):
+    played = m.get("status") == "FT" and m.get("hs") is not None
+    w, l = ko_winner(m)
+    note = ""
+    dec = m.get("decided")
+    if dec == "pens":
+        p = m.get("pens") or {}
+        if p.get("h") is not None and p.get("a") is not None:
+            note = f'<div class="bk-note">{bi("点球", "pens")} {p["h"]}:{p["a"]}</div>'
+    elif dec == "aet":
+        note = f'<div class="bk-note">{bi("加时", "AET")}</div>'
+    livecls = " live" if m.get("status") == "LIVE" else ""
+    return (f'<div class="bk-match{livecls}" data-h="{esc(m["home"])}" data-a="{esc(m["away"])}">'
+            + _bk_team_row(m["home"], m.get("hs"), m["home"] == w, m["home"] == l, played)
+            + _bk_team_row(m["away"], m.get("as"), m["away"] == w, m["away"] == l, played)
+            + note + '</div>')
+
+
+def bracket_html(knockout):
+    if not knockout:
+        return f'<div class="empty">{bi("淘汰赛对阵未产生", "Bracket not set yet")}</div>'
+    blocks = []
+    for r in _BRACKET_ORDER:
+        ms = sorted([m for m in knockout if m.get("round") == r],
+                    key=lambda x: (x.get("ts") or 0))
+        if not ms:
+            continue
+        zh, en = _KO_ROUND_BI[r]
+        cards = "".join(bracket_card(m) for m in ms)
+        blocks.append(f'<div class="bk-round"><div class="bk-rh">{bi(zh, en)}'
+                      f'<span class="bk-n">{len(ms)}</span></div>'
+                      f'<div class="bk-grid">{cards}</div></div>')
+    return f'<div class="bracket">{"".join(blocks)}</div>'
+
+
 def build():
     with open(DATA, "r", encoding="utf-8") as f:
         data = json.load(f)
     meta = data.get("meta", {})
+    elim = eliminated_teams(data)
 
-    groups_html = "".join(group_block(g) for g in data.get("groups", []))
+    groups_html = "".join(group_block(g, elim) for g in data.get("groups", []))
     if not groups_html:
         groups_html = '<div class="empty">小组数据待补全</div>'
 
@@ -594,11 +688,8 @@ def build():
                             open_=False, cls="standings")
 
     knockout = data.get("knockout", [])
-    if knockout:
-        _kbody = '<div class="fix-grid">' + "".join(match_row(m, show_group=True) for m in knockout) + '</div>'
-    else:
-        _kbody = f'<div class="empty">{bi("小组赛进行中，淘汰赛对阵未产生", "Group stage in progress; knockout bracket not set yet")}</div>'
-    knockout_html = collap(bi("淘汰赛", "Knockout"), _kbody, open_=False, cls="knockout")
+    knockout_html = collap(bi("淘汰赛对阵图", "Knockout Bracket"),
+                           bracket_html(knockout), open_=False, cls="knockout")
 
     sources = " · ".join(esc(s) for s in meta.get("sources", []))
     _built = datetime.now(timezone.utc)
@@ -622,7 +713,49 @@ def build():
     var h=ms[i].getAttribute('data-h'),a=ms[i].getAttribute('data-a');
     if(h&&a){var k=key(h,a);(idx[k]=idx[k]||[]).push(ms[i]);}
   }
-  if(!Object.keys(idx).length) return;
+  // 对阵图卡片索引(与 .match 同键,实时更新比分/胜负/点球 + 输球置灰积分榜)
+  var bidx={};
+  var bms=document.querySelectorAll('.bk-match');
+  for(var bi2=0;bi2<bms.length;bi2++){
+    var bh=bms[bi2].getAttribute('data-h'),ba=bms[bi2].getAttribute('data-a');
+    if(bh&&ba){var bk=key(bh,ba);(bidx[bk]=bidx[bk]||[]).push(bms[bi2]);}
+  }
+  if(!Object.keys(idx).length && !Object.keys(bidx).length) return;
+  function dimTeam(name){
+    var all=document.querySelectorAll('tr[data-team]');
+    for(var q=0;q<all.length;q++){ if(all[q].getAttribute('data-team')===name) all[q].classList.add('out'); }
+  }
+  function applyBK(cards,hs,as,state,sh,sa,stName){
+    for(var i=0;i<cards.length;i++){
+      var card=cards[i],rows=card.querySelectorAll('.bk-team');
+      if(rows.length<2) continue;
+      var hr=rows[0],ar=rows[1];
+      function setSc(row,v){
+        var s=row.querySelector('.bk-sc');
+        if(v==null){ if(s)s.parentNode.removeChild(s); return; }
+        if(!s){ s=document.createElement('span'); s.className='bk-sc'; row.appendChild(s); }
+        s.textContent=v;
+      }
+      if(state!=='pre'){ setSc(hr,hs); setSc(ar,as); }
+      hr.classList.remove('win','lose'); ar.classList.remove('win','lose');
+      var winner=null;
+      if(state==='post'){
+        if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null) winner=(sh>sa)?'h':'a';
+        else if(hs!=null&&as!=null){ if(hs>as)winner='h'; else if(as>hs)winner='a'; }
+      }
+      if(winner==='h'){ hr.classList.add('win'); ar.classList.add('lose'); }
+      else if(winner==='a'){ ar.classList.add('win'); hr.classList.add('lose'); }
+      var note=card.querySelector('.bk-note'),txt='';
+      if(state==='post'){
+        if(stName.indexOf('PEN')>=0&&sh!=null&&sa!=null) txt=(en()?'pens ':'点球 ')+sh+':'+sa;
+        else if(stName.indexOf('AET')>=0) txt=(en()?'AET':'加时');
+      }
+      if(txt){ if(!note){ note=document.createElement('div'); note.className='bk-note'; card.appendChild(note); } note.textContent=txt; }
+      else if(note){ note.parentNode.removeChild(note); }
+      if(state==='in') card.classList.add('live'); else card.classList.remove('live');
+      if(winner){ dimTeam(winner==='h'?card.getAttribute('data-a'):card.getAttribute('data-h')); }
+    }
+  }
   function setBadge(meta,state,clock){
     var b=meta.querySelector('.badge'); if(!b) return;
     var cls,z,e;
@@ -698,6 +831,8 @@ def build():
         var st=((c.status||{}).type)||{},state=st.state||'';
         var els=idx[key((hc.team||{}).displayName,(ac.team||{}).displayName)];
         if(els){apply(els,hc.score,ac.score,state,(c.status||{}).displayClock,evs[i].id,hc.shootoutScore,ac.shootoutScore,st.name||'');if(state==='in')live=true;}
+        var bcards=bidx[key((hc.team||{}).displayName,(ac.team||{}).displayName)];
+        if(bcards) applyBK(bcards,hc.score,ac.score,state,hc.shootoutScore,ac.shootoutScore,st.name||'');
       }
       if(timer)clearInterval(timer);
       timer=setInterval(poll,live?45000:300000);
@@ -777,6 +912,26 @@ def build():
   td.gd {{ color:var(--muted); }}
   tr.qualify td {{ background:rgba(63,185,80,0.10); }}
   tr.qualify td.rank {{ color:var(--accent); font-weight:700; box-shadow:inset 2px 0 0 var(--accent); }}
+  /* 已出局的队:整行淡化、国旗去色(name 加删除线) */
+  tr.out td {{ opacity:0.42; }}
+  tr.out .flag {{ filter:grayscale(1); }}
+  tr.out .tname {{ text-decoration:line-through; text-decoration-color:rgba(139,152,165,0.5); }}
+  /* 淘汰赛对阵图:竖向分轮次,每轮一段,轮内自适应网格 */
+  .bracket {{ display:flex; flex-direction:column; gap:16px; }}
+  .bk-rh {{ font-size:12px; font-weight:700; color:var(--gold); margin:0 0 7px;
+    padding-bottom:4px; border-bottom:1px solid #21262d; display:flex; align-items:center; gap:6px; }}
+  .bk-rh .bk-n {{ background:#21262d; color:var(--muted); font-size:10px; font-weight:400;
+    padding:0 6px; border-radius:8px; }}
+  .bk-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:8px; }}
+  .bk-match {{ background:#0f151c; border:1px solid #21262d; border-radius:7px; padding:5px 8px; }}
+  .bk-match.live {{ border-color:var(--live); box-shadow:0 0 0 1px rgba(248,81,73,0.3); }}
+  .bk-team {{ display:flex; align-items:center; gap:5px; font-size:12.5px; color:var(--muted); padding:1.5px 0; }}
+  .bk-team .bk-sc {{ margin-left:auto; font-variant-numeric:tabular-nums; font-weight:600; }}
+  .bk-team.win {{ color:var(--txt); font-weight:700; }}
+  .bk-team.win .bk-sc {{ color:var(--accent); }}
+  .bk-team.lose {{ opacity:0.5; }}
+  .bk-team.lose .flag {{ filter:grayscale(1); }}
+  .bk-note {{ font-size:10px; color:var(--gold); text-align:right; margin-top:2px; }}
   .g-details {{ margin-top:10px; }}
   .g-details > summary {{ cursor:pointer; list-style:none; user-select:none; font-size:12.5px;
     color:var(--muted); padding:6px 10px; border-radius:6px; background:#161d27;
