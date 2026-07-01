@@ -473,8 +473,8 @@ _PH_RE = re.compile(r"(Round of 32|Round of 16|Quarterfinal|Semifinal) (\d+) (Wi
 _PREV = {"round-of-16": "round-of-32", "quarterfinals": "round-of-16",
          "semifinals": "quarterfinals", "final": "semifinals"}
 _DEPTH = {"final": 0, "semifinals": 1, "quarterfinals": 2, "round-of-16": 3, "round-of-32": 4}
-# SVG 版面常量
-_COLW, _BOXW, _BOXH, _PITCH, _TOP, _CX = 150, 128, 40, 52, 46, 610
+# SVG 版面常量(框加大、字号提高,让缩放到一屏后更清楚)
+_COLW, _BOXW, _BOXH, _PITCH, _TOP, _CX = 156, 136, 48, 58, 48, 636
 
 
 def _feeder_idx(label, prev_slug, prev_list):
@@ -528,17 +528,17 @@ def _bk_box_svg(n, is_final=False):
         scfill = "#f4c430" if (played and wl == "w") else "#c8d4ec"
         seg = [f'<g class="bk-row"{op}>']
         if fl:
-            seg.append(f'<text class="bk-fl" x="{x+7:.0f}" y="{ry+4:.0f}" font-size="13">{fl}</text>')
+            seg.append(f'<text class="bk-fl" x="{x+9:.0f}" y="{ry+4:.0f}" font-size="17">{fl}</text>')
         seg.append(f'<text class="i18n bk-nm" data-zh="{esc(nm_zh)}" data-en="{esc(nm_en)}" '
-                   f'x="{x+24:.0f}" y="{ry+4:.0f}" font-size="12.5" fill="{nfill}"{fw}>{esc(nm_zh)}</text>')
+                   f'x="{x+31:.0f}" y="{ry+4:.0f}" font-size="16" fill="{nfill}"{fw}>{esc(nm_zh)}</text>')
         sc = "" if score is None else str(score)
-        seg.append(f'<text class="bk-sc" x="{x+_BOXW-7:.0f}" y="{ry+4:.0f}" font-size="12.5" '
+        seg.append(f'<text class="bk-sc" x="{x+_BOXW-9:.0f}" y="{ry+4:.0f}" font-size="16" '
                    f'font-weight="700" fill="{scfill}" text-anchor="end">{esc(sc)}</text>')
         seg.append("</g>")
         return "".join(seg)
 
-    out.append(row(m.get("home"), m.get("hs"), "w" if m.get("home") == w else ("l" if m.get("home") == l else ""), y + 13))
-    out.append(row(m.get("away"), m.get("as"), "w" if m.get("away") == w else ("l" if m.get("away") == l else ""), y + 29))
+    out.append(row(m.get("home"), m.get("hs"), "w" if m.get("home") == w else ("l" if m.get("home") == l else ""), y + 16))
+    out.append(row(m.get("away"), m.get("as"), "w" if m.get("away") == w else ("l" if m.get("away") == l else ""), y + 36))
     dec = m.get("decided")
     nz = ne = ""
     if dec == "pens":
@@ -547,8 +547,8 @@ def _bk_box_svg(n, is_final=False):
             nz, ne = f'点球{p["h"]}:{p["a"]}', f'pens {p["h"]}:{p["a"]}'
     elif dec == "aet":
         nz, ne = "加时", "AET"
-    out.append(f'<text class="i18n bk-note-t" data-zh="{nz}" data-en="{ne}" x="{x+_BOXW-7:.0f}" '
-               f'y="{y+_BOXH+9:.0f}" font-size="8.5" fill="#e0b53c" text-anchor="end">{nz}</text>')
+    out.append(f'<text class="i18n bk-note-t" data-zh="{nz}" data-en="{ne}" x="{x+_BOXW-9:.0f}" '
+               f'y="{y+_BOXH+11:.0f}" font-size="11" fill="#e0b53c" text-anchor="end">{nz}</text>')
     out.append("</g>")
     return "".join(out)
 
@@ -640,11 +640,11 @@ def bracket_svg(knockout):
     lbls = []
     for slug, zh, en, d in labels:
         for cxp in (_CX - d * _COLW + _BOXW / 2, _CX + d * _COLW + _BOXW / 2):
-            lbls.append(f'<text class="i18n bk-lbl" data-zh="{zh}" data-en="{en}" x="{cxp:.0f}" y="26" '
+            lbls.append(f'<text class="i18n bk-lbl" data-zh="{zh}" data-en="{en}" x="{cxp:.0f}" y="30" '
                         f'text-anchor="middle">{zh}</text>')
-    lbls.append(f'<text class="i18n bk-lbl" data-zh="决赛" data-en="Final" x="{_CX+_BOXW/2:.0f}" y="26" text-anchor="middle">决赛</text>')
+    lbls.append(f'<text class="i18n bk-lbl" data-zh="决赛" data-en="Final" x="{_CX+_BOXW/2:.0f}" y="30" text-anchor="middle">决赛</text>')
     # 奖杯 + 决赛上方
-    trophy = f'<text x="{_CX+_BOXW/2:.0f}" y="{root["cy"]-_BOXH/2-9:.0f}" font-size="22" text-anchor="middle">🏆</text>'
+    trophy = f'<text x="{_CX+_BOXW/2:.0f}" y="{root["cy"]-_BOXH/2-10:.0f}" font-size="26" text-anchor="middle">🏆</text>'
 
     # 季军赛(底部居中,独立)
     third = ""
@@ -661,6 +661,25 @@ def bracket_svg(knockout):
            f'<g class="bk-lines" stroke="#e0b53c" stroke-width="1.4" fill="none" opacity="0.7">{conns}</g>'
            f'{"".join(lbls)}{trophy}{boxes}{third}</svg></div>{hint}')
     return svg
+
+
+def group_flags_overview(groups, elim):
+    """树下方的小组分组国旗总览:每组按积分排序,前两名高亮,出局队国旗置灰。"""
+    if not groups:
+        return ""
+    cards = []
+    for g in sorted(groups, key=lambda x: x.get("name", "")):
+        rows = []
+        for i, r in enumerate(compute_table(g)):
+            t = r["team"]
+            out = " out" if t in elim else ""
+            qual = " qual" if (i < 2 and not out) else ""
+            rows.append(f'<div class="gf-t{out}{qual}" data-team="{esc(t)}">'
+                        f'<span class="gf-fl">{flag(t)}</span>'
+                        f'<span class="i18n gf-nm" data-zh="{esc(cn(t))}" data-en="{esc(t)}">{esc(cn(t))}</span></div>')
+        cards.append(f'<div class="gf-card"><div class="gf-h">{esc(g["name"])}</div>{"".join(rows)}</div>')
+    title = f'<div class="i18n gf-title" data-zh="小组分组 · 前二晋级 · 出局队灰显" data-en="Groups · top 2 advance · eliminated dimmed">小组分组 · 前二晋级 · 出局队灰显</div>'
+    return f'{title}<div class="gf-grid">{"".join(cards)}</div>'
 
 
 def build():
@@ -834,7 +853,8 @@ def build():
 
     knockout = data.get("knockout", [])
     knockout_html = collap(bi("淘汰赛对阵图", "Knockout Bracket"),
-                           bracket_svg(knockout), open_=False, cls="knockout")
+                           bracket_svg(knockout) + group_flags_overview(data.get("groups", []), elim),
+                           open_=False, cls="knockout")
 
     sources = " · ".join(esc(s) for s in meta.get("sources", []))
     _built = datetime.now(timezone.utc)
@@ -867,7 +887,7 @@ def build():
   }
   if(!Object.keys(idx).length && !Object.keys(bidx).length) return;
   function dimTeam(name){
-    var all=document.querySelectorAll('tr[data-team]');
+    var all=document.querySelectorAll('[data-team]');  // 积分榜行 + 小组国旗总览格,一起置灰
     for(var q=0;q<all.length;q++){ if(all[q].getAttribute('data-team')===name) all[q].classList.add('out'); }
   }
   function applyBK(gs,hs,as,state,sh,sa,stName){
@@ -1066,6 +1086,17 @@ def build():
   .bk-lbl {{ font-size:13px; font-weight:700; fill:var(--gold); }}
   .bk-node.live .bk-box {{ stroke:var(--live); stroke-width:2; }}
   .bk-hint {{ color:var(--muted); font-size:11px; text-align:center; margin-top:8px; }}
+  /* 树下方:小组分组国旗总览(出局队国旗置灰) */
+  .gf-title {{ color:var(--gold); font-size:13px; font-weight:700; text-align:center; margin:18px 0 10px; }}
+  .gf-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(116px,1fr)); gap:8px; }}
+  .gf-card {{ background:#0f151c; border:1px solid #21262d; border-radius:8px; padding:6px 9px; }}
+  .gf-h {{ font-size:12px; font-weight:700; color:var(--gold); text-align:center;
+    border-bottom:1px solid #21262d; padding-bottom:4px; margin-bottom:5px; }}
+  .gf-t {{ display:flex; align-items:center; gap:7px; font-size:14px; color:var(--muted); padding:2.5px 0; }}
+  .gf-fl {{ font-size:18px; line-height:1; }}
+  .gf-t.qual {{ color:var(--txt); font-weight:600; }}
+  .gf-t.out {{ opacity:0.4; }}
+  .gf-t.out .gf-fl {{ filter:grayscale(1); }}
   .g-details {{ margin-top:10px; }}
   .g-details > summary {{ cursor:pointer; list-style:none; user-select:none; font-size:12.5px;
     color:var(--muted); padding:6px 10px; border-radius:6px; background:#161d27;
